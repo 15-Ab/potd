@@ -25,7 +25,7 @@ Keep Solving.:)
 
 # Complexity
 - Time complexity : $$O(l)$$
-$$O(l)$$ : length of given array
+$$l$$ : length of given array
 <!-- Add your time complexity here, e.g. $$O(n)$$ -->
 
 - Space complexity : $$O(k)$$
