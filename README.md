@@ -2,15 +2,15 @@
 
 This is my attemp to make the coding experience easier for you guys so that you can easily learn what to do in today's leetcode challenge.
 
-## Today's 02-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/largest-sum-subarray-of-size-at-least-k3121/1)
+## Today's 03-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/smallest-window-containing-0-1-and-2--170637/1)
 
 # Intuition
 <!-- Describe your first thoughts on how to solve this problem. -->
-Kadane's algorithm
+Simple tracking of indices.
 
 # Approach
 <!-- Describe your approach to solving the problem. -->
-- I simply applied Kadane's algorithm
+- I kept track of the indices of '0
 - Stored the initial sum
 - Trversed the array and kept track of elements from starting as well
 - Updated the answer if got maximum till now
@@ -19,7 +19,7 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 # Complexity
-- Time complexity : $$O(n)$$
+- Time complexity : $$O(l)$$
 $$l$$ : length of given array
 <!-- Add your time complexity here, e.g. $$O(n)$$ -->
 
@@ -31,27 +31,37 @@ $$l$$ : length of given array
 // User function Template for Java
 
 class Solution {
-    
-    public long maxSumWithK(long a[], long n, long k){
-        long jor = 0;    // to store the sum
-        long b = 0;     // to keep track of left sum
-        int ib = 0;    // to keep track of current leftsum index
-        for( int i = 0; i < (int)k; i++){
-            jor += a[i];
-        }
-        long jawab = Math.max( jor, Long.MIN_VALUE);
-        
-        for( int i = (int)k; i < (int)n; i++){
-            jor += a[i];
-            b += a[ib++];
-            jawab = Math.max(jawab, jor);
-            if( b < 0){
-                jor -= b;
-                jawab = Math.max(jawab, jor);
-                b = 0;
+    public int smallestSubstring(String S) {
+        // Code here
+        int i0 = -1;                // initialising index with '-1'
+        int i1 = -1;
+        int i2 = -1; 
+        boolean all3found = false;    // will be true whwn all '0' '1' '2' are found
+        int min = Integer.MAX_VALUE;  // to store the length of smallest substring
+        for( int i = 0; i < S.length(); i++){
+            if( S.charAt(i) == '0'){
+                i0 = i;
+            }
+            else if( S.charAt(i) == '1'){
+                i1 = i;
+            }
+            else if( S.charAt(i) == '2'){
+                i2 = i;
+            }
+            if( i0 != -1 && i1 != -1 && i2 != -1){  
+                all3found = true;
+            }
+            if( all3found){
+                int maxindex = Math.max( i0, Math.max(i1, i2)); // to store the largest index
+                int minindex = Math.min( i0, Math.min(i1, i2)); // to store the smallest index
+                int difference = maxindex - minindex + 1;       // length of that substring containg '0' '1' '2'
+                min = Math.min(min, difference);             // updating answer if required
             }
         }
-        return jawab;
+        if( all3found){    // if all '0' '1' '2' are present 
+            return min;
+        }
+        return -1;        // else returned '-1'
     }
-}
+};
 ```
