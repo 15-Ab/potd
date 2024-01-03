@@ -10,10 +10,14 @@ Simple tracking of indices.
 
 # Approach
 <!-- Describe your approach to solving the problem. -->
-- I kept track of the indices of '0
-- Stored the initial sum
-- Trversed the array and kept track of elements from starting as well
-- Updated the answer if got maximum till now
+- I kept track of the indices of '0' '1' and '2'
+- Created a boolean value that will be true whwn all '0' '1' '2' are found
+- If all 3 are found in array
+- - found the largest index
+- - found the smallest index
+- -  calculated length of that substring containg '0' '1' '2'
+- -  updating answer if required
+-  Else return '-1'
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 Keep Solving.:)
