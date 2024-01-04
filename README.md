@@ -28,11 +28,12 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 # Complexity
-- Time complexity:
+- Time complexity : $$O(l)$$
 <!-- Add your time complexity here, e.g. $$O(n)$$ -->
-
-- Space complexity:
+$$l$$ : length of array
+- Space complexity : $$O(1)$$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
+
 
 # Code
 ```
