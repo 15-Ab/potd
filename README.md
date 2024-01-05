@@ -17,7 +17,7 @@ This is my attemp to make the coding experience easier for you guys so that you 
 - - The base case is handled separately: if N is 1, there is only one way to construct the structure with 4 units (as indicated by the return 4; statement).
 - Iterative Dynamic Programming :
 - - The code then iterates from i = 1 to i = N-1, updating the counts for "khali" and "makan" units.
-- -'khali' and 'makan' represent the counts of empty and occupied units at the current step, respectively.
+- - 'khali' and 'makan' represent the counts of empty and occupied ( building ) units at the current step, respectively.
 - Calculation of Total Ways :
 - - After the loop, 'ektrfka' represents the total number of ways to construct the structure with N units. ( sum of total number of ways of both buildings and space : of one side of road )
 - - 'donotrfka' is calculated as the square of 'ektrfka' ( as each combination will have as much permutation on other side of road ).
@@ -62,3 +62,4 @@ class Solution
     }
 }
 ```
+
