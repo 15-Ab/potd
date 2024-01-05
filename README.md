@@ -2,51 +2,63 @@
 
 This is my attemp to make the coding experience easier for you guys so that you can easily learn what to do in today's leetcode challenge.
 
-## Today's 04-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/find-element-occuring-once-when-all-other-are-present-thrice/1)
+## Today's 05-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/count-possible-ways-to-construct-buildings5007/1)
 
 # Intuition
 <!-- Describe your first thoughts on how to solve this problem. -->
-Need to keep track of occurences of bits.
+- Recursive Structure :
+- - This problem likely involves constructing a structure consisting of "khali" (empty) and "makan" (occupied) units in a certain pattern.
+- Dynamic Programming :
+- - I should use dynamic programming to iteratively calculate the total number of ways to construct the building structure.
 
 # Approach
 <!-- Describe your approach to solving the problem. -->
-- Initialization:
-- - 'ekbaar' and 'dobaar' are initialized to 0. These variables will be used to keep track of the bits that have appeared once and twice so far.
-- Bitwise XOR in the Loop :
-- - The code iterates through each number in the array using a for-each loop.
-- - The key idea is to use XOR operations to keep track of the bits in 'ekbaar' and 'dobaar'.
-- - For each number (num) :
-- - - 'ekbaar' ^= (num & ~'dobaar') : XOR the current 'ekbaar' with the bit representation of num after excluding the bits that are also in 'dobaar'.
-- - - dobaar ^= (num & ~'ekbaar'): XOR the current 'dobaar' with the bit representation of num after excluding the bits that are also in 'ekbaar'.
-- Explanation of XOR Operations :
-- - XORing with num & ~dobaar means updating the 'ekbaar' variable by XORing it with the bits that are in num but not in 'dobaar'.
-- - XORing with num & ~ekbaar means updating the 'dobaar' variable by XORing it with the bits that are in num but not in 'ekbaar'.
-- Result :
-- - The final result is stored in 'ekbaar'. After iterating through all the numbers, 'ekbaar' will contain the bit representation of the unique element that appears only once.
+- Initialization :
+- - The base case is handled separately: if N is 1, there is only one way to construct the structure with 4 units (as indicated by the return 4; statement).
+- Iterative Dynamic Programming :
+- - The code then iterates from i = 1 to i = N-1, updating the counts for "khali" and "makan" units.
+- -'khali' and 'makan' represent the counts of empty and occupied units at the current step, respectively.
+- Calculation of Total Ways :
+- - After the loop, 'ektrfka' represents the total number of ways to construct the structure with N units. ( sum of total number of ways of both buildings and space : of one side of road )
+- - 'donotrfka' is calculated as the square of 'ektrfka' ( as each combination will have as much permutation on other side of road ).
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 Keep Solving.:)
 
 # Complexity
-- Time complexity : $$O(l)$$
+- Time complexity : $$O(N-1)$$
 <!-- Add your time complexity here, e.g. $$O(n)$$ -->
-$$l$$ : length of array
 - Space complexity : $$O(1)$$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 
 # Code
 ```
-class Solution {
-    public int singleNumber(int[] nums) {
-        int ekbaar = 0; // to store bits occuring once
-        int dobaar = 0; // to store bits occuring twice
-        for( int i : nums){
-            ekbaar = ekbaar ^ ( i & ~ dobaar); // updating the 'once' variable by XORing it with the bits that are in 'i' but not in 'twice'.
-            dobaar = dobaar ^ ( i & ~ ekbaar); // updating the 'twice' variable by XORing it with the bits that are in 'i' but not in 'once'.
+class Solution
+{
+    static int mod = 1_000_000_007;
+    
+    public int TotalWays(int N){
+        // Code here
+        if( N == 1){
+            return 4;
         }
-
-        return ekbaar; // as this stores the numer( bits) occuring once
+        int khali = 1;    // to store empty spaces ways till now
+        int makan = 1;    // to store ways to store buildings till now
+        int pichla_khali ; // to keep track of previous number of ways of empty spaces
+        int pichla_makan ; // to keep track of previous number of ways of buildings
+        for( int i = 1; i < N; i++){
+            pichla_khali = khali;    // updaing previous ways to current one
+            pichla_makan = makan;    // updaing previous ways to current one
+            
+            khali = ( pichla_makan + pichla_khali ) % mod; // as a plot can be left empty if previous plot is either empty or have building
+            makan = pichla_khali % mod;       // as building can only be possible if previous plot is empty
+        }
+        
+        long ektrfka = ( khali + makan ) % mod;   // sum of total number of ways of both buildings and space : of one side of road
+        long donotrfka = ( ektrfka * ektrfka ) % mod;  // as each combination will have as much permutation on other side of road 
+        
+        return (int)donotrfka;
     }
 }
 ```
