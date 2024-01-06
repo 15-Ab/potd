@@ -40,7 +40,7 @@ Keep Solving.:)
 <!-- Add your time complexity here, e.g. $$O(n)$$ -->
 - Space complexity : $$O(p)$$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
-$$p : &nbsp number of prime factors $$
+$$p : &nbsp number &nbsp of &nbsp prime &nbsp factors $$
 
 # Code
 ```
