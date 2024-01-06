@@ -2,25 +2,35 @@
 
 This is my attemp to make the coding experience easier for you guys so that you can easily learn what to do in today's leetcode challenge.
 
-## Today's 05-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/count-possible-ways-to-construct-buildings5007/1)
+## Today's 06-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/techfest-and-the-queue1044/1)
+## Techfest and the Queue
 
 # Intuition
 <!-- Describe your first thoughts on how to solve this problem. -->
-- Recursive Structure :
-- - This problem likely involves constructing a structure consisting of "khali" (empty) and "makan" (occupied) units in a certain pattern.
-- Dynamic Programming :
-- - I should use dynamic programming to iteratively calculate the total number of ways to construct the building structure.
+My intuition is to breaking down each number into its prime factors and summing up the powers of those prime factors.
 
 # Approach
 <!-- Describe your approach to solving the problem. -->
-- Initialization :
-- - The base case is handled separately: if N is 1, there is only one way to construct the structure with 4 units (as indicated by the return 4; statement).
-- Iterative Dynamic Programming :
-- - The code then iterates from i = 1 to i = N-1, updating the counts for "khali" and "makan" units.
-- - 'khali' and 'makan' represent the counts of empty and occupied ( building ) units at the current step, respectively.
-- Calculation of Total Ways :
-- - After the loop, 'ektrfka' represents the total number of ways to construct the structure with N units. ( sum of total number of ways of both buildings and space : of one side of road )
-- - 'donotrfka' is calculated as the square of 'ektrfka' ( as each combination will have as much permutation on other side of road ).
+- Prime Factorization (primeFactorization method) :
+- - I initialized a Map<Integer, Integer> named 'bhajak' to store prime factors and their counts.
+- - I startes with the smallest prime divisor (2) and iterate until the given number is reduced to 1.
+- - While iterating, divide the number by the divisor:
+- - - If the division is successful (remainder is 0), count how many times the divisor divides the number.
+- - - If the count is greater than 0, add an entry to the map with the divisor as the key and the count as the value.
+- - Move to the next divisor and repeat until the number is completely factored.
+- - Return the bhajak map representing the prime factorization.
+- Sum of Powers (sumhelper method) :
+- - Take a number as input and calculate the sum of powers of its prime factorization.
+- - Call the primeFactorization method to obtain the prime factors and their counts (bhajak map).
+- - Iterate over the values (counts) in the bhajak map and add them to the sum.
+- - Return the final sum representing the sum of powers of prime factorization for the given number.
+- Range Calculation (sumOfPowers method) :
+- - Take two parameters, a and b, representing the range of numbers [a, b].
+- - Initialize a variable sum to store the cumulative sum of powers for all numbers in the range.
+- - Iterate over each integer in the range [a, b] (inclusive).
+- - For each number, call the sumhelper method to calculate the sum of powers of its prime factorization.
+- - Add the result to the sum.
+- - Return the final sum representing the sum of powers for all numbers in the specified range.
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 Keep Solving.:)
@@ -34,32 +44,68 @@ Keep Solving.:)
 
 # Code
 ```
-class Solution
-{
-    static int mod = 1_000_000_007;
-    
-    public int TotalWays(int N){
-        // Code here
-        if( N == 1){
-            return 4;
+import java.util.HashMap;
+import java.util.Map;
+
+public class Solution {
+    // Method to calculate the sum of powers for each number in the range [a, b]
+    public static long sumOfPowers(long a, long b) {
+        long sum = 0;
+
+        // Iterate over the range [a, b] and calculate the sum of powers using sumhelper
+        for (int i = (int) a; i <= (int) b; i++) {
+            sum += sumhelper(i);
         }
-        int khali = 1;    // to store empty spaces ways till now
-        int makan = 1;    // to store ways to store buildings till now
-        int pichla_khali ; // to keep track of previous number of ways of empty spaces
-        int pichla_makan ; // to keep track of previous number of ways of buildings
-        for( int i = 1; i < N; i++){
-            pichla_khali = khali;    // updaing previous ways to current one
-            pichla_makan = makan;    // updaing previous ways to current one
-            
-            khali = ( pichla_makan + pichla_khali ) % mod; // as a plot can be left empty if previous plot is either empty or have building
-            makan = pichla_khali % mod;       // as building can only be possible if previous plot is empty
+
+        return sum;
+    }
+
+    // Method to find the sum of powers of prime factorization for a given number
+    public static long sumhelper(int number) {
+        long sum = 0;
+
+        // Calculate the prime factorization for the given number
+        Map<Integer, Integer> primebhajak = primeFactorization(number);
+
+        // Iterate over the values (exponents) in the prime factorization and add them to the sum
+        for (int v : primebhajak.values()) {
+            sum += v;
         }
-        
-        long ektrfka = ( khali + makan ) % mod;   // sum of total number of ways of both buildings and space : of one side of road
-        long donotrfka = ( ektrfka * ektrfka ) % mod;  // as each combination will have as much permutation on other side of road 
-        
-        return (int)donotrfka;
+
+        return sum;
+    }
+
+    // Method to calculate the prime factorization of a number
+    public static Map<Integer, Integer> primeFactorization(int n) {
+        Map<Integer, Integer> bhajak = new HashMap<>();
+        int divisor = 2;
+
+        while (n > 1) {
+            int count = 0;
+
+            // Divide by the divisor and count the number of times it divides
+            while (n % divisor == 0) {
+                n /= divisor;
+                count++;
+            }
+
+            // If the count is greater than 0, add the divisor and count to the map
+            if (count > 0) {
+                bhajak.put(divisor, count);
+            }
+
+            divisor++;
+
+            // If the square of the divisor is greater than n and n is still greater than 1, add n to the map
+            if (divisor * divisor > n && n > 1) {
+                bhajak.put(n, 1);
+                break;
+            }
+        }
+
+        return bhajak;
     }
 }
+
 ```
 
