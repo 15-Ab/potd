@@ -36,11 +36,11 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 # Complexity
-- Time complexity : $$O((b-a)*n^1/2$$
+- Time complexity : $$O((b-a)*n^(1/2))$$
 <!-- Add your time complexity here, e.g. $$O(n)$$ -->
 - Space complexity : $$O(p)$$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
-$$O(p)$$ : number of prime factors
+$$p$$ : number of prime factors
 
 # Code
 ```
