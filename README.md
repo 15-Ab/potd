@@ -2,35 +2,36 @@
 
 This is my attemp to make the coding experience easier for you guys so that you can easily learn what to do in today's leetcode challenge.
 
-## Today's 06-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/techfest-and-the-queue1044/1)
-## Techfest and the Queue
+## Today's 07-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/split-array-largest-sum--141634/1)
+## Split Array Largest Sum
 
 # Intuition
 <!-- Describe your first thoughts on how to solve this problem. -->
-My intuition is to breaking down each number into its prime factors and summing up the powers of those prime factors.
+The goal of this question is to split an array into at most K partitions in a way that minimizes the maximum sum of elements in each partition. Basically this involves finding the maximum sum for a given number of partitions.
 
 # Approach
 <!-- Describe your approach to solving the problem. -->
-- Prime Factorization (primeFactorization method) :
-- - I initialized a Map<Integer, Integer> named 'bhajak' to store prime factors and their counts.
-- - I startes with the smallest prime divisor (2) and iterate until the given number is reduced to 1.
-- - While iterating, divide the number by the divisor:
-- - - If the division is successful (remainder is 0), count how many times the divisor divides the number.
-- - - If the count is greater than 0, add an entry to the map with the divisor as the key and the count as the value.
-- - Move to the next divisor and repeat until the number is completely factored.
-- - Return the bhajak map representing the prime factorization.
-- Sum of Powers (sumhelper method) :
-- - Take a number as input and calculate the sum of powers of its prime factorization.
-- - Call the primeFactorization method to obtain the prime factors and their counts (bhajak map).
-- - Iterate over the values (counts) in the bhajak map and add them to the sum.
-- - Return the final sum representing the sum of powers of prime factorization for the given number.
-- Range Calculation (sumOfPowers method) :
-- - Take two parameters, a and b, representing the range of numbers [a, b].
-- - Initialize a variable sum to store the cumulative sum of powers for all numbers in the range.
-- - Iterate over each integer in the range [a, b] (inclusive).
-- - For each number, call the sumhelper method to calculate the sum of powers of its prime factorization.
-- - Add the result to the sum.
-- - Return the final sum representing the sum of powers for all numbers in the specified range.
+- Initialization :
+- - I initialized a variable 'm' to store the maximum element in the array.
+- - I iterated through the array to find the maximum element and calculate the sum of all elements in the array (jor).
+- Binary Search :
+- - I performed binary search to find the maximum possible sum of elements in a partition.
+- - Initialized the left boundary (l) with the maximum element in the array (m) and the right boundary (r) with the total sum of elements in the array (jor).
+- Binary Search Loop :
+- - While 'l' is less than or equal to 'r', calculate the mid-point (mid) between l and r.
+- - Initialize variables :
+- - - 'tatkal' to store the current number of partitions.
+- - - 'j' to store the sum of elements in the current partition.
+- Check Partitions :
+- - Iterated through the array and check how many partitions can be formed with the current mid value:
+- - - If the sum j exceeds the current mid value, increase the partition count (tatkal) and reset j to the current element.
+- - Then I compared the partition count tatkal with the allowed number of partitions K.
+- Adjust Boundaries :
+- - If the current partition count 'tatkal' is greater than K, it means the mid value is too small, so I adjusted the left boundary (l) to mid + 1.
+- - If the current partition count is less than or equal to K, update the result variable (jawab) with the current mid value and adjusted the right boundary (r) to mid - 1.
+- Return Result :
+- - After the binary search loop, the result variable jawab contains the maximum sum for at most K partitions.
+- - Returned the final result.
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 Keep Solving.:)
@@ -44,68 +45,62 @@ $$p : &nbsp number &nbsp of &nbsp prime &nbsp factors $$
 
 # Code
 ```
-import java.util.HashMap;
-import java.util.Map;
+class Solution {
+    static int m; // Static variable to store the maximum element in the array
+    
+    // Function to split the array into at most K partitions
+    static int splitArray(int[] arr, int N, int K) {
+        int jor = 0; // Variable to store the sum of array elements
+        m = Integer.MIN_VALUE; // Initialize m to the minimum integer value
 
-public class Solution {
-    // Method to calculate the sum of powers for each number in the range [a, b]
-    public static long sumOfPowers(long a, long b) {
-        long sum = 0;
-
-        // Iterate over the range [a, b] and calculate the sum of powers using sumhelper
-        for (int i = (int) a; i <= (int) b; i++) {
-            sum += sumhelper(i);
+        // Iterate through the array to find the maximum element (m) and calculate the sum (jor)
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] > m) {
+                m = arr[i];
+            }
+            jor += arr[i];
         }
 
-        return sum;
+        int jawab = 0;
+        jawab = helper(arr, jor, K); // Call the helper function to find the maximum sum for at most K partitions
+        return jawab; // Return the result
     }
 
-    // Method to find the sum of powers of prime factorization for a given number
-    public static long sumhelper(int number) {
-        long sum = 0;
+    // Helper function to perform binary search to find the maximum sum for at most K partitions
+    static int helper(int[] a, int jor, int K) {
+        int l = m; // Initialize the left boundary with the maximum element in the array
+        int r = jor; // Initialize the right boundary with the sum of array elements
+        int jawab = 0; // Variable to store the final result
 
-        // Calculate the prime factorization for the given number
-        Map<Integer, Integer> primebhajak = primeFactorization(number);
+        // Perform binary search to find the maximum sum for at most K partitions
+        while (l <= r) {
+            int mid = (l + r) / 2; // Calculate the mid-point
 
-        // Iterate over the values (exponents) in the prime factorization and add them to the sum
-        for (int v : primebhajak.values()) {
-            sum += v;
-        }
+            int tatkal = 1; // Variable to store the current number of partitions
+            int j = 0;
 
-        return sum;
-    }
-
-    // Method to calculate the prime factorization of a number
-    public static Map<Integer, Integer> primeFactorization(int n) {
-        Map<Integer, Integer> bhajak = new HashMap<>();
-        int divisor = 2;
-
-        while (n > 1) {
-            int count = 0;
-
-            // Divide by the divisor and count the number of times it divides
-            while (n % divisor == 0) {
-                n /= divisor;
-                count++;
+            // Iterate through the array to check how many partitions can be formed with the current mid value
+            for (int i = 0; i < a.length; i++) {
+                j += a[i];
+                if (j > mid) {
+                    tatkal++; // Increase the partition count
+                    j = a[i];
+                }
             }
 
-            // If the count is greater than 0, add the divisor and count to the map
-            if (count > 0) {
-                bhajak.put(divisor, count);
-            }
-
-            divisor++;
-
-            // If the square of the divisor is greater than n and n is still greater than 1, add n to the map
-            if (divisor * divisor > n && n > 1) {
-                bhajak.put(n, 1);
-                break;
+            // Adjust the boundaries based on the current number of partitions
+            if (tatkal > K) {
+                l = mid + 1; // Need to increase the sum, move to the right half
+            } else {
+                jawab = mid; // Update the result with the current mid value
+                r = mid - 1; // Explore the left half for a potentially smaller maximum sum
             }
         }
 
-        return bhajak;
+        return jawab; // Return the final result
     }
-}
+};
+
 
 ```
 
