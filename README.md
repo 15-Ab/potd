@@ -37,11 +37,12 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 # Complexity
-- Time complexity : $$O((b-a)*\sqrt{n})$$
+- Time complexity : $$O(nlogd)$$
 <!-- Add your time complexity here, e.g. $$O(n)$$ -->
-- Space complexity : $$O(p)$$
+- Space complexity : $$O(1)$$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
-$$p : &nbsp number &nbsp of &nbsp prime &nbsp factors $$
+$$n : length of array  $$
+$$d : difference between the maximum element and the sum of the array.  $$
 
 # Code
 ```
