@@ -33,9 +33,9 @@ Keep Solving.:)
 # Complexity
 - Time complexity : $$O(m+n)$$
 <!-- Add your time complexity here, e.g. $$O(n)$$ -->
-$$m : &nbsp;  length &nbsp; of &nbsp; first &nbsp; linked &nbsp; list  $$
+$$m$$ : length of first linked  list  
 
-$$n : length of second linked list  $$
+$$n$$ : length of second linked list  
 
 - Space complexity : $$O(1)$$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
