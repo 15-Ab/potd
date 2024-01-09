@@ -2,122 +2,86 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's leetcode challenge.
 
-## Today's 09-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/search-pattern0205/1)
-## Search Pattern (KMP-Algorithm)
+## Today's 10-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/longest-subarray-with-sum-divisible-by-k1259/1)
+## Longest subarray with sum divisible by K
 
 # Intuition
 <!-- Describe your first thoughts on how to solve this problem. -->
-My code aims to find all occurrences of a given pattern within a given text using the Knuth-Morris-Pratt (KMP) pattern matching algorithm. The KMP algorithm efficiently handles pattern matching by utilizing information from previous matching attempts.
+My code aims to find the length of the longest subarray whose sum is divisible by a given integer 'k'. My solution leverages the concept of cumulative sum and utilizes a HashMap to efficiently track remainders of cumulative sums.
 
 # Approach
 <!-- Describe your approach to solving the problem. -->
-- Initialization :
-- - Initialized an ArrayList (al) to store the starting indices of pattern occurrences.
-- - Initialized an array (a) to store information related to the KMP algorithm.
-- KMP Prefix Array Construction (helperKMP) :
-- - The helperKMP method constructs the prefix array (a) for the given pattern.
-- - The prefix array represents the length of the proper prefix that is also a proper suffix for each position in the pattern.
-- Pattern Search (search) :
-- - Iterated through the text (txt) and the pattern (pat) using indices i and ia respectively.
-- - If characters at the current positions matched, incremented both indices (i and ia).
-- - If the entire pattern is matched, added the starting index of the occurrence to the ArrayList (al), and adjusted the pattern index (ia) based on the prefix array.
-- - If there is a mismatch between characters:
-- - - If 'ia' is zero, incremented the text index (i).
-- - - If 'ia' is non-zero, adjusted 'ia' based on the prefix array.
-- Result :
-- - My ArrayList 'al' contains the starting indices of all occurrences of the pattern in the text. 
+
+**Initialization:**
+   - Initialize variables, including `longest` to store the length of the longest subarray, and a HashMap `m` to store remainders and their corresponding indices.
+
+2. **Cumulative Sum Calculation:**
+   - Iterate through the array, maintaining a cumulative sum `jor` at each index.
+
+3. **Remainder Calculation:**
+   - Calculate the remainder after dividing the cumulative sum `jor` by \( k \).
+
+4. **Conditions:**
+   - If the remainder is zero, it implies that the subarray from the beginning to the current index is divisible by \( k \). Update the `longest` variable accordingly.
+   - If the remainder is already present in the HashMap, it means that the subarray between the current index and the index stored in the HashMap has a sum divisible by \( k \). Update the `longest` variable if needed.
+   - If the remainder is not present in the HashMap, add it to the HashMap along with its index.
+
+5. **Result:**
+   - The `longest` variable stores the length of the longest subarray whose sum is divisible by \( k \).
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 Keep Solving.:)
 
 # Complexity
-- Time complexity : $O(p+t)$
+- Time complexity : $O(e)$
 <!-- Add your time complexity here, e.g. $$O(n)$$ -->
  
 - Space complexity : $O(p+k)$
-<!-- Add your space complexity here, e.g. $$O(n)$$ -->
+<!-- Add your space complexity here, e.g. $$O(e)$$ -->
 
-$p$ : length of pattern  
-
-$t$ : length of text 
-
-$k$ : represents the number of occurrences of the pattern in the text.
+$e$ : number of elements
 
 # Code
 ```
 //User function Template for Java
 
 class Solution {
-    // Created static arrays to store information for KMP algorithm
-    static int[] a;
-    static ArrayList<Integer> al;
+    
+    int longSubarrWthSumDivByK(int a[], int n, int k) {
+        // Initialized the variable to store the length of the longest subarray
+        int longest = 0;
+        
+        // HashMap to store the remainder and its corresponding index
+        HashMap<Integer, Integer> m = new HashMap<>();
+        
+        // Variable to store the cumulative sum
+        int jor = 0;
 
-    // Main method for pattern search in text using KMP algorithm
-    ArrayList<Integer> search(String pat, String txt) {
-        // Initialized an ArrayList to store the starting indices of pattern occurrences
-        al = new ArrayList<>();
-
-        // Length of the pattern
-        int l = pat.length();
-
-        // Initialized the prefix array for the KMP algorithm
-        a = new int[l];
-
-        // Built the prefix array using the helper method
-        helperKMP(pat);
-
-        // Initialized indices for pattern (ia) and text (i)
-        int ia = 0;
-        int i = 0;
-
-        // Iterated through the text
-        while (i < txt.length()) {
-            // If characters matched, moved to the next characters in both pattern and text
-            if (txt.charAt(i) == pat.charAt(ia)) {
-                i++;
-                ia++;
-            }
-
-            // If the entire pattern is matched, added the starting index to the result list
-            if (ia == l) {
-                al.add(i - ia + 1);
-                ia = a[ia - 1]; // Moved the pattern index based on the prefix array
-            } else if (i < txt.length() && txt.charAt(i) != pat.charAt(ia)) {
-                // Mismatch between characters
-
-                if (ia == 0) {
-                    i++;
-                } else {
-                    // Move the pattern index based on the prefix array
-                    ia = a[ia - 1];
-                }
-            }
-        }
-
-        // Returned the list of starting indices of pattern occurrences
-        return al;
-    }
-
-    // Helper method to build the prefix array using the KMP algorithm
-    static void helperKMP(String pattern) {
-        a[0] = 0;
-        int s = 0;
-
-        // Iterated through the pattern to build the prefix array
-        for (int i = 1; i < pattern.length(); i++) {
-            if (pattern.charAt(s) == pattern.charAt(i)) {
-                s++;
-                a[i] = s;
-            } else if (s == 0) {
-                a[i] = s;
+        // Iterated through the array
+        for (int i = 0; i < a.length; i++) {
+            // Update the cumulative sum
+            jor += a[i];
+            
+            // Calculated the remainder after dividing the cumulative sum by k
+            int remainder = ((jor % k) + k) % k;
+            
+            // Checked if the cumulative sum is divisible by k
+            if (remainder == 0) {
+                // Updated the length of the longest subarray
+                longest = i + 1;
+            } else if (m.containsKey(remainder)) {
+                // If the remainder is already present in the HashMap, updated the longest subarray length
+                longest = Math.max(longest, i - m.get(remainder));
             } else {
-                s = a[s - 1];
-                i--;
+                // If the remainder is not present, added it to the HashMap along with its index
+                m.put(remainder, i);
             }
         }
+
+        // Returned the length of the longest subarray
+        return longest;
     }
 }
-
 ```
 
