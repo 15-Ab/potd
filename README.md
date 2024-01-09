@@ -13,20 +13,20 @@ My code aims to find the length of the longest subarray whose sum is divisible b
 <!-- Describe your approach to solving the problem. -->
 
 **Initialization:**
-   - Initialize variables, including `longest` to store the length of the longest subarray, and a HashMap `m` to store remainders and their corresponding indices.
+   - Initialized variables, including `longest` to store the length of the longest subarray, and a HashMap `m` to store remainders and their corresponding indices.
 
-2. **Cumulative Sum Calculation:**
-   - Iterate through the array, maintaining a cumulative sum `jor` at each index.
+**Cumulative Sum Calculation:**
+   - Iterated through the array, maintaining a cumulative sum `jor` at each index.
 
-3. **Remainder Calculation:**
-   - Calculate the remainder after dividing the cumulative sum `jor` by \( k \).
+**Remainder Calculation:**
+   - Calculated the remainder after dividing the cumulative sum `jor` by \( k \).
 
-4. **Conditions:**
-   - If the remainder is zero, it implies that the subarray from the beginning to the current index is divisible by \( k \). Update the `longest` variable accordingly.
+**Conditions:**
+   - If the remainder is zero, it implies that the subarray from the beginning to the current index is divisible by \( k \). Updated the `longest` variable accordingly.
    - If the remainder is already present in the HashMap, it means that the subarray between the current index and the index stored in the HashMap has a sum divisible by \( k \). Update the `longest` variable if needed.
-   - If the remainder is not present in the HashMap, add it to the HashMap along with its index.
+   - If the remainder is not present in the HashMap, added it to the HashMap along with its index.
 
-5. **Result:**
+**Result:**
    - The `longest` variable stores the length of the longest subarray whose sum is divisible by \( k \).
 
 ---
@@ -37,7 +37,7 @@ Keep Solving.:)
 - Time complexity : $O(e)$
 <!-- Add your time complexity here, e.g. $$O(n)$$ -->
  
-- Space complexity : $O(p+k)$
+- Space complexity : $O(e)$
 <!-- Add your space complexity here, e.g. $$O(e)$$ -->
 
 $e$ : number of elements
