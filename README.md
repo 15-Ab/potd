@@ -7,7 +7,7 @@ This is my attempt to make the coding experience easier for you guys so that you
 
 # Intuition
 <!-- Describe your first thoughts on how to solve this problem. -->
-A this code aims to find the minimum number that can be obtained by removing K digits from the given string. My approach involves using a stack to keep track of the digits and ensuring that the resulting number is minimal.
+As this code aims to find the minimum number that can be obtained by removing K digits from the given string. My approach involves using a stack to keep track of the digits and ensuring that the resulting number is minimal.
 
 # Approach
 <!-- Describe your approach to solving the problem. -->
