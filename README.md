@@ -2,86 +2,87 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's leetcode challenge.
 
-## Today's 10-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/longest-subarray-with-sum-divisible-by-k1259/1)
-## Longest subarray with sum divisible by K
+## Today's 11-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/remove-k-digits/1)
+## Remove K Digits
 
 # Intuition
 <!-- Describe your first thoughts on how to solve this problem. -->
-My code aims to find the length of the longest subarray whose sum is divisible by a given integer 'k'. My solution leverages the concept of cumulative sum and utilizes a HashMap to efficiently track remainders of cumulative sums.
+A this code aims to find the minimum number that can be obtained by removing K digits from the given string. My approach involves using a stack to keep track of the digits and ensuring that the resulting number is minimal.
 
 # Approach
 <!-- Describe your approach to solving the problem. -->
+**Base Case:**
+   - If the length of the string `S` is less than or equal to `K`, return "0" since all digits can be removed.
 
-**Initialization:**
-   - Initialized variables, including `longest` to store the length of the longest subarray, and a HashMap `m` to store remainders and their corresponding indices.
+**Stack to Build Minimum Number:**
+   - Use a stack (`s`) to build the minimum number.
+   - Iterate through each character in the string.
+   - While the stack is not empty, the current character is smaller than the top of the stack, and there are still digits to be removed (`K > 0`):
+      - Pop elements from the stack.
+      - Decrement `K`.
+   - Push the current character onto the stack.
 
-**Cumulative Sum Calculation:**
-   - Iterated through the array, maintaining a cumulative sum `jor` at each index.
+**Remove Remaining Digits:**
+   - After the iteration, if there are remaining digits to be removed (`K > 0`), pop elements from the end of the stack.
 
-**Remainder Calculation:**
-   - Calculated the remainder after dividing the cumulative sum `jor` by \( k \).
-
-**Conditions:**
-   - If the remainder is zero, it implies that the subarray from the beginning to the current index is divisible by \( k \). Updated the `longest` variable accordingly.
-   - If the remainder is already present in the HashMap, it means that the subarray between the current index and the index stored in the HashMap has a sum divisible by \( k \). Update the `longest` variable if needed.
-   - If the remainder is not present in the HashMap, added it to the HashMap along with its index.
+**Build Minimum Number from Stack:**
+   - Use a `StringBuilder` (`min`) to build the minimum number from the elements in the stack.
+   - Ignore leading zeros by skipping them.
 
 **Result:**
-   - The `longest` variable stores the length of the longest subarray whose sum is divisible by \( k \).
-
+   - If the resulting number is empty, return "0"; otherwise, return the string representation of the minimum number.
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 Keep Solving.:)
 
 # Complexity
-- Time complexity : $O(e)$
+- Time complexity : $O(n)$
 <!-- Add your time complexity here, e.g. $$O(n)$$ -->
- 
-- Space complexity : $O(e)$
-<!-- Add your space complexity here, e.g. $$O(e)$$ -->
-
-$e$ : number of elements
+$n$ : number of elements
+- Space complexity : $O(n)$
+<!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 # Code
 ```
-//User function Template for Java
-
 class Solution {
-    
-    int longSubarrWthSumDivByK(int a[], int n, int k) {
-        // Initialized the variable to store the length of the longest subarray
-        int longest = 0;
-        
-        // HashMap to store the remainder and its corresponding index
-        HashMap<Integer, Integer> m = new HashMap<>();
-        
-        // Variable to store the cumulative sum
-        int jor = 0;
+    public String removeKdigits(String S, int K) {
 
-        // Iterated through the array
-        for (int i = 0; i < a.length; i++) {
-            // Update the cumulative sum
-            jor += a[i];
-            
-            // Calculated the remainder after dividing the cumulative sum by k
-            int remainder = ((jor % k) + k) % k;
-            
-            // Checked if the cumulative sum is divisible by k
-            if (remainder == 0) {
-                // Updated the length of the longest subarray
-                longest = i + 1;
-            } else if (m.containsKey(remainder)) {
-                // If the remainder is already present in the HashMap, updated the longest subarray length
-                longest = Math.max(longest, i - m.get(remainder));
-            } else {
-                // If the remainder is not present, added it to the HashMap along with its index
-                m.put(remainder, i);
-            }
+        // Check if the length of the string is less than or equal to K
+        if (S.length() <= K) {
+            return "0";
         }
 
-        // Returned the length of the longest subarray
-        return longest;
+        // Use a stack to build the minimum number by removing larger digits
+        Stack<Character> s = new Stack<>();
+        for (int i = 0; i < S.length(); i++) {
+            // Pop elements from the stack if a larger digit is encountered and K > 0
+            while (!s.isEmpty() && s.peek() > S.charAt(i) && K > 0) {
+                s.pop();
+                K--;
+            }
+            // Push the current character onto the stack
+            s.push(S.charAt(i));
+        }
+
+        // Remove remaining K digits from the end, if necessary
+        while (K-- > 0) {
+            s.pop();
+        }
+
+        // Build the minimum number from the stack, ignoring leading zeros
+        StringBuilder min = new StringBuilder();
+        for (char c : s) {
+            // Ignore leading zeros
+            if (c == '0' && min.length() == 0) {
+                continue;
+            }
+            min.append(c);
+        }
+
+        // If the resulting number is empty, return "0"
+        return min.length() == 0 ? "0" : min.toString();
     }
 }
+
 ```
 
