@@ -11,16 +11,16 @@ My code is implementing a function to reverse the first k elements of a given qu
 
 # Approach
 <!-- Describe your approach to solving the problem. -->
-**Input Parameters:** The function takes a `Queue<Integer>` and an integer `k`.
-**Calculate Unchanged Elements:** Determine the number of unchanged elements in the queue by subtracting `k` from its total size.
+**Input Parameters:** My function takes a `Queue<Integer>` and an integer `k`.
+**Calculated Unchanged Elements:** Determined the number of unchanged elements in the queue by subtracting `k` from its total size.
 **Temporary Storage with Stack:**
-   - Use a `Stack<Integer>` to temporarily store the first k elements of the queue.
-   - Iterate over the first k elements, dequeuing each element and pushing it onto the stack, effectively reversing their order.
-**Reverse Order Back to Queue:**
-   - Iterate over the elements in the stack, dequeuing each element and enqueuing it back into the original queue, reversing their order again.
-**Enqueue Remaining Unchanged Elements:**
-   - Iterate over the remaining unchanged elements in the queue and enqueue them back.
-**Return Modified Queue:**
+   - Used a `Stack<Integer>` to temporarily store the first k elements of the queue.
+   - Iterated over the first k elements, dequeuing each element and pushing it onto the stack, effectively reversing their order.
+**Reversed Order Back to Queue:**
+   - Iterated over the elements in the stack, dequeuing each element and enqueuing it back into the original queue, reversing their order again.
+**Enqueued Remaining Unchanged Elements:**
+   - Iterated over the remaining unchanged elements in the queue and enqueued them back.
+**Returned Modified Queue:**
    - The modified queue is returned as the final result.
 
 ---
