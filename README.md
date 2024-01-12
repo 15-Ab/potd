@@ -2,87 +2,67 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's leetcode challenge.
 
-## Today's 11-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/remove-k-digits/1)
-## Remove K Digits
+## Today's 12-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/reverse-first-k-elements-of-queue/1)
+## Reverse First K elements of Queue
 
 # Intuition
 <!-- Describe your first thoughts on how to solve this problem. -->
-As this code aims to find the minimum number that can be obtained by removing K digits from the given string. My approach involves using a stack to keep track of the digits and ensuring that the resulting number is minimal.
+My code is implementing a function to reverse the first k elements of a given queue.
 
 # Approach
 <!-- Describe your approach to solving the problem. -->
-**Base Case:**
-   - If the length of the string `S` is less than or equal to `K`, return "0" since all digits can be removed.
+**Input Parameters:** The function takes a `Queue<Integer>` and an integer `k`.
+**Calculate Unchanged Elements:** Determine the number of unchanged elements in the queue by subtracting `k` from its total size.
+**Temporary Storage with Stack:**
+   - Use a `Stack<Integer>` to temporarily store the first k elements of the queue.
+   - Iterate over the first k elements, dequeuing each element and pushing it onto the stack, effectively reversing their order.
+**Reverse Order Back to Queue:**
+   - Iterate over the elements in the stack, dequeuing each element and enqueuing it back into the original queue, reversing their order again.
+**Enqueue Remaining Unchanged Elements:**
+   - Iterate over the remaining unchanged elements in the queue and enqueue them back.
+**Return Modified Queue:**
+   - The modified queue is returned as the final result.
 
-**Stack to Build Minimum Number:**
-   - Use a stack (`s`) to build the minimum number.
-   - Iterate through each character in the string.
-   - While the stack is not empty, the current character is smaller than the top of the stack, and there are still digits to be removed (`K > 0`):
-      - Pop elements from the stack.
-      - Decrement `K`.
-   - Push the current character onto the stack.
-
-**Remove Remaining Digits:**
-   - After the iteration, if there are remaining digits to be removed (`K > 0`), pop elements from the end of the stack.
-
-**Build Minimum Number from Stack:**
-   - Use a `StringBuilder` (`min`) to build the minimum number from the elements in the stack.
-   - Ignore leading zeros by skipping them.
-
-**Result:**
-   - If the resulting number is empty, return "0"; otherwise, return the string representation of the minimum number.
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 Keep Solving.:)
 
 # Complexity
-- Time complexity : $O(n)$
-<!-- Add your time complexity here, e.g. $$O(n)$$ -->
-$n$ : number of elements
-- Space complexity : $O(n)$
+- Time complexity : $O(k+(n-k)) = O(n)$
+<!-- Add your time complexity here, e.g. $$O(k+(n-k))$$ -->
+$n$ : size of queue
+- Space complexity : $O(k)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 # Code
 ```
-class Solution {
-    public String removeKdigits(String S, int K) {
+// User function Template for Java
 
-        // Check if the length of the string is less than or equal to K
-        if (S.length() <= K) {
-            return "0";
+class GfG {
+    // Function to reverse first k elements of a queue.
+    public Queue<Integer> modifyQueue(Queue<Integer> q, int k) {
+        // Calculated the number of unchanged elements.
+        int unchanged = q.size() - k;
+    
+        // Used a stack to temporarily store the first k elements.
+        Stack<Integer> s = new Stack<>();
+        for (int i = 0; i < k; i++) {
+            s.push(q.poll());
         }
-
-        // Use a stack to build the minimum number by removing larger digits
-        Stack<Character> s = new Stack<>();
-        for (int i = 0; i < S.length(); i++) {
-            // Pop elements from the stack if a larger digit is encountered and K > 0
-            while (!s.isEmpty() && s.peek() > S.charAt(i) && K > 0) {
-                s.pop();
-                K--;
-            }
-            // Push the current character onto the stack
-            s.push(S.charAt(i));
+    
+        // Reversed the order of the first k elements and enqueued them back.
+        while (!s.isEmpty()) {
+            q.offer(s.pop());
         }
-
-        // Remove remaining K digits from the end, if necessary
-        while (K-- > 0) {
-            s.pop();
+    
+        // Enqueued the remaining unchanged elements.
+        for (int i = 0; i < unchanged; i++) {
+            q.offer(q.poll());
         }
-
-        // Build the minimum number from the stack, ignoring leading zeros
-        StringBuilder min = new StringBuilder();
-        for (char c : s) {
-            // Ignore leading zeros
-            if (c == '0' && min.length() == 0) {
-                continue;
-            }
-            min.append(c);
-        }
-
-        // If the resulting number is empty, return "0"
-        return min.length() == 0 ? "0" : min.toString();
+    
+        // Returned the modified queue.
+        return q;
     }
 }
-
 ```
 
