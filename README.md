@@ -2,8 +2,8 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's leetcode challenge.
 
-## Today's 12-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/reverse-first-k-elements-of-queue/1)
-## Reverse First K elements of Queue
+## Today's 13-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/insertion-sort-for-singly-linked-list/1)
+## Insertion Sort for Singly Linked List
 
 # Intuition
 <!-- Describe your first thoughts on how to solve this problem. -->
@@ -28,40 +28,46 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 # Complexity
-- Time complexity : $O(k+(n-k)) = O(n)$
-<!-- Add your time complexity here, e.g. $$O(k+(n-k))$$ -->
+- Time complexity : $O(nlogn)$
+<!-- Add your time complexity here, e.g. $$O())$$ -->
 $n$ : size of queue
-- Space complexity : $O(k)$
+- Space complexity : $O(n)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 # Code
 ```
-// User function Template for Java
+//User function Template for Java
 
-class GfG {
-    // Function to reverse first k elements of a queue.
-    public Queue<Integer> modifyQueue(Queue<Integer> q, int k) {
-        // Calculated the number of unchanged elements.
-        int unchanged = q.size() - k;
-    
-        // Used a stack to temporarily store the first k elements.
-        Stack<Integer> s = new Stack<>();
-        for (int i = 0; i < k; i++) {
-            s.push(q.poll());
+/*class Node
+    {
+        int data;
+        Node next;
+        Node(int d) {data = d; next = null; }
+    }
+    */
+class Solution
+{
+    public static Node insertionSort(Node head_ref){
+        
+        // Extracting values from the linked list and store them in an ArrayList.
+        Node n = head_ref;
+        ArrayList<Integer> al = new ArrayList<>();
+        while( n != null){
+            al.add(n.data);
+            n = n.next;
         }
-    
-        // Reversed the order of the first k elements and enqueued them back.
-        while (!s.isEmpty()) {
-            q.offer(s.pop());
+        
+        // Sorting the ArrayList in ascending order.
+        al.sort(Comparator.naturalOrder());
+        
+        // Traversing the linked list again and update the values with the sorted values.
+        n = head_ref;
+        int i = 0;
+        while( n != null){
+            n.data = al.get(i++);
+            n = n.next;
         }
-    
-        // Enqueued the remaining unchanged elements.
-        for (int i = 0; i < unchanged; i++) {
-            q.offer(q.poll());
-        }
-    
-        // Returned the modified queue.
-        return q;
+        return head_ref;
     }
 }
 ```
