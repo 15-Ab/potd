@@ -5,23 +5,29 @@ This is my attempt to make the coding experience easier for you guys so that you
 ## Today's 13-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/insertion-sort-for-singly-linked-list/1)
 ## Insertion Sort for Singly Linked List
 
-# Intuition
-<!-- Describe your first thoughts on how to solve this problem. -->
-My code is implementing a function to reverse the first k elements of a given queue.
+### Intuition:
+Insertion Sort is a simple sorting algorithm that builds the final sorted list one element at a time. It is much less efficient on large lists than more advanced algorithms such as quicksort, heapsort, or merge sort. However, it has the advantage of being easy to understand and implement.
 
-# Approach
-<!-- Describe your approach to solving the problem. -->
-**Input Parameters:** My function takes a `Queue<Integer>` and an integer `k`.
-**Calculated Unchanged Elements:** Determined the number of unchanged elements in the queue by subtracting `k` from its total size.
-**Temporary Storage with Stack:**
-   - Used a `Stack<Integer>` to temporarily store the first k elements of the queue.
-   - Iterated over the first k elements, dequeuing each element and pushing it onto the stack, effectively reversing their order.
-**Reversed Order Back to Queue:**
-   - Iterated over the elements in the stack, dequeuing each element and enqueuing it back into the original queue, reversing their order again.
-**Enqueued Remaining Unchanged Elements:**
-   - Iterated over the remaining unchanged elements in the queue and enqueued them back.
-**Returned Modified Queue:**
-   - The modified queue is returned as the final result.
+### Approach:
+1. **Traversal and Extraction:**
+   - Traverse the linked list and extract the values of each node, storing them in an ArrayList (`al`).
+   
+2. **Sorting:**
+   - Sort the ArrayList in ascending order. The sorting is done using the `sort` method with the natural order comparator.
+
+3. **Linked List Update:**
+   - Traverse the linked list again.
+   - Update the values of each node with the sorted values from the ArrayList.
+
+### Implementation:
+- The algorithm converts the linked list into an ArrayList to leverage its easy sorting capabilities.
+- After sorting, it updates the linked list nodes with the sorted values.
+
+### Example:
+Consider an unsorted linked list: `5 -> 2 -> 8 -> 1`
+1. Extract values: `[5, 2, 8, 1]`
+2. Sort values: `[1, 2, 5, 8]`
+3. Update linked list: `1 -> 2 -> 5 -> 8`
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -30,7 +36,7 @@ Keep Solving.:)
 # Complexity
 - Time complexity : $O(nlogn)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$n$ : size of queue
+$n$ : number of elements in linked list
 - Space complexity : $O(n)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
