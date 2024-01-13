@@ -5,17 +5,17 @@ This is my attempt to make the coding experience easier for you guys so that you
 ## Today's 13-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/insertion-sort-for-singly-linked-list/1)
 ## Insertion Sort for Singly Linked List
 
-### Intuition:
+### Intuition
 Insertion Sort is a simple sorting algorithm that builds the final sorted list one element at a time. It is much less efficient on large lists than more advanced algorithms such as quicksort, heapsort, or merge sort. However, it has the advantage of being easy to understand and implement.
 
-### Approach:
-1. **Traversal and Extraction:**
+### Approach
+**Traversal and Extraction:**
    - Traverse the linked list and extract the values of each node, storing them in an ArrayList (`al`).
    
-2. **Sorting:**
+**Sorting:**
    - Sort the ArrayList in ascending order. The sorting is done using the `sort` method with the natural order comparator.
 
-3. **Linked List Update:**
+**Linked List Update:**
    - Traverse the linked list again.
    - Update the values of each node with the sorted values from the ArrayList.
 
@@ -33,14 +33,14 @@ Consider an unsorted linked list: `5 -> 2 -> 8 -> 1`
 Have a look at the code , still have any confusion then please let me know in the comments
 Keep Solving.:)
 
-# Complexity
+## Complexity
 - Time complexity : $O(nlogn)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 $n$ : number of elements in linked list
 - Space complexity : $O(n)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
-# Code
+## Code
 ```
 //User function Template for Java
 
