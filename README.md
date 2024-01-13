@@ -10,17 +10,17 @@ Insertion Sort is a simple sorting algorithm that builds the final sorted list o
 
 ### Approach
 **Traversal and Extraction:**
-   - Traverse the linked list and extract the values of each node, storing them in an ArrayList (`al`).
+   - I traversed the linked list and extract the values of each node, storing them in an ArrayList (`al`).
    
 **Sorting:**
-   - Sort the ArrayList in ascending order. The sorting is done using the `sort` method with the natural order comparator.
+   - Sorted the ArrayList in ascending order. The sorting is done using the `sort` method with the natural order comparator.
 
 **Linked List Update:**
-   - Traverse the linked list again.
-   - Update the values of each node with the sorted values from the ArrayList.
+   - Traversed the linked list again.
+   - Updated the values of each node with the sorted values from the ArrayList.
 
 ### Implementation:
-- The algorithm converts the linked list into an ArrayList to leverage its easy sorting capabilities.
+- My algorithm converts the linked list into an ArrayList to leverage its easy sorting capabilities.
 - After sorting, it updates the linked list nodes with the sorted values.
 
 ### Example:
