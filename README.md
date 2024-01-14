@@ -6,38 +6,26 @@ This is my attempt to make the coding experience easier for you guys so that you
 ## Find duplicate rows in a binary matrix
 
 ### Intuition
-Insertion Sort is a simple sorting algorithm that builds the final sorted list one element at a time. It is much less efficient on large lists than more advanced algorithms such as quicksort, heapsort, or merge sort. However, it has the advantage of being easy to understand and implement.
-
+As, the goal of the code is to find and return the indices of the rows in a given matrix that are repeated. A row is considered repeated if there is another identical row in the matrix.
 ### Approach
-**Traversal and Extraction:**
-   - I traversed the linked list and extract the values of each node, storing them in an ArrayList (`al`).
-   
-**Sorting:**
-   - Sorted the ArrayList in ascending order. The sorting is done using the `sort` method with the natural order comparator.
-
-**Linked List Update:**
-   - Traversed the linked list again.
-   - Updated the values of each node with the sorted values from the ArrayList.
-
-### Implementation:
-- My algorithm converts the linked list into an ArrayList to leverage its easy sorting capabilities.
-- After sorting, it updates the linked list nodes with the sorted values.
-
-### Example:
-Consider an unsorted linked list: `5 -> 2 -> 8 -> 1`
-1. Extract values: `[5, 2, 8, 1]`
-2. Sort values: `[1, 2, 5, 8]`
-3. Update linked list: `1 -> 2 -> 5 -> 8`
+- My function takes a 2D matrix matrix along with its dimensions `m` (number of rows) and `n` (number of columns).
+- It uses a HashSet named `hl` to store unique rows encountered during the iteration.
+- My function iterates through each row of the matrix using a for loop.
+- For each row, it creates an ArrayList named `r` to store the elements of that row.
+- If `r` is already present in the HashSet, it means the row is repeated, and the index of the repeated row is added to the result ArrayList named `jawab`.
+- If `r` is not present in the HashSet, it is added to the HashSet to keep track of unique rows.
+- After processing all rows, the function returns the ArrayList `jawab` containing indices of repeated rows.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(nlogn)$
+- Time complexity : $O(m*n)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$n$ : number of elements in linked list
-- Space complexity : $O(n)$
+$m$ : number of row(s)
+$n$ : number of column(s)
+- Space complexity : $O(m*n)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code
