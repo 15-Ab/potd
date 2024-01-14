@@ -2,8 +2,8 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's leetcode challenge.
 
-## Today's 13-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/insertion-sort-for-singly-linked-list/1)
-## Insertion Sort for Singly Linked List
+## Today's 14-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/find-duplicate-rows-in-a-binary-matrix/1)
+## Find duplicate rows in a binary matrix
 
 ### Intuition
 Insertion Sort is a simple sorting algorithm that builds the final sorted list one element at a time. It is much less efficient on large lists than more advanced algorithms such as quicksort, heapsort, or merge sort. However, it has the advantage of being easy to understand and implement.
@@ -44,36 +44,32 @@ $n$ : number of elements in linked list
 ```
 //User function Template for Java
 
-/*class Node
-    {
-        int data;
-        Node next;
-        Node(int d) {data = d; next = null; }
-    }
-    */
 class Solution
 {
-    public static Node insertionSort(Node head_ref){
+    public static ArrayList<Integer> repeatedRows(int matrix[][], int m, int n){
+        //code here
+        HashSet<ArrayList<Integer>> hl = new HashSet<>();
+        ArrayList<Integer> jawab = new ArrayList<>();
         
-        // Extracting values from the linked list and store them in an ArrayList.
-        Node n = head_ref;
-        ArrayList<Integer> al = new ArrayList<>();
-        while( n != null){
-            al.add(n.data);
-            n = n.next;
+        // Iterating through each row of the matrix
+        for( int i = 0; i < matrix.length; i++){
+            ArrayList<Integer> r = new ArrayList<>();
+            
+            // Adding elements of the current row to an ArrayList
+            for( int j = 0; j < matrix[0].length; j++){
+                r.add(matrix[i][j]);
+            }
+            
+            // If the ArrayList is already present in the HashSet, it means the row is repeated
+            if( hl.contains(r)){
+                jawab.add(i); // Adding the index of the repeated row to the result ArrayList
+            }
+            else{
+                hl.add(r); // Adding the ArrayList to the HashSet
+            }
         }
         
-        // Sorting the ArrayList in ascending order.
-        al.sort(Comparator.naturalOrder());
-        
-        // Traversing the linked list again and update the values with the sorted values.
-        n = head_ref;
-        int i = 0;
-        while( n != null){
-            n.data = al.get(i++);
-            n = n.next;
-        }
-        return head_ref;
+        return jawab; // Returning the ArrayList containing indices of repeated rows
     }
 }
 ```
