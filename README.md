@@ -40,25 +40,25 @@ class Solution
         HashSet<ArrayList<Integer>> hl = new HashSet<>();
         ArrayList<Integer> jawab = new ArrayList<>();
         
-        // Iterating through each row of the matrix
+        // Iterated through each row of the matrix
         for( int i = 0; i < matrix.length; i++){
             ArrayList<Integer> r = new ArrayList<>();
             
-            // Adding elements of the current row to an ArrayList
+            // Added elements of the current row to an ArrayList
             for( int j = 0; j < matrix[0].length; j++){
                 r.add(matrix[i][j]);
             }
             
             // If the ArrayList is already present in the HashSet, it means the row is repeated
             if( hl.contains(r)){
-                jawab.add(i); // Adding the index of the repeated row to the result ArrayList
+                jawab.add(i); // Added the index of the repeated row to the result ArrayList
             }
             else{
-                hl.add(r); // Adding the ArrayList to the HashSet
+                hl.add(r); // Added the ArrayList to the HashSet
             }
         }
         
-        return jawab; // Returning the ArrayList containing indices of repeated rows
+        return jawab; // Returned the ArrayList containing indices of repeated rows
     }
 }
 ```
