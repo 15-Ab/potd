@@ -33,14 +33,12 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(n*total)$
+- Time complexity : $O(m*n)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$n$ : number of courses
+$m$ : given
 
-$total$ : total budget
-
-$n$ : number of column(s)
-- Space complexity : $O(total)$
+$n$ : given
+- Space complexity : $O(m*n)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code
