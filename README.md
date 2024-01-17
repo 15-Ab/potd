@@ -11,7 +11,7 @@ This problem requires finding all possible unique permutations of the given arra
 ### Approach
 
 **Sort the Input Array :** 
-Start by sorting the given array in ascending order. Sorting helps in avoiding duplicates during the permutation generation process.
+I started by sorting the given array in ascending order. Sorting helps in avoiding duplicates during the permutation generation process.
 
 **Backtracking Permutation Generation :**
    - Used backtracking to generate permutations.
