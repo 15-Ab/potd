@@ -31,12 +31,10 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(m*n)$
+- Time complexity : $O(n log n + n!)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$m$ : given
-
-$n$ : given
-- Space complexity : $O(m*n)$
+$n$ : length of the input array
+- Space complexity : $O( n + n!)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code
