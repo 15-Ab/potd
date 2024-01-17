@@ -2,8 +2,8 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's leetcode challenge.
 
-## Today's 16-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/sequence-of-sequence1155/1)
-## Sequence of Sequence
+## Today's 17-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/all-unique-permutations-of-an-array/1)
+## All Unique Permutations of an array
 
 ### Intuition
 My code aims to find the maximum number of courses that Geek can complete within a specific time frame, considering a certain total budget. Geek has to buy courses each day, and if he completes 90% of the course on the same day, he receives a 90% refund. This involves dynamic programming, where my goal is to maximize the number of completed courses.
