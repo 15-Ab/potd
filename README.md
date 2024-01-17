@@ -6,28 +6,26 @@ This is my attempt to make the coding experience easier for you guys so that you
 ## All Unique Permutations of an array
 
 ### Intuition
-My code aims to find the maximum number of courses that Geek can complete within a specific time frame, considering a certain total budget. Geek has to buy courses each day, and if he completes 90% of the course on the same day, he receives a 90% refund. This involves dynamic programming, where my goal is to maximize the number of completed courses.
+This problem requires finding all possible unique permutations of the given array in sorted order. A permutation is an arrangement of elements in a specific order. Here, uniqueness refers to avoiding duplicate permutations, and sorted order indicates arranging the permutations in ascending order.
 
 ### Approach
 
-**Initialization:**
-   - Initialized a 2D array `h` of size `(m + 1) x (n + 1)` to store intermediate results.
-   - Looped through each combination of `i` and `j` where `i` represents the length of the sequence, and `j` represents the number of elements in each sequence.
+**Sort the Input Array :** 
+Start by sorting the given array in ascending order. Sorting helps in avoiding duplicates during the permutation generation process.
 
-**Base Cases:**
-   - If `j` is greater than `i` or if `i` is 0 or `j` is 0, set `h[i][j]` to 0 since it's not possible to form a sequence in these cases.
-   - If `j` is 1, set `h[i][j]` to `i` since there is only one element in each sequence.
+**Backtracking Permutation Generation :**
+   - Used backtracking to generate permutations.
+   - Maintained a boolean array to keep track of used elements during the backtracking process.
+   - Iterated through the sorted array elements and consider each element for the current permutation.
+   - Ensured uniqueness by skipping duplicate elements (same as the previous element) unless the previous occurrence is already used.
+   - Recursively explored all possibilities by adding the current element to the permutation, marking it as used, and making a recursive call.
+   - Backtracked by removing the last added element and marking it as unused for the next iteration.
 
-**Recursive Relation:**
-   - For other cases, used the recursive relation `h[i][j] = h[i/2][j-1] + h[i-1][j]`.
-   - This relation indicates that the number of sequences of length `i` with `j` elements can be obtained by either taking the first half of a sequence of length `i` with `j-1` elements or by adding one more element to a sequence of length `i-1` with `j` elements.
+**Store Result :**
+   - Stored each unique permutation in the result array.
 
-**Filled the 2D Array:**
-   - Looped through each combination of `i` and `j` and filled in the values of `h` based on the calculated results.
-
-**Returned the Result:**
-   - The final result is stored in `h[m][n]`, representing the number of sequences of length `m` with `n` elements.
-
+**Return Result :**
+   - Returned the array containing all unique permutations in sorted order.
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 Keep Solving.:)
