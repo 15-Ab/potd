@@ -43,35 +43,49 @@ $n$ : given
 
 ## Code
 ```
-// User function Template for Java
+//User function Template for Java
 
 class Solution {
-    // Created a helper 2D array to store intermediate results for dynamic programming
-    static int[][] h;
+    // Function to find all unique permutations of the array in sorted order.
+    static ArrayList<ArrayList<Integer>> uniquePerms(ArrayList<Integer> arr, int n) {
+        // Sorting the input array
+        Collections.sort(arr);
+        // ArrayList to store the result (unique permutations)
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        // Boolean array to keep track of used elements during backtracking
+        boolean[] used = new boolean[arr.size()];
+        // Generating permutations
+        generatePermutations(arr, new ArrayList<>(), used, result);
+        // Returning the result
+        return result;
+    }
 
-    static int numberSequence(int m, int n) {
-        // Initializing the 2D array to store results
-        h = new int[m + 1][n + 1];
-
-        // Looping through each combination of m and n
-        for (int i = 0; i <= m; i++) {
-            for (int j = 0; j <= n; j++) {
-                // Base cases:
-                // If j is greater than i or if i is 0 or j is 0
-                if (j > i || i == 0 || j == 0) {
-                    h[i][j] = 0; // Set result to 0
-                } else if (j == 1) {
-                    // If j is 1, set the result to i
-                    h[i][j] = i;
-                } else {
-                    h[i][j] = h[i / 2][j - 1] + h[i - 1][j];
-                }
-            }
+    // Backtracking function to generate permutations
+    private static void generatePermutations(ArrayList<Integer> arr, ArrayList<Integer> current, boolean[] used, ArrayList<ArrayList<Integer>> result) {
+        // Base case: If the current permutation is of the same size as the input array, add it to the result
+        if (current.size() == arr.size()) {
+            result.add(new ArrayList<>(current));
+            return;
         }
 
-        // Returning the final result for the given m and n
-        return h[m][n];
+        // Iterating through the array elements
+        for (int i = 0; i < arr.size(); i++) {
+            // Checking if the current element is not used and is unique (to avoid duplicates)
+            if (!used[i] && (i == 0 || arr.get(i) != arr.get(i - 1) || used[i - 1])) {
+                // Adding the current element to the current permutation
+                current.add(arr.get(i));
+                // Marking the current element as used
+                used[i] = true;
+                // Recursive call to generate permutations
+                generatePermutations(arr, current, used, result);
+                // Backtracking: removing the last element to explore other possibilities
+                current.remove(current.size() - 1);
+                // Marking the current element as unused for the next iteration
+                used[i] = false;
+            }
+        }
     }
-}
+};
+
 ```
 
