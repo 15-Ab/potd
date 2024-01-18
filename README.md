@@ -10,11 +10,11 @@ This problem involves finding the minimum number of sprinklers needed to cover t
 
 **Identifed valid sprinklers :** Filtered out the valid sprinklers based on their range (ignoring the ones with `-1` range).
 
-**Sorted the sprinklers:** Sorted the sprinklers based on their left positions.
+**Sorted the sprinklers :** Sorted the sprinklers based on their left positions.
 
-**Iterated through sprinklers:** Started iterating through the sorted sprinklers. For each sprinkler, check if its left position is covered. If not, return `-1`. Otherwise, update the covered range based on the current sprinkler's right position.
+**Iterated through sprinklers :** Started iterating through the sorted sprinklers. For each sprinkler, check if its left position is covered. If not, return `-1`. Otherwise, update the covered range based on the current sprinkler's right position.
 
-**Counted minimum taps:** Counted the number of taps used during the iteration.
+**Counted minimum taps :** Counted the number of taps used during the iteration.
 
 ### Approach
 
