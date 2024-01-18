@@ -15,16 +15,16 @@ This problem involves finding the minimum number of sprinklers needed to cover t
 
 ### Approach
 
-1. Create an `ArrayList` to store the sprinklers' information, where each element is an object containing left, right, and value (range) of the sprinkler.
-2. Filter out the invalid sprinklers (ones with `-1` range) and add them to the ArrayList.
-3. Sort the ArrayList based on the left positions of the sprinklers.
-4. Initialize variables to keep track of the current and last covered positions.
-5. Iterate through the sorted sprinklers:
-   - If a sprinkler's left position is beyond the current covered range + 1, return `-1`.
+1. Created an `ArrayList` to store the sprinklers' information, where each element is an object containing left, right, and value (range) of the sprinkler.
+2. Filtered out the invalid sprinklers (ones with `-1` range) and add them to the ArrayList.
+3. Sorted the ArrayList based on the left positions of the sprinklers.
+4. Initialized variables to keep track of the current and last covered positions.
+5. Iterated through the sorted sprinklers:
+   - If a sprinkler's left position is beyond the current covered range + 1, returned `-1`.
    - If a sprinkler's left position is within or equal to the current covered range + 1, update the covered range based on the sprinkler's right position.
-   - If a sprinkler's left position is greater than the current covered range + 1, update the last covered position and covered range based on the current sprinkler, and increment the tap count.
-6. Return the minimum number of taps + 1.
-The final result is the minimum number of sprinklers needed to cover the entire gallery.
+   - If a sprinkler's left position is greater than the current covered range + 1, updated the last covered position and covered range based on the current sprinkler, and increment the tap count.
+6. Returned the minimum number of taps + 1.
+- The final result is the minimum number of sprinklers needed to cover the entire gallery.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
