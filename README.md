@@ -1,6 +1,6 @@
 # Problem Of The Day Solutions
 
-This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's leetcode challenge.
+This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
 ## Today's 19-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/top-k-numbers3425/1)
 ## Top k numbers in a stream
