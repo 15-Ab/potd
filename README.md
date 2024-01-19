@@ -35,7 +35,9 @@ $K$ : given
 import java.util.*;
 
 class Solution {
+    
     // Function to determine the top K elements based on frequency at each iteration
+    
     public static ArrayList<ArrayList<Integer>> kTop(int[] arr, int N, int K) {
         // Resultant array of arrays to store the top K elements at each iteration
         ArrayList<ArrayList<Integer>> result = new ArrayList<>();
@@ -46,24 +48,24 @@ class Solution {
         // HashMap to store the frequency of each element
         HashMap<Integer, Integer> m = new HashMap<>();
 
-        // Initialize the frequency map with zeros for each element from 0 to K
+        // Initializing the frequency map with zeros for each element from 0 to K
         for (int i = 0; i <= K; i++) {
             m.put(i, 0);
         }
 
-        // Iterate over the input array
+        // Iterating over the input array
         for (int i = 0; i < arr.length; i++) {
             // Update the last slot of jada with the current element
             jada[K] = arr[i];
 
-            // Update the frequency map for the current element
+            // Updating the frequency map for the current element
             if (m.containsKey(arr[i])) {
                 m.put(arr[i], m.get(arr[i]) + 1);
             } else {
                 m.put(arr[i], 1);
             }
 
-            // Find the position of the current element in jada
+            // Finding the position of the current element in jada
             int in = -1;
             for (int j = 0; j < jada.length; j++) {
                 if (jada[j] == arr[i]) {
@@ -73,7 +75,7 @@ class Solution {
             }
             in--;
 
-            // Move the current element to its correct position in jada based on frequency
+            // Moving the current element to its correct position in jada based on frequency
             while (in >= 0) {
                 if (m.get(jada[in]) < m.get(jada[in + 1])) {
                     int t = jada[in];
@@ -89,7 +91,7 @@ class Solution {
                 in--;
             }
 
-            // Populate the current array with the top K elements and add it to the result
+            // Populating the current array with the top K elements and add it to the result
             ArrayList<Integer> aa = new ArrayList<>();
             for (int e = 0; e < K && jada[e] != 0; e++) {
                 aa.add(jada[e]);
@@ -97,7 +99,7 @@ class Solution {
             result.add(aa);
         }
 
-        // Return the final result
+        // Returning the final result
         return result;
     }
 }
