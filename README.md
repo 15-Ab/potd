@@ -2,8 +2,8 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's leetcode challenge.
 
-## Today's 18-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/water-the-plants--170646/1)
-## Water the plants
+## Today's 19-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/top-k-numbers3425/1)
+## Top k numbers in a stream
 
 ### Intuition
 This problem involves finding the minimum number of sprinklers needed to cover the entire gallery. To approach this problem, I used the following strategy :
@@ -42,66 +42,75 @@ $s$ : number of valid sprinklers
 
 ## Code
 ```
-//User function Template for Java
-
-class jora {
-    int left;
-    int right;
-    int value;
-
-    jora(int l, int r, int v) {
-        this.left = l;
-        this.right = r;
-        this.value = v;
-    }
-}
+import java.util.*;
 
 class Solution {
-    
-    int min_sprinklers(int gallery[], int n) {
-        // ArrayList to store the sprinklers' information
-        ArrayList<jora> al = new ArrayList<>();
+    // Function to determine the top K elements based on frequency at each iteration
+    public static ArrayList<ArrayList<Integer>> kTop(int[] arr, int N, int K) {
+        // Resultant array of arrays to store the top K elements at each iteration
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
 
-        // Filtering out invalid sprinklers and adding them to the ArrayList
-        for (int i = 0; i < n; i++) {
-            if (gallery[i] == -1) {
-                continue;
-            }
-            int l = Math.max(i - gallery[i], 0);
-            int r = Math.min(i + gallery[i], n - 1);
-            int v = gallery[i];
-            al.add(new jora(l, r, v));
+        // Array to maintain the current top K elements along with an extra slot
+        int[] jada = new int[K + 1];
+
+        // HashMap to store the frequency of each element
+        HashMap<Integer, Integer> m = new HashMap<>();
+
+        // Initialize the frequency map with zeros for each element from 0 to K
+        for (int i = 0; i <= K; i++) {
+            m.put(i, 0);
         }
 
-        // Sorting the sprinklers based on their left positions
-        Collections.sort(al, (p, q) -> p.left - q.left);
+        // Iterate over the input array
+        for (int i = 0; i < arr.length; i++) {
+            // Update the last slot of jada with the current element
+            jada[K] = arr[i];
 
-        // Variables to keep track of current and last covered positions
-        int in = 0;
-        int minTap = 0;
-        int suru = -1;
-        int khtm = -1;
-
-        // Iterating through sprinklers to find the minimum number of taps
-        while (in < n && khtm < n - 1) {
-            jora j = al.get(in);
-            if (j.left <= suru + 1) {
-                khtm = Math.max(khtm, j.right);
-            } 
-            else if (j.left > khtm + 1) {
-                return -1;
-            } 
-            else {
-                suru = khtm;
-                khtm = j.right;
-                minTap++;
+            // Update the frequency map for the current element
+            if (m.containsKey(arr[i])) {
+                m.put(arr[i], m.get(arr[i]) + 1);
+            } else {
+                m.put(arr[i], 1);
             }
-            in++;
+
+            // Find the position of the current element in jada
+            int in = -1;
+            for (int j = 0; j < jada.length; j++) {
+                if (jada[j] == arr[i]) {
+                    in = j;
+                    break;
+                }
+            }
+            in--;
+
+            // Move the current element to its correct position in jada based on frequency
+            while (in >= 0) {
+                if (m.get(jada[in]) < m.get(jada[in + 1])) {
+                    int t = jada[in];
+                    jada[in] = jada[in + 1];
+                    jada[in + 1] = t;
+                } else if ((jada[in] > jada[in + 1]) && (m.get(jada[in]) == m.get(jada[in + 1]))) {
+                    int t = jada[in];
+                    jada[in] = jada[in + 1];
+                    jada[in + 1] = t;
+                } else {
+                    break;
+                }
+                in--;
+            }
+
+            // Populate the current array with the top K elements and add it to the result
+            ArrayList<Integer> aa = new ArrayList<>();
+            for (int e = 0; e < K && jada[e] != 0; e++) {
+                aa.add(jada[e]);
+            }
+            result.add(aa);
         }
 
-        // Returning the minimum number of taps + 1
-        return minTap + 1;
+        // Return the final result
+        return result;
     }
 }
+
 ```
 
