@@ -14,7 +14,7 @@ My code aims to find the top K elements based on their frequency at each iterati
 - Iterated over the input array, updating the last slot of `jada` with the current element and updating its frequency in the HashMap (`m`).
 - Found the position of the current element in `jada` and moved it to its correct position based on its frequency. This ensured that `jada` maintains the top K elements at all times.
 - Populated a new array with the current top K elements and add it to the result array.
-- Repeated last three steps steps for each element in the input array.
+- Repeated the last three steps steps for each element in the input array.
 - The final result array contained sub-arrays representing the top K elements at each iteration.
 
 ---
@@ -22,10 +22,12 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(s log s)$
+- Time complexity : $O(N*K)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$s$ : number of valid sprinklers
-- Space complexity : $O( s)$
+$N$ : length of the input array
+
+$K$ : given
+- Space complexity : $O(K)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code
