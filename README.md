@@ -6,28 +6,16 @@ This is my attempt to make the coding experience easier for you guys so that you
 ## Top k numbers in a stream
 
 ### Intuition
-This problem involves finding the minimum number of sprinklers needed to cover the entire gallery. To approach this problem, I used the following strategy :
-
-**Identifed valid sprinklers :** Filtered out the valid sprinklers based on their range (ignoring the ones with `-1` range).
-
-**Sorted the sprinklers :** Sorted the sprinklers based on their left positions.
-
-**Iterated through sprinklers :** Started iterating through the sorted sprinklers. For each sprinkler, check if its left position is covered. If not, return `-1`. Otherwise, update the covered range based on the current sprinkler's right position.
-
-**Counted minimum taps :** Counted the number of taps used during the iteration.
+My code aims to find the top K elements based on their frequency at each iteration while traversing an input array. I used a combination of an array (`jada`) and a HashMap (`m`) to efficiently keep track of the current top K elements and their frequencies.
 
 ### Approach
 
-- Created an `ArrayList` to store the sprinklers' information, where each element is an object containing left, right, and value (range) of the sprinkler.
-- Filtered out the invalid sprinklers (ones with `-1` range) and add them to the ArrayList.
-- Sorted the ArrayList based on the left positions of the sprinklers.
-- Initialized variables to keep track of the current and last covered positions.
-- Iterated through the sorted sprinklers :
-- - If a sprinkler's left position is beyond the current covered range + 1, returned `-1`.
-- - If a sprinkler's left position is within or equal to the current covered range + 1, update the covered range based on the sprinkler's right position.
-- - If a sprinkler's left position is greater than the current covered range + 1, updated the last covered position and covered range based on the current sprinkler, and increment the tap count.
-- Returned the minimum number of taps + 1.
-- - The final result is the minimum number of sprinklers needed to cover the entire gallery.
+- Initialized an array (`jada`) with an extra slot to hold the current element at the last position. Also, created a HashMap (`m`) to store the frequency of each element.
+- Iterated over the input array, updating the last slot of `jada` with the current element and updating its frequency in the HashMap (`m`).
+- Found the position of the current element in `jada` and moved it to its correct position based on its frequency. This ensured that `jada` maintains the top K elements at all times.
+- Populated a new array with the current top K elements and add it to the result array.
+- Repeated last three steps steps for each element in the input array.
+- The final result array contained sub-arrays representing the top K elements at each iteration.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
