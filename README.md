@@ -5,10 +5,10 @@ This is my attempt to make the coding experience easier for you guys so that you
 ## Today's 20-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/distribute-candies-in-a-binary-tree/1)
 ## Distribute candies in a binary tree
 
-### Intuition
+## Intuition
 As the goal is to distribute candies among nodes in a binary tree, ensuring each node receives at least one candy. My recursive approach calculates the minimum additional candies needed for the left and right subtrees of each node. The absolute values of these candies are added to a global variable, representing the total additional candies required for fair distribution.
 
-### Approach
+## Approach
 
 **Base Case :**
    - If the current node is `null`, returned 0 (no candies needed for an empty subtree).
