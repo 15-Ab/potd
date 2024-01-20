@@ -2,105 +2,89 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 19-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/top-k-numbers3425/1)
-## Top k numbers in a stream
+## Today's 20-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/distribute-candies-in-a-binary-tree/1)
+## Distribute candies in a binary tree
 
 ### Intuition
-My code aims to find the top K elements based on their frequency at each iteration while traversing an input array. I used a combination of an array (`jada`) and a HashMap (`m`) to efficiently keep track of the current top K elements and their frequencies.
+As the goal is to distribute candies among nodes in a binary tree, ensuring each node receives at least one candy. My recursive approach calculates the minimum additional candies needed for the left and right subtrees of each node. The absolute values of these candies are added to a global variable, representing the total additional candies required for fair distribution.
 
 ### Approach
 
-- Initialized an array (`jada`) with an extra slot to hold the current element at the last position. Also, created a HashMap (`m`) to store the frequency of each element.
-- Iterated over the input array, updating the last slot of `jada` with the current element and updating its frequency in the HashMap (`m`).
-- Found the position of the current element in `jada` and moved it to its correct position based on its frequency. This ensured that `jada` maintains the top K elements at all times.
-- Populated a new array with the current top K elements and add it to the result array.
-- Repeated the last three steps steps for each element in the input array.
-- The final result array contained sub-arrays representing the top K elements at each iteration.
+**Base Case :**
+   - If the current node is `null`, returned 0 (no candies needed for an empty subtree).
+
+**Recursive Calls :**
+   - Recursively calculated candies needed for the left subtree (`l`).
+   - Recursively calculated candies needed for the right subtree (`r`).
+
+**Updated Answer (`jawab`) :**
+   - Added the absolute values of `l` and `r` to `jawab`, representing additional candies for the current subtree.
+
+**Calculated Total Candies :**
+   - Calculated total candies needed for the current subtree by adding the data value of the current node, `l`, and `r`. Subtracted 1 to avoid double-counting.
+
+**Returned Total Candies :**
+   - Returned the total candies needed for the current subtree.
+
+**Wrapper Function (`distributeCandy`) :**
+   - I initialized `jawab` and calls the helper function for the actual calculation.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(N*K)$
+- Time complexity : $O(N)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$N$ : length of the input array
+$N$ : number of nodes in the binary tree
 
-$K$ : given
-- Space complexity : $O(K)$
+$H$ :  height of the binary tree
+- Space complexity : $O(H)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code
 ```
-import java.util.*;
+//User function Template for Java
 
-class Solution {
+/*
+class Node {
+    int data;
+    Node left;
+    Node right;
+    Node(int data) {
+        this.data = data;
+        left = null;
+        right = null;
+    }
+}*/
+
+class Solution
+{
+    static int jawab;
     
-    // Function to determine the top K elements based on frequency at each iteration
+    // Function to distribute candy among nodes in a binary tree
+    public static int distributeCandy(Node root){
+        jawab = 0;
+        helper(root);
+        return jawab;
+    }
     
-    public static ArrayList<ArrayList<Integer>> kTop(int[] arr, int N, int K) {
-        // Resultant array of arrays to store the top K elements at each iteration
-        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
-
-        // Array to maintain the current top K elements along with an extra slot
-        int[] jada = new int[K + 1];
-
-        // HashMap to store the frequency of each element
-        HashMap<Integer, Integer> m = new HashMap<>();
-
-        // Initializing the frequency map with zeros for each element from 0 to K
-        for (int i = 0; i <= K; i++) {
-            m.put(i, 0);
+    // Helper function to calculate the candies distributed and return the extra candies
+    static int helper(Node n){
+        // Base case: If the node is null, returning 0
+        if(n == null){
+            return 0;
         }
-
-        // Iterating over the input array
-        for (int i = 0; i < arr.length; i++) {
-            // Update the last slot of jada with the current element
-            jada[K] = arr[i];
-
-            // Updating the frequency map for the current element
-            if (m.containsKey(arr[i])) {
-                m.put(arr[i], m.get(arr[i]) + 1);
-            } else {
-                m.put(arr[i], 1);
-            }
-
-            // Finding the position of the current element in jada
-            int in = -1;
-            for (int j = 0; j < jada.length; j++) {
-                if (jada[j] == arr[i]) {
-                    in = j;
-                    break;
-                }
-            }
-            in--;
-
-            // Moving the current element to its correct position in jada based on frequency
-            while (in >= 0) {
-                if (m.get(jada[in]) < m.get(jada[in + 1])) {
-                    int t = jada[in];
-                    jada[in] = jada[in + 1];
-                    jada[in + 1] = t;
-                } else if ((jada[in] > jada[in + 1]) && (m.get(jada[in]) == m.get(jada[in + 1]))) {
-                    int t = jada[in];
-                    jada[in] = jada[in + 1];
-                    jada[in + 1] = t;
-                } else {
-                    break;
-                }
-                in--;
-            }
-
-            // Populating the current array with the top K elements and add it to the result
-            ArrayList<Integer> aa = new ArrayList<>();
-            for (int e = 0; e < K && jada[e] != 0; e++) {
-                aa.add(jada[e]);
-            }
-            result.add(aa);
-        }
-
-        // Returning the final result
-        return result;
+        
+        // Recursively calculating the extra candies for left and right subtrees
+        int l = helper(n.left);
+        int r = helper(n.right);
+        
+        // Updating the total candies distributed by adding the absolute values of left and right extra candies
+        jawab += Math.abs(l) + Math.abs(r);
+        
+        // Returning the total candies distributed for the current subtree
+        return n.data + l + r - 1;
     }
 }
 
