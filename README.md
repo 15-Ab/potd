@@ -2,33 +2,40 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 20-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/distribute-candies-in-a-binary-tree/1)
-## Distribute candies in a binary tree
+## Today's 21-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/vertex-cover/1)
+## Vertex Cover
 
 ## Intuition
-As the goal is to distribute candies among nodes in a binary tree, ensuring each node receives at least one candy. My recursive approach calculates the minimum additional candies needed for the left and right subtrees of each node. The absolute values of these candies are added to a global variable, representing the total additional candies required for fair distribution.
+A vertex cover of a graph is a set of vertices such that every edge in the graph is incident to at least one vertex from the set. This problem is to find the smallest possible size of such a vertex cover.
 
 ## Approach
 
-**Base Case :**
-   - If the current node is `null`, returned 0 (no candies needed for an empty subtree).
+#### Initialization
+- I represented the graph using a 2D boolean array called `adjacencyMatrix`. `adjacencyMatrix[i][j]` is true if there is an edge between vertex `i` and vertex `j`.
+- The function `addEdge` is used to fill the adjacency matrix based on the given edges.
 
-**Recursive Calls :**
-   - Recursively calculated candies needed for the left subtree (`l`).
-   - Recursively calculated candies needed for the right subtree (`r`).
+#### Finding Minimum Vertex Cover Size
+**Function `vertexCover`**
+    - Takes the number of nodes `n`, the number of edges `m`, and a 2D array `edges` representing the edges between nodes.
+    - Initializes and fills the adjacency matrix using the `addEdge` function.
+    - Calls the `findMinimumCoverSize` function to find the minimum size of the vertex cover.
 
-**Updated Answer (`jawab`) :**
-   - Added the absolute values of `l` and `r` to `jawab`, representing additional candies for the current subtree.
+**Function `findMinimumCoverSize`**
+    - Uses binary search to find the minimum size of the vertex cover.
+    - Calls the `isVertexCover` function to check if a vertex cover of a certain size is valid.
+    - The result is the minimum size of the vertex cover.
 
-**Calculated Total Candies :**
-   - Calculated total candies needed for the current subtree by adding the data value of the current node, `l`, and `r`. Subtracted 1 to avoid double-counting.
+**Function `isVertexCover`**
+    - Checks whether a vertex cover of a given size covers all the edges in the graph.
+    - Utilizes bitmasking to represent the selected vertices.
+    - Iterates through all possible combinations of vertices to find a valid cover.
+    - Uses a 2D array `visited` to keep track of visited edges during the checking process.
 
-**Returned Total Candies :**
-   - Returned the total candies needed for the current subtree.
+**Function `initializeVisited`**
+    - Initializes a 2D array `visited` to keep track of visited edges during the checking process.
 
-**Wrapper Function (`distributeCandy`) :**
-   - I initialized `jawab` and calls the helper function for the actual calculation.
-
+### Summary
+My code employs an adjacency matrix, bitmasking, and binary search to efficiently find the minimum size of a vertex cover for the given graph. My approach involves checking the validity of vertex covers of different sizes until the minimum valid size is found.
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 Keep Solving.:)
@@ -46,45 +53,92 @@ $H$ :  height of the binary tree
 ```
 //User function Template for Java
 
-/*
-class Node {
-    int data;
-    Node left;
-    Node right;
-    Node(int data) {
-        this.data = data;
-        left = null;
-        right = null;
-    }
-}*/
+class Solution {
+    
+    static final int MAX_NODES = 30;
+    static boolean[][] adjacencyMatrix = new boolean[MAX_NODES][MAX_NODES];
 
-class Solution
-{
-    static int jawab;
-    
-    // Function to distribute candy among nodes in a binary tree
-    public static int distributeCandy(Node root){
-        jawab = 0;
-        helper(root);
-        return jawab;
-    }
-    
-    // Helper function to calculate the candies distributed and return the extra candies
-    static int helper(Node n){
-        // Base case: If the node is null, returning 0
-        if(n == null){
-            return 0;
+    public int vertexCover(int n, int m, int[][] edges) {
+        // Initializing the adjacency matrix with the given edges
+        initializeAdjacencyMatrix();
+
+        for (int[] edge : edges) {
+            addEdge(edge[0], edge[1]);
         }
-        
-        // Recursively calculating the extra candies for left and right subtrees
-        int l = helper(n.left);
-        int r = helper(n.right);
-        
-        // Updating the total candies distributed by adding the absolute values of left and right extra candies
-        jawab += Math.abs(l) + Math.abs(r);
-        
-        // Returning the total candies distributed for the current subtree
-        return n.data + l + r - 1;
+
+        // Find the minimum vertex cover size
+        return findMinimumCoverSize(n, edges.length);
+    }
+
+    // Initializing the adjacency matrix with all false values
+    static void initializeAdjacencyMatrix() {
+        for (int i = 0; i < MAX_NODES; i++) {
+            Arrays.fill(adjacencyMatrix[i], false);
+        }
+    }
+
+    // Checking if the current vertex cover size is valid
+    static boolean isVertexCover(int numNodes, int coverSize, int numEdges) {
+        int currentCover = (1 << coverSize) - 1;
+        int bound = (1 << numNodes);
+        boolean[][] visited = new boolean[MAX_NODES][MAX_NODES];
+
+        while (currentCover < bound) {
+            initializeVisited(visited);
+            int coveredEdges = 0;
+
+            for (int currentNode = 1, vertex = 1; currentNode < bound; currentNode = currentNode << 1, vertex++) {
+                if ((currentCover & currentNode) != 0) {
+                    for (int connectedNode = 1; connectedNode <= numNodes; connectedNode++) {
+                        if (adjacencyMatrix[vertex][connectedNode] && !visited[vertex][connectedNode]) {
+                            visited[vertex][connectedNode] = true;
+                            visited[connectedNode][vertex] = true;
+                            coveredEdges++;
+                        }
+                    }
+                }
+            }
+
+            if (coveredEdges == numEdges) {
+                return true; // The current cover size is valid
+            }
+
+            int x = currentCover & -currentCover;
+            int r = currentCover + x;
+            currentCover = (((r ^ currentCover) >> 2) / x) | r;
+        }
+
+        return false; // The current cover size is not valid
+    }
+
+    // Initializing the visited array with all false values
+    static void initializeVisited(boolean[][] visited) {
+        for (int i = 0; i < MAX_NODES; i++) {
+            Arrays.fill(visited[i], false);
+        }
+    }
+
+    // Finding the minimum vertex cover size using binary search
+    static int findMinimumCoverSize(int numNodes, int numEdges) {
+        int left = 1, right = numNodes;
+
+        while (right > left) {
+            int mid = (left + right) >> 1;
+
+            if (!isVertexCover(numNodes, mid, numEdges)) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+
+        return left; // Return the minimum cover size
+    }
+
+    // Adding an edge to the adjacency matrix
+    static void addEdge(int startNode, int endNode) {
+        adjacencyMatrix[startNode][endNode] = true;
+        adjacencyMatrix[endNode][startNode] = true;
     }
 }
 
