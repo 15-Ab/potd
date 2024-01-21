@@ -42,13 +42,14 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(N)$
+- Time complexity : $O(log n * 2^n)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 $N$ : number of nodes in the binary tree
 
 $H$ :  height of the binary tree
-- Space complexity : $O(H)$
+- Space complexity : $O(MAX_NODES^2)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
+$MAX_NODES$ : 30 ( I used )
 
 ## Code
 ```
