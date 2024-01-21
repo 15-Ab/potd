@@ -46,9 +46,9 @@ Keep Solving.:)
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 $n$ : number of nodese
 
-- Space complexity : $O(MAX_NODES^2)$
+- Space complexity : $O(max^2)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
-$MAX_NODES$ : 30 ( I used )
+$ max = MAX\_NODES$ : 30 ( I used )
 
 ## Code
 ```
