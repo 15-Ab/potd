@@ -48,7 +48,11 @@ $n$ : number of nodese
 
 - Space complexity : $O(max^2)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
+<<<<<<< HEAD
 $ max = MAX NODES$ : 30 ( I used )
+=======
+$max$ = $MAX\_\NODES$ : 30 ( I used )
+>>>>>>> d96354f6d148982f36361caebebd8fbe22d11240
 
 ## Code
 ```
