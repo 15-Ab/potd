@@ -44,9 +44,8 @@ Keep Solving.:)
 ## Complexity
 - Time complexity : $O(log n * 2^n)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$N$ : number of nodes in the binary tree
+$n$ : number of nodese
 
-$H$ :  height of the binary tree
 - Space complexity : $O(MAX_NODES^2)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 $MAX_NODES$ : 30 ( I used )
