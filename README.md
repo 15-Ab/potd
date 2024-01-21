@@ -16,26 +16,27 @@ A vertex cover of a graph is a set of vertices such that every edge in the graph
 
 #### Finding Minimum Vertex Cover Size
 **Function `vertexCover`**
-    - Takes the number of nodes `n`, the number of edges `m`, and a 2D array `edges` representing the edges between nodes.
-    - Initializes and fills the adjacency matrix using the `addEdge` function.
-    - Calls the `findMinimumCoverSize` function to find the minimum size of the vertex cover.
+- It takes the number of nodes `n`, the number of edges `m`, and a 2D array `edges` representing the edges between nodes.
+- Initializes and fills the adjacency matrix using the `addEdge` function.
+- Calls the `findMinimumCoverSize` function to find the minimum size of the vertex cover.
 
 **Function `findMinimumCoverSize`**
-    - Uses binary search to find the minimum size of the vertex cover.
-    - Calls the `isVertexCover` function to check if a vertex cover of a certain size is valid.
-    - The result is the minimum size of the vertex cover.
+- It uses binary search to find the minimum size of the vertex cover.
+- Calls the `isVertexCover` function to check if a vertex cover of a certain size is valid.
+- The result is the minimum size of the vertex cover.
 
 **Function `isVertexCover`**
-    - Checks whether a vertex cover of a given size covers all the edges in the graph.
-    - Utilizes bitmasking to represent the selected vertices.
-    - Iterates through all possible combinations of vertices to find a valid cover.
-    - Uses a 2D array `visited` to keep track of visited edges during the checking process.
+- Checks whether a vertex cover of a given size covers all the edges in the graph.
+- Utilizes bitmasking to represent the selected vertices.
+- Iterates through all possible combinations of vertices to find a valid cover.
+- Uses a 2D array `visited` to keep track of visited edges during the checking process.
 
 **Function `initializeVisited`**
-    - Initializes a 2D array `visited` to keep track of visited edges during the checking process.
+- Initializes a 2D array `visited` to keep track of visited edges during the checking process.
 
 ### Summary
 My code employs an adjacency matrix, bitmasking, and binary search to efficiently find the minimum size of a vertex cover for the given graph. My approach involves checking the validity of vertex covers of different sizes until the minimum valid size is found.
+
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 Keep Solving.:)
