@@ -6,50 +6,36 @@ This is my attempt to make the coding experience easier for you guys so that you
 ## Paths from root with a specified sum
 
 ## Intuition
-A vertex cover of a graph is a set of vertices such that every edge in the graph is incident to at least one vertex from the set. This problem is to find the smallest possible size of such a vertex cover.
+As the goal of this algorithm is to find all paths in a binary tree where the sum of node values along the path is equal to a given target sum, I used a recursive approach to explore all possible paths in the binary tree.
 
 ## Approach
 
-#### Initialization
-- I represented the graph using a 2D boolean array called `adjacencyMatrix`. `adjacencyMatrix[i][j]` is true if there is an edge between vertex `i` and vertex `j`.
-- The function `addEdge` is used to fill the adjacency matrix based on the given edges.
+- I Initialized global variables `chahiye` (target sum), `rasta` (current path), and `jawab` (result paths).
+- Called the helper function `helper` with the initial sum `0` and the root of the binary tree.
+**In the `helper` function :**
+- Checked if the current node is `null`. If true, return.
+- Updated the current sum (`abhitak`) by adding the value of the current node.
+- Added the value of the current node to the current path (`rasta`).
+- Checked if the current path sums up to the target sum (`chahiye`).
+- - If true, add a new copy of the current path to the result paths (`jawab`).
+- Recursively explored the left and right subtrees.
+- Backtrack: Remove the last element from the current path to explore other paths.
 
-#### Finding Minimum Vertex Cover Size
-**Function `vertexCover`**
-- It takes the number of nodes `n`, the number of edges `m`, and a 2D array `edges` representing the edges between nodes.
-- Initializes and fills the adjacency matrix using the `addEdge` function.
-- Calls the `findMinimumCoverSize` function to find the minimum size of the vertex cover.
-
-**Function `findMinimumCoverSize`**
-- It uses binary search to find the minimum size of the vertex cover.
-- Calls the `isVertexCover` function to check if a vertex cover of a certain size is valid.
-- The result is the minimum size of the vertex cover.
-
-**Function `isVertexCover`**
-- Checks whether a vertex cover of a given size covers all the edges in the graph.
-- Utilizes bitmasking to represent the selected vertices.
-- Iterates through all possible combinations of vertices to find a valid cover.
-- Uses a 2D array `visited` to keep track of visited edges during the checking process.
-
-**Function `initializeVisited`**
-- Initializes a 2D array `visited` to keep track of visited edges during the checking process.
+- Return the result paths (`jawab`).
 
 ### Summary
-My code employs an adjacency matrix, bitmasking, and binary search to efficiently find the minimum size of a vertex cover for the given graph. My approach involves checking the validity of vertex covers of different sizes until the minimum valid size is found.
-
+My algorithm utilizes a recursive depth-first search (DFS) approach to traverse the binary tree and explore all possible paths. The result paths are stored in the `jawab` ArrayList.
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(log n * 2^n)$
+- Time complexity : $O(n)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$n$ : number of nodese
+$n$ : number of nodes in the binary tree
 
-- Space complexity : $O(max^2)$
+- Space complexity : $O(n)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
-$max = MAX NODES$ : 30 ( I used )
-
 ## Code 
 ```
 //User function Template for Java
