@@ -20,9 +20,9 @@ As the goal of this algorithm is to find all paths in a binary tree where the su
 - Checked if the current path sums up to the target sum (`chahiye`).
 - - If true, add a new copy of the current path to the result paths (`jawab`).
 - Recursively explored the left and right subtrees.
-- Backtrack: Remove the last element from the current path to explore other paths.
+- Backtrack: Removed the last element from the current path to explore other paths.
 
-- Return the result paths (`jawab`).
+- Returned the result paths (`jawab`).
 
 ### Summary
 My algorithm utilizes a recursive depth-first search (DFS) approach to traverse the binary tree and explore all possible paths. The result paths are stored in the `jawab` ArrayList.
