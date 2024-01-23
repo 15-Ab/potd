@@ -24,9 +24,9 @@ My idea is to represent the courses as nodes in a graph, and the prerequisites a
 
 **BFS Topological Sort :**
 - Processed the courses in a Breadth-First Search (BFS) manner:
-- - Poll a course from the queue.
-- - Added the course to the answer (`jawab`).
-- - Updated the in-degrees of its neighbors and add them to the queue if their in-degree becomes 0.
+  - Poll a course from the queue.
+  - Added the course to the answer (`jawab`).
+  - Updated the in-degrees of its neighbors and add them to the queue if their in-degree becomes 0.
 
 **Checked for Valid Order :**
 - After processing all courses, checked if all courses have in-degree 0. If not, return an empty array since a valid order is not possible.
