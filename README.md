@@ -24,9 +24,9 @@ My idea is to represent the courses as nodes in a graph, and the prerequisites a
 
 **BFS Topological Sort :**
 - Processed the courses in a Breadth-First Search (BFS) manner:
-  - Poll a course from the queue.
-  - Added the course to the answer (`jawab`).
-  - Updated the in-degrees of its neighbors and add them to the queue if their in-degree becomes 0.
+- - Poll a course from the queue.
+- - Added the course to the answer (`jawab`).
+- - Updated the in-degrees of its neighbors and add them to the queue if their in-degree becomes 0.
 
 **Checked for Valid Order :**
 - After processing all courses, checked if all courses have in-degree 0. If not, return an empty array since a valid order is not possible.
@@ -34,16 +34,20 @@ My idea is to represent the courses as nodes in a graph, and the prerequisites a
 **Returned Result:**
 - Returned the final answer (`jawab`) representing the order in which courses can be taken.
 
+The BFS ensures that I processed courses with no prerequisites first, gradually moving to courses with all prerequisites satisfied. If a valid topological order exists, I returned it; otherwise, it returned an empty array.
+
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(n)$
+- Time complexity : $O(m + n)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$n$ : number of nodes in the binary tree
+$n$ : number of courses
 
-- Space complexity : $O(n)$
+$m$ : number of prerequisites
+
+- Space complexity : $O(m + n)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code 
