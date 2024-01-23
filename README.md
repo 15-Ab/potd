@@ -2,30 +2,37 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 22-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/paths-from-root-with-a-specified-sum/1)
-## Paths from root with a specified sum
+## Today's 23-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/course-schedule/1)
+## Course Schedule
 
 ## Intuition
-As the goal of this algorithm is to find all paths in a binary tree where the sum of node values along the path is equal to a given target sum, I used a recursive approach to explore all possible paths in the binary tree.
+As this problem is about finding the order in which courses can be taken given a list of prerequisites, it is essentially a topological sorting problem.
+
+My idea is to represent the courses as nodes in a graph, and the prerequisites as directed edges between the nodes, as the problem asks for an order in which we can take the courses, considering the prerequisites.
 
 ## Approach
 
-- I Initialized global variables `chahiye` (target sum), `rasta` (current path), and `jawab` (result paths).
-- Called the helper function `helper` with the initial sum `0` and the root of the binary tree.
+**Initialized Data Structures :**
+- Declared arrays and data structures for in-degrees (`in`), the final answer (`jawab`), an adjacency list (`al`), and a queue (`q`).
+   
+**Built Graph :**
+- Created an adjacency list representing the directed edges between courses based on prerequisites.
+- Calculated the in-degree of each course, i.e., the number of prerequisites it has.
 
-**In the `helper` function :**
-- Checked if the current node is `null`. If true, return.
-- Updated the current sum (`abhitak`) by adding the value of the current node.
-- Added the value of the current node to the current path (`rasta`).
-- Checked if the current path sums up to the target sum (`chahiye`).
-- - If true, add a new copy of the current path to the result paths (`jawab`).
-- Recursively explored the left and right subtrees.
-- Backtracked : Removed the last element from the current path to explore other paths.
+**Initialized Queue :**
+- Added courses with in-degree 0 to the queue initially.
 
-- Returned the result paths (`jawab`).
+**BFS Topological Sort :**
+- Processed the courses in a Breadth-First Search (BFS) manner:
+  - Poll a course from the queue.
+  - Added the course to the answer (`jawab`).
+  - Updated the in-degrees of its neighbors and add them to the queue if their in-degree becomes 0.
 
-### Summary
-My algorithm utilizes a recursive depth-first search (DFS) approach to traverse the binary tree and explore all possible paths. The result paths are stored in the `jawab` ArrayList.
+**Checked for Valid Order :**
+- After processing all courses, checked if all courses have in-degree 0. If not, return an empty array since a valid order is not possible.
+
+**Returned Result:**
+- Returned the final answer (`jawab`) representing the order in which courses can be taken.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -38,67 +45,69 @@ $n$ : number of nodes in the binary tree
 
 - Space complexity : $O(n)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
+
 ## Code 
 ```
 //User function Template for Java
 
-/*Tree Node
-class Node {
-    int data;
-    Node left;
-    Node right;
-    Node(int data) {
-        this.data = data;
-        left = null;
-        right = null;
-    }
-} 
-*/
-
-class Solution {
+class Solution
+{
+    // Declaring static arrays and data structures
+    static int[] in;
+    static int[] jawab;
+    static ArrayList<ArrayList<Integer>> al;
+    static Queue<Integer> q;
     
-    // Global variables to store target sum, current path, and result paths
-    static int chahiye;
-    static ArrayList<Integer> rasta;
-    static ArrayList<ArrayList<Integer>> jawab;
-
-    public static ArrayList<ArrayList<Integer>> printPaths(Node root, int sum) {
+    static int[] findOrder(int n, int m, ArrayList<ArrayList<Integer>> prerequisites) {
         
-        // Initializing global variables
-        chahiye = sum;
-        rasta = new ArrayList<>();
-        jawab = new ArrayList<>();
-
-        // Calling helper function to explore paths
-        helper(0, root);
-
-        // Returning the result paths
+        // Initializing in-degree array, adjacency list, and queue
+        in = new int[n];
+        al = new ArrayList<>();
+        for( int i = 0; i < n; i++){
+            al.add(new ArrayList<>());
+        }
+        
+        // Populating adjacency list and in-degree array based on prerequisites
+        for(ArrayList<Integer> a : prerequisites){
+            al.get(a.get(1)).add(a.get(0));
+            in[a.get(0)]++;
+        }
+        
+        // Initializing queue with courses having in-degree 0
+        q = new LinkedList<>();
+        for(int i = 0; i < n; i++){
+            if(in[i] == 0){
+                q.add(i);
+            }
+        }
+        
+        // If no courses have in-degree 0, returning an empty array
+        if(q.isEmpty()){
+            return new int[0];
+        }
+        
+        int t = 0;
+        jawab = new int[n];
+        
+        // Processing courses in topological order using BFS
+        while(!q.isEmpty()){
+            int p = q.poll();
+            jawab[t++] = p;
+            for(int aaspass : al.get(p)){
+                in[aaspass]--;
+                if(in[aaspass] == 0){
+                    q.add(aaspass);
+                }
+            }
+        }
+        
+        // Checking if all courses have been processed
+        for(int i = 0; i < n; i++){
+            if(in[i] != 0){
+                return new int[0];
+            }
+        }
         return jawab;
-    }
-
-    // Helper function to recursively explore paths
-    static void helper(int abhitak, Node n) {
-        // Base case: if the node is null, return
-        if (n == null) {
-            return;
-        }
-
-        // Updating the current sum and path
-        abhitak += n.data;
-        rasta.add(n.data);
-
-        // Checking if the current path sums up to the target sum
-        if (abhitak == chahiye) {
-            // Adding a new copy of the current path to the result paths
-            jawab.add(new ArrayList<>(rasta));
-        }
-
-        // Recursively exploring left and right subtrees            
-        helper(abhitak, n.left);
-        helper(abhitak, n.right);
-
-        // Backtracking : removing the last element from the current path
-        rasta.remove(rasta.size() - 1);
     }
 }
 
