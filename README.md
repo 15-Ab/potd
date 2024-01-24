@@ -6,48 +6,43 @@ This is my attempt to make the coding experience easier for you guys so that you
 ## Check if a given graph is tree or not
 
 ## Intuition
-As this problem is about finding the order in which courses can be taken given a list of prerequisites, it is essentially a topological sorting problem.
 
-My idea is to represent the courses as nodes in a graph, and the prerequisites as directed edges between the nodes, as the problem asks for an order in which we can take the courses, considering the prerequisites.
+The goal is to determine whether a given graph is a tree. A tree in graph theory is a connected acyclic graph, and to validate this, I checked for connected components and the absence of cycles.
 
 ## Approach
 
-**Initialized Data Structures :**
-- Declared arrays and data structures for in-degrees (`in`), the final answer (`jawab`), an adjacency list (`al`), and a queue (`q`).
-   
-**Built Graph :**
-- Created an adjacency list representing the directed edges between courses based on prerequisites.
-- Calculated the in-degree of each course, i.e., the number of prerequisites it has.
+##### Built Graph :
+   - Created an adjacency list to represent the graph using an array of ArrayLists. Populate the adjacency list based on the provided edges.
 
-**Initialized Queue :**
-- Added courses with in-degree 0 to the queue initially.
+##### Connected Components :
+   - Used Breadth-First Search (BFS) to traverse the graph and mark connected components.
+   - Maintained an array to keep track of visited nodes during BFS.
+   - Counted the number of connected components in the graph.
 
-**BFS Topological Sort :**
-- Processed the courses in a Breadth-First Search (BFS) manner:
-  - Poll a course from the queue.
-  - Added the course to the answer (`jawab`).
-  - Updated the in-degrees of its neighbors and add them to the queue if their in-degree becomes 0.
+##### Checked for Multiple Components :
+   - If the number of connected components is greater than 1, the graph is not a tree (as a tree should be a single connected component).
 
-**Checked for Valid Order :**
-- After processing all courses, checked if all courses have in-degree 0. If not, return an empty array since a valid order is not possible.
+##### Checked for Cycles :
+   - Used BFS to detect cycles in the graph.
+   - Maintained an array to keep track of visited nodes during cycle detection.
+   - If a visited node is encountered, checked if it is the parent of the current node. If not, a cycle exists.
 
-**Returned Result:**
-- Returned the final answer (`jawab`) representing the order in which courses can be taken.
-
-The BFS ensures that I processed courses with no prerequisites first, gradually moving to courses with all prerequisites satisfied. If a valid topological order exists, I returned it; otherwise, it returned an empty array.
+##### Final Decision :
+   - If the graph has multiple connected components or contains a cycle, it is not a tree. Returned false in such cases.
+   - If no issues are found, the graph is a tree. Returned true.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(m + n)$
+- Time complexity : $O(N + M)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$n$ : number of courses
+$N$ : number of nodes
 
-$m$ : number of prerequisites
+$M$ : number of edges
 
-- Space complexity : $O(m + n)$
+- Space complexity : $O(N)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code 
