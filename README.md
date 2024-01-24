@@ -2,8 +2,8 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 23-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/course-schedule/1)
-## Course Schedule
+## Today's 24-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/is-it-a-tree/1)
+## Check if a given graph is tree or not
 
 ## Intuition
 As this problem is about finding the order in which courses can be taken given a list of prerequisites, it is essentially a topological sorting problem.
@@ -54,64 +54,94 @@ $m$ : number of prerequisites
 ```
 //User function Template for Java
 
-class Solution
-{
-    // Declaring static arrays and data structures
-    static int[] in;
-    static int[] jawab;
-    static ArrayList<ArrayList<Integer>> al;
-    static Queue<Integer> q;
-    
-    static int[] findOrder(int n, int m, ArrayList<ArrayList<Integer>> prerequisites) {
+class Solution {
+
+    public boolean isTree(int n, int m, ArrayList<ArrayList<Integer>> edges) {
         
-        // Initializing in-degree array, adjacency list, and queue
-        in = new int[n];
-        al = new ArrayList<>();
-        for( int i = 0; i < n; i++){
-            al.add(new ArrayList<>());
+        // Creating an adjacency list to represent the graph
+        ArrayList<Integer>[] graph = new ArrayList[n];
+        for (int i = 0; i < n; i++) {
+            graph[i] = new ArrayList<>();
         }
-        
-        // Populating adjacency list and in-degree array based on prerequisites
-        for(ArrayList<Integer> a : prerequisites){
-            al.get(a.get(1)).add(a.get(0));
-            in[a.get(0)]++;
+
+        // Populating the adjacency list based on the provided edges
+        for (int i = 0; i < m; i++) {
+            graph[edges.get(i).get(0)].add(edges.get(i).get(1));
+            graph[edges.get(i).get(1)].add(edges.get(i).get(0));
         }
-        
-        // Initializing queue with courses having in-degree 0
-        q = new LinkedList<>();
-        for(int i = 0; i < n; i++){
-            if(in[i] == 0){
-                q.add(i);
+
+        // Array to keep track of visited nodes during BFS
+        int[] visited = new int[n];
+
+        // Counting the number of connected components in the graph
+        int components = 0;
+        for (int i = 0; i < n; i++) {
+            if (visited[i] == 0) {
+                components++;
+                bfs(graph, visited, i);
             }
         }
-        
-        // If no courses have in-degree 0, returning an empty array
-        if(q.isEmpty()){
-            return new int[0];
+
+        // If there is more than one connected component, it's not a tree
+        if (components > 1) {
+            return false;
         }
-        
-        int t = 0;
-        jawab = new int[n];
-        
-        // Processing courses in topological order using BFS
-        while(!q.isEmpty()){
-            int p = q.poll();
-            jawab[t++] = p;
-            for(int aaspass : al.get(p)){
-                in[aaspass]--;
-                if(in[aaspass] == 0){
-                    q.add(aaspass);
+
+        // Checking for cycle in the graph
+        if (hasCycle(graph, n)) {
+            return false;
+        }
+
+        // If no issues are found, the graph is a tree
+        return true;
+    }
+
+    // BFS helper function to traverse the graph and mark connected components
+    static void bfs(ArrayList<Integer>[] graph, int[] visited, int start) {
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(start);
+        visited[start] = 1;
+
+        while (!queue.isEmpty()) {
+            int node = queue.poll();
+
+            for (int neighbor : graph[node]) {
+                if (visited[neighbor] == 0) {
+                    queue.add(neighbor);
+                    visited[neighbor] = 1;
                 }
             }
         }
-        
-        // Checking if all courses have been processed
-        for(int i = 0; i < n; i++){
-            if(in[i] != 0){
-                return new int[0];
+    }
+
+    // Helper function to check if the graph has a cycle
+    static boolean hasCycle(ArrayList<Integer>[] graph, int n) {
+        int[] visited = new int[n];
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(new int[]{0, -1});
+        visited[0] = 1;
+
+        while (!queue.isEmpty()) {
+            int node = queue.peek()[0];
+            int parent = queue.peek()[1];
+            queue.poll();
+
+            for (int neighbor : graph[node]) {
+                if (visited[neighbor] == 1) {
+                    if (parent == neighbor) {
+                        // Skipping the edge to the parent in case of undirected graph
+                        continue;
+                    } else {
+                        // If a node is already visited and not the parent, a cycle exists
+                        return true;
+                    }
+                } else {
+                    queue.add(new int[]{neighbor, node});
+                    visited[neighbor] = 1;
+                }
             }
         }
-        return jawab;
+        return false;
     }
 }
 
