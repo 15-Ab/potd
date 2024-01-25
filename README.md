@@ -30,7 +30,7 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $ O(V * sqrt(N))$
+- Time complexity : $O(V * sqrt(N))$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 $N$ : maximum value of the input number
 
