@@ -50,93 +50,74 @@ $M$ : number of edges
 //User function Template for Java
 
 class Solution {
+    
+    // Function to find the minimum number of flips required to transform Num1 to Num2
+    int solve(int Num1, int Num2) {
+        // If Num1 is already equal to Num2, no flips are needed
+        if (Num1 == Num2) return 0;
 
-    public boolean isTree(int n, int m, ArrayList<ArrayList<Integer>> edges) {
-        
-        // Creating an adjacency list to represent the graph
-        ArrayList<Integer>[] graph = new ArrayList[n];
-        for (int i = 0; i < n; i++) {
-            graph[i] = new ArrayList<>();
-        }
-
-        // Populating the adjacency list based on the provided edges
-        for (int i = 0; i < m; i++) {
-            graph[edges.get(i).get(0)].add(edges.get(i).get(1));
-            graph[edges.get(i).get(1)].add(edges.get(i).get(0));
-        }
-
-        // Array to keep track of visited nodes during BFS
-        int[] visited = new int[n];
-
-        // Counting the number of connected components in the graph
-        int components = 0;
-        for (int i = 0; i < n; i++) {
-            if (visited[i] == 0) {
-                components++;
-                bfs(graph, visited, i);
-            }
-        }
-
-        // If there is more than one connected component, it's not a tree
-        if (components > 1) {
-            return false;
-        }
-
-        // Checking for cycle in the graph
-        if (hasCycle(graph, n)) {
-            return false;
-        }
-
-        // If no issues are found, the graph is a tree
-        return true;
-    }
-
-    // BFS helper function to traverse the graph and mark connected components
-    static void bfs(ArrayList<Integer>[] graph, int[] visited, int start) {
+        // Initializing a queue for BFS traversal
         Queue<Integer> queue = new LinkedList<>();
-        queue.add(start);
-        visited[start] = 1;
+        queue.add(Num1);
 
+        // Set to track visited number strings to avoid cycles
+        Set<String> visitedNumStrings = new HashSet<>();
+
+        // Variable to track the number of flips
+        int flips = 0;
+
+        // Performing BFS traversal
         while (!queue.isEmpty()) {
-            int node = queue.poll();
+            int size = queue.size();
+            while (size != 0) {
+                int poppedNum = queue.remove();
+                size--;
 
-            for (int neighbor : graph[node]) {
-                if (visited[neighbor] == 0) {
-                    queue.add(neighbor);
-                    visited[neighbor] = 1;
+                String startNumString = String.valueOf(poppedNum);
+
+                // Skipping if the number string is already visited
+                if (!visitedNumStrings.add(startNumString.toString())) continue;
+
+                // Iterating over each digit in the number string
+                for (int i = 0; i < 4; i++) {
+                    StringBuffer currString = new StringBuffer(startNumString);
+                    // Trying to change the digit to every possible digit from '0' to '9'
+                    for (char c = '0'; c <= '9'; c++) {
+                        // Skipping if the digit doesn't change or the first digit becomes '0'
+                        if (currString.charAt(i) == c || (i == 0 && c == '0')) {
+                            continue;
+                        }
+                        currString.setCharAt(i, c);
+                        int changedNum = Integer.parseInt(currString.toString());
+
+                        // If the changed number becomes Num2, returning the number of flips
+                        if (changedNum == Num2) {
+                            return flips + 1;
+                        }
+
+                        // If the changed number is prime, adding it to the queue for further exploration
+                        if (isPrime(changedNum)) {
+                            queue.offer(changedNum);
+                        }
+                    }
                 }
             }
+            flips++; // Incrementing flips per level in BFS
         }
+
+        // If no transformation is possible, returning -1
+        return -1;
     }
 
-    // Helper function to check if the graph has a cycle
-    static boolean hasCycle(ArrayList<Integer>[] graph, int n) {
-        int[] visited = new int[n];
-        Queue<int[]> queue = new LinkedList<>();
-        queue.add(new int[]{0, -1});
-        visited[0] = 1;
+    // Function to check if a number is prime
+    static boolean isPrime(int num) {
+        if (num <= 1) return false;
 
-        while (!queue.isEmpty()) {
-            int node = queue.peek()[0];
-            int parent = queue.peek()[1];
-            queue.poll();
-
-            for (int neighbor : graph[node]) {
-                if (visited[neighbor] == 1) {
-                    if (parent == neighbor) {
-                        // Skipping the edge to the parent in case of undirected graph
-                        continue;
-                    } else {
-                        // If a node is already visited and not the parent, a cycle exists
-                        return true;
-                    }
-                } else {
-                    queue.add(new int[]{neighbor, node});
-                    visited[neighbor] = 1;
-                }
-            }
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i == 0) return false;
         }
-        return false;
+
+        return true;
     }
 }
 
