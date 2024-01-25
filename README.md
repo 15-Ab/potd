@@ -30,13 +30,15 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(N + M)$
+- Time complexity : $ O(V * sqrt(N))$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$N$ : number of nodes
+$N$ : maximum value of the input number
 
-$M$ : number of edges
+$V$ :  total number of possible transformations of the input number `Num1`. 
 
-- Space complexity : $O(N)$
+In the worst case, the BFS explores all valid transformations, which can be at most 10^D (since each digit can be changed to any digit from '0' to '9'). Then, $V$ = $10^D$, Were D is the number of digits in the input number 
+
+- Space complexity : $O(V)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code 
