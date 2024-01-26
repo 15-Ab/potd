@@ -65,11 +65,11 @@ class MyComparator implements Comparator<Item> {
 class Solution {
     // Function to get the maximum total value in the knapsack.
     double fractionalKnapsack(int W, Item arr[], int n) {
+
+        double jawab = 0;  // Variable to store the final result.
         
         // Sorting the items based on the value-to-weight ratio using MyComparator.
         Arrays.sort(arr, new MyComparator());
-
-        double jawab = 0d;  // Variable to store the final result.
         
         // Iterating through the sorted items.
         for (Item i : arr) {
