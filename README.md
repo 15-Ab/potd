@@ -1,121 +1,97 @@
-# Problem Of The Day Solutions
+# Celebrating Unity in Diversity: Happy Republic Day ! :india:
+
+## Problem Of The Day Solutions
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 25-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/shortest-prime-path--141631/1)
-## Shortest Prime Path
+## Today's 26-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/fractional-knapsack-1587115620/1)
+## Fractional Knapsack
 
 ## Intuition
 
-The goal of this problem is to find the minimum number of flips required to transform one given number (Num1) into another (Num2). A flip is defined as changing one digit at a time.
+The Fractional Knapsack problem revolves around optimizing the total value of items placed in a knapsack with a specified weight capacity. Each item has both a weight and a value, and the objective is to strategically select items, allowing for fractional parts, to maximize the overall value within the given constraints.
 
 
 ## Approach
 
-- If Num1 is already equal to Num2, no flips are needed, and the answer is 0.
+**Sorted by Value-to-Weight Ratio :**
+   - Created a new Comparator class for this
+   - Sorted the items in descending order based on their value-to-weight ratio.
+   - Prioritized items that offer more value per unit of weight.
 
-- Used Breadth-First Search (BFS) to explore all possible transformations:
-    - Started with Num1 and enqueue it in the BFS queue.
-    - Maintained a set (`visitedNumStrings`) to track previously visited prime numbers to avoid cycles.
-    - For each number popped from the queue, try changing each digit to every possible digit from '0' to '9', excluding the current digit and avoiding leading zeros.
-    - If the changed number becomes equal to Num2, returned the number of flips.
-    - If the changed number is prime, enqueue it for further exploration in the BFS.
+**Greedy Selection :**
+   - Iterated through sorted items.
+   - Included items in the knapsack if there's sufficient capacity.
+   - If an item doesn't fit entirely, included a fraction to maximize overall value.
 
-- If no transformation is possible, returned -1.
+**Optimal Solution :**
+   - Continued greedy selection until the knapsack is full.
+   - Achieved the maximum total value through strategic inclusion of items, considering both entire items and fractional parts.
 
-My BFS traversal ensures that the algorithm explores all possible transformations in the minimum number of flips, and the isPrime function is used to check if a number is prime.
+By employing a greedy strategy and sorting based on value-to-weight ratio, I systematically selected more valuable items early on, leading to an efficient solution for the Fractional Knapsack problem.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(V * sqrt(N))$
+- Time complexity : $O(nlogn)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$N$ : maximum value of the input number
+$n$ : number of items
 
-$V$ :  total number of possible transformations of the input number `Num1`. 
-
-In the worst case, the BFS explores all valid transformations, which can be at most 10^D (since each digit can be changed to any digit from '0' to '9'). Then, $V$ = $10^D$, Were D is the number of digits in the input number 
-
-- Space complexity : $O(V)$
+- Space complexity : $O(1)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code 
 ```
 //User function Template for Java
 
-class Solution {
-    
-    // Function to find the minimum number of flips required to transform Num1 to Num2
-    int solve(int Num1, int Num2) {
-        // If Num1 is already equal to Num2, no flips are needed
-        if (Num1 == Num2) return 0;
+// Custom Comparator class for sorting items based on value-to-weight ratio in descending order.
+class MyComparator implements Comparator<Item> {
+    @Override
+    public int compare(Item a, Item b) {
+        // Calculating value-to-weight ratio for both items.
+        double ka = (double) a.value / (double) a.weight;
+        double kb = (double) b.value / (double) b.weight;
 
-        // Initializing a queue for BFS traversal
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(Num1);
-
-        // Set to track visited number strings to avoid cycles
-        Set<String> visitedNumStrings = new HashSet<>();
-
-        // Variable to track the number of flips
-        int flips = 0;
-
-        // Performing BFS traversal
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            while (size != 0) {
-                int poppedNum = queue.remove();
-                size--;
-
-                String startNumString = String.valueOf(poppedNum);
-
-                // Skipping if the number string is already visited
-                if (!visitedNumStrings.add(startNumString.toString())) continue;
-
-                // Iterating over each digit in the number string
-                for (int i = 0; i < 4; i++) {
-                    StringBuffer currString = new StringBuffer(startNumString);
-                    // Trying to change the digit to every possible digit from '0' to '9'
-                    for (char c = '0'; c <= '9'; c++) {
-                        // Skipping if the digit doesn't change or the first digit becomes '0'
-                        if (currString.charAt(i) == c || (i == 0 && c == '0')) {
-                            continue;
-                        }
-                        currString.setCharAt(i, c);
-                        int changedNum = Integer.parseInt(currString.toString());
-
-                        // If the changed number becomes Num2, returning the number of flips
-                        if (changedNum == Num2) {
-                            return flips + 1;
-                        }
-
-                        // If the changed number is prime, adding it to the queue for further exploration
-                        if (isPrime(changedNum)) {
-                            queue.offer(changedNum);
-                        }
-                    }
-                }
-            }
-            flips++; // Incrementing flips per level in BFS
+        // Sorting in descending order based on the ratio.
+        if (ka < kb) {
+            return 1;
         }
-
-        // If no transformation is possible, returning -1
         return -1;
-    }
-
-    // Function to check if a number is prime
-    static boolean isPrime(int num) {
-        if (num <= 1) return false;
-
-        for (int i = 2; i <= Math.sqrt(num); i++) {
-            if (num % i == 0) return false;
-        }
-
-        return true;
     }
 }
 
+class Solution {
+    // Function to get the maximum total value in the knapsack.
+    double fractionalKnapsack(int W, Item arr[], int n) {
+        
+        // Sorting the items based on the value-to-weight ratio using MyComparator.
+        Arrays.sort(arr, new MyComparator());
+
+        double jawab = 0d;  // Variable to store the final result.
+        
+        // Iterating through the sorted items.
+        for (Item i : arr) {
+            int v = i.value;     // Value of the current item.
+            int w = i.weight;    // Weight of the current item.
+
+            // Check if the entire item can be included in the knapsack.
+            if (W >= w) {
+                jawab += v;         // Adding the value of the entire item to the result.
+                W -= w;            // Reducing the available space in the knapsack.
+            } 
+            else {
+                // Calculating the fraction of the item that can be included.
+                double tukra = (double) W / (double) w;
+                jawab += (v * tukra);                   // Adding the fractional value to the result.
+                W -= (int) (w * tukra);                 // Updating the available space in the knapsack.
+                break;                                  // Breaking the loop as the knapsack is full.
+            }
+        }
+
+        return jawab;  // Returning the final result.
+    }
+}
 ```
 
