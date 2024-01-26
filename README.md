@@ -1,4 +1,4 @@
-# Celebrating Unity in Diversity: Happy Republic Day ! :india
+# Celebrating Unity in Diversity: Happy Republic Day ! :india:
 
 ## Problem Of The Day Solutions
 
