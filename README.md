@@ -7,7 +7,7 @@ This is my attempt to make the coding experience easier for you guys so that you
 
 ## Intuition
 
-The Fractional Knapsack problem revolves around optimizing the total value of items placed in a knapsack with a specified weight capacity. Each item has both a weight and a value, and the objective is to strategically select items, allowing for fractional parts, to maximize the overall value within the given constraints.
+This problem involves finding the optimal order of multiplying a given set of matrices to minimize the total number of scalar multiplications.
 
 
 ## Approach
