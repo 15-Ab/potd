@@ -1,11 +1,9 @@
-# Celebrating Unity in Diversity: Happy Republic Day ! :india:
-
 ## Problem Of The Day Solutions
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 26-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/fractional-knapsack-1587115620/1)
-## Fractional Knapsack
+## Today's 27-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/brackets-in-matrix-chain-multiplication1024/1)
+## Brackets in Matrix Chain Multiplication
 
 ## Intuition
 
@@ -14,83 +12,113 @@ The Fractional Knapsack problem revolves around optimizing the total value of it
 
 ## Approach
 
-**Sorted by Value-to-Weight Ratio :**
-   - Created a new Comparator class for this
-   - Sorted the items in descending order based on their value-to-weight ratio.
-   - Prioritized items that offer more value per unit of weight.
+**Dynamic Programming Table Initialization :**
+   - Initialized a 2D array `gp` to store the minimum cost of multiplying matrices.
+   - Set `gp[i][i]` to 0 for all `i`, as a single matrix multiplication has no cost.
 
-**Greedy Selection :**
-   - Iterated through sorted items.
-   - Included items in the knapsack if there's sufficient capacity.
-   - If an item doesn't fit entirely, included a fraction to maximize overall value.
+**Dynamic Programming Table Filling :**
+   - Used a bottom-up approach to fill the `gp` table.
+   - For each subsequence length `len` (2 to n-1), iterated through all possible subsequences (i, j) of that length.
+   - For each subsequence, found the optimal split point `k` that minimizes the cost of multiplication.
+   - Updated the `gp[i][j]` with the minimum cost and store the optimal split point in the `order` array.
 
-**Optimal Solution :**
-   - Continued greedy selection until the knapsack is full.
-   - Achieved the maximum total value through strategic inclusion of items, considering both entire items and fractional parts.
+**Optimal Order Reconstruction :**
+   - After filling the `gp` table, reconstructed the optimal order of matrix multiplication.
+   - Used a recursive function `appendOptimalOrder` to traverse the `order` array and build the result string.
 
-By employing a greedy strategy and sorting based on value-to-weight ratio, I systematically selected more valuable items early on, leading to an efficient solution for the Fractional Knapsack problem.
+**Result :**
+   - The result string contained the optimal order of matrix multiplication, including parentheses to represent the optimal split points.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(nlogn)$
+- Time complexity : $O(n^3)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$n$ : number of items
+$n$ : number of matrices
 
-- Space complexity : $O(1)$
+- Space complexity : $O(n^2)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code 
 ```
 //User function Template for Java
 
-// Custom Comparator class for sorting items based on value-to-weight ratio in descending order.
-class MyComparator implements Comparator<Item> {
-    @Override
-    public int compare(Item a, Item b) {
-        // Calculating value-to-weight ratio for both items.
-        double ka = (double) a.value / (double) a.weight;
-        double kb = (double) b.value / (double) b.weight;
-
-        // Sorting in descending order based on the ratio.
-        if (ka < kb) {
-            return 1;
-        }
-        return -1;
-    }
-}
-
 class Solution {
-    // Function to get the maximum total value in the knapsack.
-    double fractionalKnapsack(int W, Item arr[], int n) {
+    // Static variable to store the optimal order
+    static char[][] order;
 
-        double jawab = 0;  // Variable to store the final result.
+    // Main function to find the optimal matrix chain multiplication order
+    static String matrixChainOrder(int p[], int n) {
         
-        // Sorting the items based on the value-to-weight ratio using MyComparator.
-        Arrays.sort(arr, new MyComparator());
+        // Initializing the dynamic programming table
+        int[][] gp = initializeDPTable(n);
         
-        // Iterating through the sorted items.
-        for (Item i : arr) {
-            int v = i.value;     // Value of the current item.
-            int w = i.weight;    // Weight of the current item.
+        // Initializing the order array to store the optimal split points
+        order = new char[n][26]; 
 
-            // Check if the entire item can be included in the knapsack.
-            if (W >= w) {
-                jawab += v;         // Adding the value of the entire item to the result.
-                W -= w;            // Reducing the available space in the knapsack.
-            } 
-            else {
-                // Calculating the fraction of the item that can be included.
-                double tukra = (double) W / (double) w;
-                jawab += (v * tukra);                   // Adding the fractional value to the result.
-                W -= (int) (w * tukra);                 // Updating the available space in the knapsack.
-                break;                                  // Breaking the loop as the knapsack is full.
+        // Filling the dynamic programming table and order array
+        fillDPTable(gp, p, n);
+        
+        // Reconstructing the optimal order
+        reconstructOptimalOrder(gp, order, p, n);
+
+        // Building the result string from the optimal order
+        StringBuilder result = new StringBuilder();
+        appendOptimalOrder(order, result, 1, n - 1);
+        return result.toString();
+    }
+
+    // Helper function to initialize the dynamic programming table
+    static int[][] initializeDPTable(int n) {
+        int[][] gp = new int[n][n];
+        for (int i = 1; i < n; i++) {
+            gp[i][i] = 0;
+        }
+        return gp;
+    }
+
+    // Helper function to fill the dynamic programming table and order array
+    static void fillDPTable(int[][] gp, int[] dimensions, int n) {
+        for (int len = 2; len < n; len++) {
+            for (int i = 1; i < n - len + 1; i++) {
+                int j = i + len - 1;
+                gp[i][j] = Integer.MAX_VALUE;
+
+                for (int k = i; k < j; k++) {
+                    // Calculating the cost of multiplication
+                    int cost = gp[i][k] + gp[k + 1][j] + dimensions[i - 1] * dimensions[k] * dimensions[j];
+
+                    // Updating the dynamic programming table and order array if cost is smaller
+                    if (cost < gp[i][j]) {
+                        gp[i][j] = cost;
+                        order[i][j] = (char) ('A' + k - 1); // Storing the optimal split point
+                    }
+                }
             }
         }
+    }
 
-        return jawab;  // Returning the final result.
+    // Helper function to reconstruct the optimal order
+    static void reconstructOptimalOrder(int[][] gp, char[][] order, int[] dimensions, int n) {
+        for (int i = 1; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                gp[i][j] = Integer.MAX_VALUE;
+            }
+        }
+    }
+
+    // Helper function to append the optimal order to the result string
+    static void appendOptimalOrder(char[][] order, StringBuilder result, int i, int j) {
+        if (i == j) {
+            result.append((char) ('A' + i - 1));
+            return;
+        }
+        result.append('(');
+        appendOptimalOrder(order, result, i, order[i][j] - 'A' + 1);
+        appendOptimalOrder(order, result, order[i][j] - 'A' + 2, j);
+        result.append(')');
     }
 }
 ```
