@@ -52,7 +52,7 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(k * log(10^(15)))$
+- Time complexity : $O(k * log(10$^{15}$)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 $k$ : maximum set bits count
 
