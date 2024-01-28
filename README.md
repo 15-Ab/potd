@@ -12,7 +12,7 @@ The goal is to find the nth number with exactly k set bits in its binary represe
 
 ## Approach
 
-##### Binary Search
+### Binary Search
 **Initial Bounds :** 
     Set the initial lower and upper bounds for binary search to 0 and 10^15, respectively.
 
@@ -25,7 +25,7 @@ The goal is to find the nth number with exactly k set bits in its binary represe
 **Result :** 
     The final lower bound represents the nth number with k set bits.
 
-##### Total Set Bits Calculation
+### Total Set Bits Calculation
 
 **Calculated Total Set Bits :** 
     For a given number and a specified maximum set bits count, calculated the total count of set bits up to that position.
@@ -33,7 +33,7 @@ The goal is to find the nth number with exactly k set bits in its binary represe
 **Iterated Over Set Bits Count :** 
     Iterated over set bits count from 0 to the specified maximum and sum up the set bits count at each position.
 
-##### Counted Set Bits
+### Counted Set Bits
 
 **Base Cases :** Handle base cases where set bits count is 0 or the number is 0.
 
@@ -43,7 +43,7 @@ The goal is to find the nth number with exactly k set bits in its binary represe
 
 **Recursive Calculation :** Calculate the binomial coefficient and continue recursively by flipping the highest set bit.
 
-##### Binomial Coefficient
+### Binomial Coefficient
 
 **Calculated Binomial Coefficient:** Calculated the binomial coefficient (n choose r) using the factorial function.
 
