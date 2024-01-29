@@ -2,50 +2,35 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 28-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/geekina-hate-1s/1)
-## Geekina Hate 1s
+## Today's 29-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/count-digit-groupings-of-a-number1520/1)
+## Count digit groupings of a number
 
 ## Intuition
 
-The goal is to find the nth number with exactly k set bits in its binary representation. The search space for this problem spans a range from 0 to 10^15.
+This task involves calculating the total count of subsequences where the sum of digits at consecutive positions is non-decreasing. My solution utilizes dynamic programming for memoization to avoid redundant calculations.
 
 
 ## Approach
 
-### Binary Search
-**Initial Bounds :** 
-    Set the initial lower and upper bounds for binary search to 0 and 10^15, respectively.
+**Initialization :**
+   - Utilized a static 2D array `dp` for dynamic programming to store intermediate results across class instances.
+   - Computed the sum of digits in the given string.
 
-**Binary Search Loop :** 
-    While the lower bound is less than the upper bound, calculated the midpoint and use it to determine the total set bits up to that position.
+**Total Count Calculation (`totalCount` method):**
+   - Initialized the dynamic programming array `dp`.
+   - Invoked the recursive `solve` method to compute the total count based on the string.
 
-**Adjust Bounds :** 
-    Based on the total set bits, adjusted the bounds to narrow down the search space.
+**Sum Calculation (`calculateSum` method):**
+   - Iterated through each character in the string, convert it to an integer, and accumulate the sum.
 
-**Result :** 
-    The final lower bound represents the nth number with k set bits.
+**Dynamic Programming Initialization (`initializeDP` method):**
+   - Created a 2D array with rows representing the length of the string and columns representing the sum of digits.
+   - Filled the array with -1 values to indicate uncalculated results.
 
-### Total Set Bits Calculation
-
-**Calculated Total Set Bits :** 
-    For a given number and a specified maximum set bits count, calculated the total count of set bits up to that position.
-
-**Iterated Over Set Bits Count :** 
-    Iterated over set bits count from 0 to the specified maximum and sum up the set bits count at each position.
-
-### Counted Set Bits
-
-**Base Cases :** Handle base cases where set bits count is 0 or the number is 0.
-
-**Highest Bit Position :**  Determined the position of the highest set bit in the binary representation.
-
-**Check Validity :** Checked if there are enough bits to form the required set bits.
-
-**Recursive Calculation :** Calculate the binomial coefficient and continue recursively by flipping the highest set bit.
-
-### Binomial Coefficient
-
-**Calculated Binomial Coefficient:** Calculated the binomial coefficient (n choose r) using the factorial function.
+**Recursive Count Calculation (`solve` method):**
+   - Base case: If the end of the string is reached, returned 1.
+   - If the result is already memoized, returned it.
+   - Iterate through the string to calculated the sum and recursively count valid subsequences.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -61,57 +46,70 @@ $k$ : maximum set bits count
 
 ## Code 
 ```
-from typing import List
-from math import factorial, log2
+//User function Template for Java
 
-class Solution:
-    def findNthNumber(self, n: int, k: int) -> int:
-        # Set the initial lower and upper bounds for binary search
-        lower_limit, upper_limit = 0, 10**15
+class Solution {
+
+    // Static variable to store dynamic programming results
+    static int[][] gp;
+
+    // Method to calculate the total count based on the given string
+    public int TotalCount(String str) {
         
-        # Performing binary search to find the nth number with k set bits
-        result = self.binary_search(lower_limit, upper_limit, n, k)
+        // Calculating the sum of digits in the string
+        int sm = calculateSum(str);
         
-        # Returning the result
-        return result
+        // Initializing the dynamic programming array
+        initializegp(str.length() + 1, sm);
 
-    def binary_search(self, lower_limit, upper_limit, n, k):
-        # Binary search loop
-        while lower_limit < upper_limit:
-            mid_point = lower_limit + (upper_limit - lower_limit) // 2
-            total_set_bits = self.calculate_total_set_bits(mid_point, k)
+        // Invoking the solve method to compute the total count
+        return solve(0, 0, str.length(), str);
+    }
 
-            # Adjusting bounds based on the total set bits
-            if total_set_bits >= n:
-                upper_limit = mid_point
-            else:
-                lower_limit = mid_point + 1
+    // Method to calculate the sum of digits in a string
+    static int calculateSum(String str) {
+        int sm = 0;
+        for (char digit : str.toCharArray()) {
+            sm += digit - '0';
+        }
+        return sm;
+    }
 
-        # Returning the final result
-        return lower_limit
+    // Method to initialize the dynamic programming array with -1 values
+    static void initializegp(int rows, int cols) {
+        gp = new int[rows][cols + 1];
+        for (int[] row : gp) {
+            Arrays.fill(row, -1);
+        }
+    }
 
-    def calculate_total_set_bits(self, number, max_set_bits_count):
-        # Calculating the total count of set bits up to a specified position
-        return sum(self.count_set_bits(number, i) for i in range(max_set_bits_count + 1))
+    // Recursive method to solve the problem and memoize results
+    static int solve(int cp, int cs, int sz, String s) {
+        // Base case: If reached the end of the string, returning 1
+        if (cp == sz) {
+            return 1;
+        }
 
-    def count_set_bits(self, number, set_bits_count):
-        # Recursive function to count set bits in a binary representation
-        if set_bits_count == 0:
-            return 1
-        if number == 0:
-            return 0
+        // If the result is already memoized, returning it
+        if (gp[cp][cs] != -1) {
+            return gp[cp][cs];
+        }
 
-        highest_bit_position = int(log2(number))
-        
-        # Checking if there are enough bits to form the required set bits
-        if highest_bit_position < set_bits_count - 1:
-            return 0
+        int sm = 0, cnt = 0;
 
-        # Calculating binomial coefficient and continue recursively
-        return self.binomial_coefficient(highest_bit_position, set_bits_count) + self.count_set_bits(number ^ (1 << highest_bit_position), set_bits_count - 1)
+        // Iterating through the string to calculate the sum and recursive count
+        for (int i = cp; i < sz; i++) {
+            sm += s.charAt(i) - '0';
+            if (sm >= cs) {
+                cnt += solve(i + 1, sm, sz, s);
+            }
+        }
 
-    def binomial_coefficient(self, n, r):
-        # Calculating binomial coefficient (n choose r)
-        return factorial(n) // (factorial(r) * factorial(n - r)) if n >= r else 0
+        // Memoizing the result and return the count
+        return gp[cp][cs] = cnt;
+    }
+
+
+}
 ```
 
