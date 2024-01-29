@@ -38,6 +38,7 @@ This problem can be efficiently solved using dynamic programming. My idea is to 
    - The result of the main function is the length of the LCS of the three input strings.
 
 My dynamic programming approach helps optimize the solution by avoiding redundant computations and efficiently finding the length of the Longest Common Subsequence of three strings.
+
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 Keep Solving.:)
