@@ -13,36 +13,37 @@ This task involves calculating the total count of subsequences where the sum of 
 ## Approach
 
 **Initialization :**
-   - Utilized a static 2D array `dp` for dynamic programming to store intermediate results across class instances.
+   - Utilized a static 2D array `gp` for dynamic programming to store intermediate results across class instances.
    - Computed the sum of digits in the given string.
 
-**Total Count Calculation (`totalCount` method):**
-   - Initialized the dynamic programming array `dp`.
+**Total Count Calculation (`totalCount` method) :**
+   - Initialized the dynamic programming array `gp`.
    - Invoked the recursive `solve` method to compute the total count based on the string.
 
-**Sum Calculation (`calculateSum` method):**
+**Sum Calculation (`calculateSum` method) :**
    - Iterated through each character in the string, convert it to an integer, and accumulate the sum.
 
-**Dynamic Programming Initialization (`initializeDP` method):**
+**Dynamic Programming Initialization (`initializeDP` method) :**
    - Created a 2D array with rows representing the length of the string and columns representing the sum of digits.
    - Filled the array with -1 values to indicate uncalculated results.
 
-**Recursive Count Calculation (`solve` method):**
+**Recursive Count Calculation (`solve` method) :**
    - Base case: If the end of the string is reached, returned 1.
    - If the result is already memoized, returned it.
-   - Iterate through the string to calculated the sum and recursively count valid subsequences.
+   - Iterated through the string to calculated the sum and recursively count valid subsequences.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(k * log(10^{15})$
+- Time complexity : $O(l * 2^l)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$k$ : maximum set bits count
+$l$ : length of the input string
 
-- Space complexity : $O(k)$
+- Space complexity : $O(l * sum)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
+$sum$ : sum of its digits
 
 ## Code 
 ```
