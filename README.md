@@ -12,37 +12,37 @@ My code implements the basic operations of a Trie data structure, specifically, 
 
 ## Approach
 
-#### Insert Function:
+### Insert Function:
 
 **Initialization :**
-    - Initialized a TrieNode variable `currentNode` to traverse the Trie starting from the root.
+- Initialized a TrieNode variable `currentNode` to traverse the Trie starting from the root.
     
 **Iteration :**
-    - Iterated through each character in the input string (`key`).
-    - Calculated the index for the current character in the Trie node's children array (`index = key.charAt(layer) - 'a'`).
+- Iterated through each character in the input string (`key`).
+- Calculated the index for the current character in the Trie node's children array (`index = key.charAt(layer) - 'a'`).
     
 **Insertion :**
     - If the child node corresponding to the current character is null, created a new TrieNode (`if (currentNode.children[index] == null)`).
     - Moved to the next TrieNode in the Trie for the current character (`currentNode = currentNode.children[index]`).
 
 **Mark End of Word:**
-    - Marked the last TrieNode as the end of the inserted word (`currentNode.isEndOfWord = true`).
+- Marked the last TrieNode as the end of the inserted word (`currentNode.isEndOfWord = true`).
 
-#### Search Function :
+### Search Function :
 
 **Initialization :**
-    - Initialized a TrieNode variable `currentNode` to traverse the Trie starting from the root.
+- Initialized a TrieNode variable `currentNode` to traverse the Trie starting from the root.
 
 **Iteration :**
-    - Iterated through each character in the input string (`key`).
-    - Calculated the index for the current character in the Trie node's children array (`index = key.charAt(layer) - 'a'`).
+- Iterated through each character in the input string (`key`).
+- Calculated the index for the current character in the Trie node's children array (`index = key.charAt(layer) - 'a'`).
     
 **Search :**
-    - If the child node corresponding to the current character is null, the word is not present, and the search fails (`if (currentNode.children[index] == null)`).
-    - Moved to the next TrieNode in the Trie for the current character (`currentNode = currentNode.children[index]`).
+- If the child node corresponding to the current character is null, the word is not present, and the search fails (`if (currentNode.children[index] == null)`).
+- Moved to the next TrieNode in the Trie for the current character (`currentNode = currentNode.children[index]`).
 
 **Checked End of Word :**
-    - Checked if the last TrieNode in the path represents the end of a word (`return currentNode.isEndOfWord`).
+- Checked if the last TrieNode in the path represents the end of a word (`return currentNode.isEndOfWord`).
 
 My approach efficiently inserts words into the Trie and searches for words with a time complexity proportional to the length of the words being inserted or searched for.
 
