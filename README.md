@@ -12,7 +12,7 @@ My code implements the basic operations of a Trie data structure, specifically, 
 
 ## Approach
 
-### Insert Function:
+### Insert Function
 
 **Initialization :**
 - Initialized a TrieNode variable `currentNode` to traverse the Trie starting from the root.
@@ -28,7 +28,7 @@ My code implements the basic operations of a Trie data structure, specifically, 
 **Mark End of Word:**
 - Marked the last TrieNode as the end of the inserted word (`currentNode.isEndOfWord = true`).
 
-### Search Function :
+### Search Function
 
 **Initialization :**
 - Initialized a TrieNode variable `currentNode` to traverse the Trie starting from the root.
@@ -51,9 +51,9 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(L)$
+- Time complexity : $O(k)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$L$ :  length of the input string `key`
+$k$ :  length of the input string `key`
 
 If there are `N` words with an average length of `L` inserted into the Trie, the overall time complexity for building the Trie is $O(N * L)$.
 
