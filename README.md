@@ -2,107 +2,131 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 30-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/lcs-of-three-strings0028/1)
-## LCS of three strings
+## Today's 31-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/trie-insert-and-search0651/1)
+## Insert and Search in a Trie
 
 ## Intuition
 
-The task is to find the length of the Longest Common Subsequence (LCS) of three strings: A, B, and C. The LCS is a subsequence that is common to all three strings and is not necessarily contiguous.
+My code implements the basic operations of a Trie data structure, specifically, inserting a string into the Trie and searching for a string in the Trie. A Trie is a tree-like data structure used for efficient retrieval of strings, making it suitable for tasks like autocomplete.
 
-This problem can be efficiently solved using dynamic programming. My idea is to break down the problem into smaller subproblems and use memoization to avoid redundant computations.
 
 ## Approach
 
-**Defined the Variables :**
-   - Declared three static String variables `a`, `b`, and `c` to store the input strings.
-   - Created a 3D array `gp` to store the results of subproblems. `gp[i][j][k]` will represent the length of LCS of substrings A[0...i], B[0...j], and C[0...k].
+#### Insert Function:
 
-**Initialized the Array :**
-   - Initialized the `gp` array with -1 to indicate that the result for a particular subproblem has not been computed yet.
+**Initialization :**
+    - Initialized a TrieNode variable `currentNode` to traverse the Trie starting from the root.
+    
+**Iteration :**
+    - Iterated through each character in the input string (`key`).
+    - Calculated the index for the current character in the Trie node's children array (`index = key.charAt(layer) - 'a'`).
+    
+**Insertion :**
+    - If the child node corresponding to the current character is null, created a new TrieNode (`if (currentNode.children[index] == null)`).
+    - Moved to the next TrieNode in the Trie for the current character (`currentNode = currentNode.children[index]`).
 
-**Recursive Helper Function :**
-   - Implemented a recursive helper function `helper(i, j, k)` that computes the length of the LCS for substrings A[0...i], B[0...j], and C[0...k].
-   - Base case: If any of the strings becomes empty (`i == -1`, `j == -1`, or `k == -1`), return 0.
-   - If the result for the current subproblem is already computed, returned it.
-   - If the characters at the current positions in all three strings are equal, incremented the result and move to the previous positions in all three strings.
-   - If the characters are not equal, found the maximum length by considering all possibilities :
-     - `helper(i - 1, j, k)`
-     - `helper(i, j - 1, k)`
-     - `helper(i, j, k - 1)`
+**Mark End of Word:**
+    - Marked the last TrieNode as the end of the inserted word (`currentNode.isEndOfWord = true`).
 
-**Main Function:**
-   - In the main function `LCSof3`, assigned the input strings to the static variables.
-   - Called the helper function with the lengths of the input strings as arguments.
+#### Search Function :
 
-**Returned the Result:**
-   - The result of the main function is the length of the LCS of the three input strings.
+**Initialization :**
+    - Initialized a TrieNode variable `currentNode` to traverse the Trie starting from the root.
 
-My dynamic programming approach helps optimize the solution by avoiding redundant computations and efficiently finding the length of the Longest Common Subsequence of three strings.
+**Iteration :**
+    - Iterated through each character in the input string (`key`).
+    - Calculated the index for the current character in the Trie node's children array (`index = key.charAt(layer) - 'a'`).
+    
+**Search :**
+    - If the child node corresponding to the current character is null, the word is not present, and the search fails (`if (currentNode.children[index] == null)`).
+    - Moved to the next TrieNode in the Trie for the current character (`currentNode = currentNode.children[index]`).
+
+**Checked End of Word :**
+    - Checked if the last TrieNode in the path represents the end of a word (`return currentNode.isEndOfWord`).
+
+My approach efficiently inserts words into the Trie and searches for words with a time complexity proportional to the length of the words being inserted or searched for.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(n1 * n2 * n3)$
+- Time complexity : $O(L)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-n1, n2, and n3 are the lengths of the input strings.
+$L$ :  length of the input string `key`
 
-- Space complexity : $O(n1 * n2 * n3)$
+If there are `N` words with an average length of `L` inserted into the Trie, the overall time complexity for building the Trie is $O(N * L)$.
+
+- Space complexity : $O(N*L)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code 
 ```
 //User function Template for Java
-class Solution 
-{ 
-    // Declaring three static String variables
-    static String a;
-    static String b;
-    static String c;
-    
-    // Creating a 3D array to store the results of subproblems
-    static int[][][] gp = new int[26][26][26];
-    
-    // Main function to find the length of the Longest Common Subsequence of three strings
-    int LCSof3(String A, String B, String C, int n1, int n2, int n3) { 
-        // Assigning input strings to the static variables
-        a = A;
-        b = B;
-        c = C;
-        
-        // Initializing the 3D array with -1
-        for (int[][] m : gp){
-            for (int[] r : m){
-                Arrays.fill(r, -1);
-            }
+
+/*
+static final int ALPHABET_SIZE = 26;
+
+    // trie node
+    static class TrieNode {
+        TrieNode[] children = new TrieNode[ALPHABET_SIZE];
+
+        // isEndOfWord is true if the node represents
+        // end of a word
+        boolean isEndOfWord;
+
+        TrieNode() {
+            isEndOfWord = false;
+            for (int i = 0; i < ALPHABET_SIZE; i++) children[i] = null;
         }
-        
-        // Calling the helper function to compute the result
-        return helper(n1 - 1, n2 - 1, n3 - 1);
+    };
+*/
+
+// Function to insert a string into the TRIE.
+static void insert(TrieNode root, String key) {
+    // Initialized a TrieNode variable to traverse the TRIE starting from the root.
+    TrieNode t = root;
+
+    // Iterated through each character in the input key.
+    for (int layer = 0; layer < key.length(); layer++) {
+        // Calculated the index for the current character in the TRIE node's children array.
+        int index = key.charAt(layer) - 'a';
+
+        // If the child node corresponding to the current character is null, created a new TrieNode.
+        if (t.children[index] == null) {
+            t.children[index] = new TrieNode();
+        }
+
+        // Moved to the next TrieNode in the TRIE for the current character.
+        t = t.children[index];
     }
+
+    // Marked the last TrieNode as the end of the inserted word.
+    t.isEndOfWord = true;
+}
+
+// Function to use the TRIE data structure and search for the given string.
+static boolean search(TrieNode root, String key) {
     
-    // Helper function to compute the length of the Longest Common Subsequence
-    static int helper(int i, int j, int k) {
-        // Base case: if any of the strings is empty, return 0
-        if (i == -1 || j == -1 || k == -1) {
-            return 0;
+    // Initialized a TrieNode variable to traverse the TRIE starting from the root.
+    TrieNode t = root;
+
+    // Iterated through each character in the input key.
+    for (int layer = 0; layer < key.length(); layer++) {
+        // Calculated the index for the current character in the TRIE node's children array.
+        int index = key.charAt(layer) - 'a';
+
+        // If the child node corresponding to the current character is null, the word is not present.
+        if (t.children[index] == null) {
+            return false;
         }
-        
-        // If the result for the current subproblem is already computed, returning it
-        if (gp[i][j][k] != -1) {
-            return gp[i][j][k];
-        }
- 
-        // If the characters at the current positions in all three strings are equal
-        if (a.charAt(i) == b.charAt(j) && b.charAt(j) == c.charAt(k)) {
-            // Incrementing the result and move to the previous positions in all three strings
-            return gp[i][j][k] = 1 + helper(i - 1, j - 1, k - 1);
-        } else {
-            // If the characters are not equal, finding the maximum length by considering all possibilities
-            return gp[i][j][k] = Math.max(Math.max(helper(i - 1, j, k), helper(i, j - 1, k)), helper(i, j, k - 1));
-        }
+
+        // Moved to the next TrieNode in the TRIE for the current character.
+        t = t.children[index];
     }
+
+    // Checked if the last TrieNode in the path represents the end of a word.
+    return t.isEndOfWord;
 }
 ```
 
