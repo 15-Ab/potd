@@ -22,7 +22,7 @@ The goal of this problem is to determine whether a given string is a pangram or 
    - Iterated through each character (`c`) in the lowercase string.
    - Checked if the character is a lowercase alphabet (`'a'` to `'z'`).
 
-**Added to HashSet:**
+**Added to HashSet :**
    - If the character is a lowercase alphabet, added it to the `HashSet` to ensure uniqueness.
 
 **Check for Pangram :**
