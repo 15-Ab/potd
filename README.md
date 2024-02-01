@@ -18,7 +18,7 @@ The goal of this problem is to determine whether a given string is a pangram or 
 **HashSet for Unique Alphabets :**
    - Used a `HashSet` (`h`) to store unique lowercase alphabets encountered in the string.
 
-3. **Iterated Through Characters :**
+**Iterated Through Characters :**
    - Iterated through each character (`c`) in the lowercase string.
    - Checked if the character is a lowercase alphabet (`'a'` to `'z'`).
 
@@ -44,7 +44,7 @@ Keep Solving.:)
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 $s$ :  length of the input string.
 
-- Space complexity : $O(26) = O(1)$
+- Space complexity : $O(26) = O(1) : Constant$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code 
