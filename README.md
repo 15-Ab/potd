@@ -2,131 +2,77 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 31-01-24 [Problem Link](https://www.geeksforgeeks.org/problems/trie-insert-and-search0651/1)
-## Insert and Search in a Trie
+## Today's 01-02-24 [Problem Link](https://www.geeksforgeeks.org/problems/pangram-checking-1587115620/1)
+## Panagram Checking
 
 ## Intuition
 
-My code implements the basic operations of a Trie data structure, specifically, inserting a string into the Trie and searching for a string in the Trie. A Trie is a tree-like data structure used for efficient retrieval of strings, making it suitable for tasks like autocomplete.
+The goal of this problem is to determine whether a given string is a pangram or not. A pangram is a sentence containing every letter of the alphabet at least once.
 
 
 ## Approach
 
-### Insert Function
+**Converted to Lowercase :**
+   - Converted the input string `s` to lowercase to make the check case-insensitive.
 
-**Initialization :**
-- Initialized a TrieNode variable `currentNode` to traverse the Trie starting from the root.
-    
-**Iteration :**
-- Iterated through each character in the input string (`key`).
-- Calculated the index for the current character in the Trie node's children array (`index = key.charAt(layer) - 'a'`).
-    
-**Insertion :**
-- If the child node corresponding to the current character is null, created a new TrieNode (`if (currentNode.children[index] == null)`).
-- Moved to the next TrieNode in the Trie for the current character (`currentNode = currentNode.children[index]`).
+**HashSet for Unique Alphabets :**
+   - Used a `HashSet` (`h`) to store unique lowercase alphabets encountered in the string.
 
-**Mark End of Word:**
-- Marked the last TrieNode as the end of the inserted word (`currentNode.isEndOfWord = true`).
+3. **Iterated Through Characters :**
+   - Iterated through each character (`c`) in the lowercase string.
+   - Checked if the character is a lowercase alphabet (`'a'` to `'z'`).
 
-### Search Function
+**Added to HashSet:**
+   - If the character is a lowercase alphabet, added it to the `HashSet` to ensure uniqueness.
 
-**Initialization :**
-- Initialized a TrieNode variable `currentNode` to traverse the Trie starting from the root.
+**Check for Pangram :**
+   - After processing the entire string, checked if the size of the `HashSet` is 26.
+   - If the size is 26, it indicates that all lowercase alphabets are present in the string.
 
-**Iteration :**
-- Iterated through each character in the input string (`key`).
-- Calculated the index for the current character in the Trie node's children array (`index = key.charAt(layer) - 'a'`).
-    
-**Search :**
-- If the child node corresponding to the current character is null, the word is not present, and the search fails (`if (currentNode.children[index] == null)`).
-- Moved to the next TrieNode in the Trie for the current character (`currentNode = currentNode.children[index]`).
+**Result :**
+   - Returned `true` if the size is 26, indicating a pangram.
+   - Returned `false` otherwise.
 
-**Checked End of Word :**
-- Checked if the last TrieNode in the path represents the end of a word (`return currentNode.isEndOfWord`).
-
-My approach efficiently inserts words into the Trie and searches for words with a time complexity proportional to the length of the words being inserted or searched for.
+My code employs a HashSet to keep track of unique lowercase alphabets in the given string. After iterating through the string and adding alphabets to the HashSet, I checked if the size of the HashSet is 26 to determine whether the string is a pangram or not. The conversion to lowercase ensures case-insensitivity.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(k)$
+- Time complexity : $O(s)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$k$ :  length of the input string `key`
+$s$ :  length of the input string.
 
-If there are `N` words with an average length of `L` inserted into the Trie, the overall time complexity for building the Trie is $O(N * L)$.
-
-- Space complexity : $O(N*L)$
+- Space complexity : $O(26) = O(1)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code 
 ```
-//User function Template for Java
+//User function Template for JAVA
 
-/*
-static final int ALPHABET_SIZE = 26;
+class Solution {
+    // Function to check if a string is Pangram or not.
+    public static boolean checkPangram(String s) {
+        
+        // Converting the input string to lowercase
+        s = s.toLowerCase(); 
 
-    // trie node
-    static class TrieNode {
-        TrieNode[] children = new TrieNode[ALPHABET_SIZE];
+        // HashSet to store unique lowercase alphabets encountered
+        HashSet<Character> h = new HashSet<>();
 
-        // isEndOfWord is true if the node represents
-        // end of a word
-        boolean isEndOfWord;
-
-        TrieNode() {
-            isEndOfWord = false;
-            for (int i = 0; i < ALPHABET_SIZE; i++) children[i] = null;
-        }
-    };
-*/
-
-// Function to insert a string into the TRIE.
-static void insert(TrieNode root, String key) {
-    // Initialized a TrieNode variable to traverse the TRIE starting from the root.
-    TrieNode t = root;
-
-    // Iterated through each character in the input key.
-    for (int layer = 0; layer < key.length(); layer++) {
-        // Calculated the index for the current character in the TRIE node's children array.
-        int index = key.charAt(layer) - 'a';
-
-        // If the child node corresponding to the current character is null, created a new TrieNode.
-        if (t.children[index] == null) {
-            t.children[index] = new TrieNode();
+        // Iterating through each character in the string
+        for (char c : s.toCharArray()) {
+            // Checking if the character is a lowercase alphabet
+            if (c >= 'a' && c <= 'z') {
+                // Adding the lowercase alphabet to the HashSet
+                h.add(c);
+            }
         }
 
-        // Moved to the next TrieNode in the TRIE for the current character.
-        t = t.children[index];
+        // Checking if the size of the HashSet is 26, indicating all lowercase alphabets are present
+        return h.size() == 26;
     }
-
-    // Marked the last TrieNode as the end of the inserted word.
-    t.isEndOfWord = true;
-}
-
-// Function to use the TRIE data structure and search for the given string.
-static boolean search(TrieNode root, String key) {
-    
-    // Initialized a TrieNode variable to traverse the TRIE starting from the root.
-    TrieNode t = root;
-
-    // Iterated through each character in the input key.
-    for (int layer = 0; layer < key.length(); layer++) {
-        // Calculated the index for the current character in the TRIE node's children array.
-        int index = key.charAt(layer) - 'a';
-
-        // If the child node corresponding to the current character is null, the word is not present.
-        if (t.children[index] == null) {
-            return false;
-        }
-
-        // Moved to the next TrieNode in the TRIE for the current character.
-        t = t.children[index];
-    }
-
-    // Checked if the last TrieNode in the path represents the end of a word.
-    return t.isEndOfWord;
 }
 ```
 
