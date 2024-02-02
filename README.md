@@ -34,6 +34,9 @@ Keep Solving.:)
 $s$ :  length of the input string.
 
 - Space complexity : $O(s)$ ( extra space required for the stripped string )
+  Don't worry, stripping the string isn't necessary here beacuuse it isn't given that there may be trailing zeroes.
+  I used stripping here so that I keep in mind that in similar questions it may be required.
+  So when stripping isn't used , time complexity will be $O(1)$ as asked in question.
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code 
