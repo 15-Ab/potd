@@ -2,38 +2,27 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 01-02-24 [Problem Link](https://www.geeksforgeeks.org/problems/pangram-checking-1587115620/1)
-## Panagram Checking
+## Today's 02-02-24 [Problem Link](https://www.geeksforgeeks.org/problems/implement-atoi/1)
+## Implement Atoi
 
 ## Intuition
 
-The goal of this problem is to determine whether a given string is a pangram or not. A pangram is a sentence containing every letter of the alphabet at least once.
+The goal is to convert a given string to an integer, considering various cases such as signs, whitespaces, and invalid characters.
 
 
 ## Approach
 
-**Converted to Lowercase :**
-   - Converted the input string `s` to lowercase to make the check case-insensitive.
-
-**HashSet for Unique Alphabets :**
-   - Used a `HashSet` (`h`) to store unique lowercase alphabets encountered in the string.
-
-**Iterated Through Characters :**
-   - Iterated through each character (`c`) in the lowercase string.
-   - Checked if the character is a lowercase alphabet (`'a'` to `'z'`).
-
-**Added to HashSet :**
-   - If the character is a lowercase alphabet, added it to the `HashSet` to ensure uniqueness.
-
-**Check for Pangram :**
-   - After processing the entire string, checked if the size of the `HashSet` is 26.
-   - If the size is 26, it indicates that all lowercase alphabets are present in the string.
-
-**Result :**
-   - Returned `true` if the size is 26, indicating a pangram.
-   - Returned `false` otherwise.
-
-My code employs a HashSet to keep track of unique lowercase alphabets in the given string. After iterating through the string and adding alphabets to the HashSet, I checked if the size of the HashSet is 26 to determine whether the string is a pangram or not. The conversion to lowercase ensures case-insensitivity.
+- Removed the leading and trailing whitespaces from the input string.
+- If the string is empty after stripping, returned -1 (invalid input).
+- Determined the sign of the number (positive or negative) based on the first character.
+- If the first character is a sign (+ or -), removed it from the string.
+- Initialized a variable 'jawab' to store the final integer value.
+- Iterated through each character in the string.
+  - Checked if the character is a digit.
+  - Updated the result by multiplying it by 10 and adding the digit.
+  - If a non-digit character is encountered, returned -1 (invalid input).
+- Applied the sign to the `jawab`.
+- Returned the final integer value.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -44,34 +33,51 @@ Keep Solving.:)
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 $s$ :  length of the input string.
 
-- Space complexity : $O(26) = O(1) : Constant$
+- Space complexity : $O(s)$ ( extra space required for the stripped string )
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code 
 ```
-//User function Template for JAVA
+//User function template for JAVA
 
+/*You are required to complete this method */
 class Solution {
-    // Function to check if a string is Pangram or not.
-    public static boolean checkPangram(String s) {
-        
-        // Converting the input string to lowercase
-        s = s.toLowerCase(); 
+    
+    // Method to convert a string to an integer (atoi)
+    int atoi(String s) {
+        // Removing leading and trailing whitespaces from the string
+        s = s.strip();
 
-        // HashSet to store unique lowercase alphabets encountered
-        HashSet<Character> h = new HashSet<>();
+        // If the string is empty after stripping, returning -1
+        if (s.isEmpty()) {
+            return -1;
+        }
+
+        // Determining the sign of the number (positive or negative)
+        int sign = s.charAt(0) == '-' ? -1 : 1;
+
+        // If the first character is a sign (+ or -), removing it from the string
+        if (s.charAt(0) == '-' || s.charAt(0) == '+') {
+            s = s.substring(1);
+        }
+
+        // Initializing a variable to store the result
+        int jawab = 0;
 
         // Iterating through each character in the string
         for (char c : s.toCharArray()) {
-            // Checking if the character is a lowercase alphabet
-            if (c >= 'a' && c <= 'z') {
-                // Adding the lowercase alphabet to the HashSet
-                h.add(c);
+            // Checking if the character is a digit
+            if (!Character.isDigit(c)) {
+                // If not a digit, returning -1 (invalid input)
+                return -1;
             }
+
+            // Updating the result by multiplying it by 10 and adding the digit
+            jawab = jawab * 10 + (c - '0');
         }
 
-        // Checking if the size of the HashSet is 26, indicating all lowercase alphabets are present
-        return h.size() == 26;
+        // Applying the sign to the result and cast it to an integer
+        return sign * jawab;
     }
 }
 ```
