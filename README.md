@@ -2,27 +2,31 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 02-02-24 [Problem Link](https://www.geeksforgeeks.org/problems/implement-atoi/1)
-## Implement Atoi
+## Today's 03-02-24 [Problem Link](https://www.geeksforgeeks.org/problems/decimal-equivalent-of-binary-linked-list/1)
+## Decimal Equivalent of Binary Linked List
 
 ## Intuition
 
-The goal is to convert a given string to an integer, considering various cases such as signs, whitespaces, and invalid characters.
-
+This problem involves converting a binary number represented by a linked list into its decimal equivalent. The linked list represents a binary number, where the significance of the bits decreases with increasing index in the linked list. The goal is to calculate the decimal value of this binary representation.
 
 ## Approach
 
-- Removed the leading and trailing whitespaces from the input string.
-- If the string is empty after stripping, returned -1 (invalid input).
-- Determined the sign of the number (positive or negative) based on the first character.
-- If the first character is a sign (+ or -), removed it from the string.
-- Initialized a variable 'jawab' to store the final integer value.
-- Iterated through each character in the string.
-  - Checked if the character is a digit.
-  - Updated the result by multiplying it by 10 and adding the digit.
-  - If a non-digit character is encountered, returned -1 (invalid input).
-- Applied the sign to the `jawab`.
-- Returned the final integer value.
+**Calculating the Length of Linked List :**
+   - Created a helper method `length` to calculate the length of the linked list.
+
+**Traversed the Linked List :**
+   - Traversed the linked list from the head to the tail.
+   - For each node with a data value of 1, calculated the corresponding power of 2.
+   - Updated the result by adding the calculated the power of 2, taking modulo `1_000_000_007` to prevent overflow.
+
+**Modular Exponentiation :**
+   - Created a helper method `modPow` for modular exponentiation.
+   - Used binary exponentiation to efficiently calculate `base^exponent % MOD`.
+
+**Returned the Result :**
+   - Returned the final result, which represents the decimal value of the binary linked list.
+
+My approach ensures that the conversion from binary to decimal is performed efficiently using modular arithmetic to handle large values and prevent overflow.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -43,46 +47,83 @@ $s$ :  length of the input string.
 
 ## Code 
 ```
-//User function template for JAVA
+/* Node of a linked list
+ class Node {
+   int data;
+    Node next;
+    Node(int d)  { data = d;  next = null; }
+}
+ Linked List class
+class LinkedList
+{
+    Node head;  // head of list
+}
+This is method only submission.  You only need to complete the method. */
 
-/*You are required to complete this method */
 class Solution {
     
-    // Method to convert a string to an integer (atoi)
-    int atoi(String s) {
-        // Removing leading and trailing whitespaces from the string
-        s = s.strip();
+    // Modulo constant
+    static int MOD = 1_000_000_007;
 
-        // If the string is empty after stripping, returning -1
-        if (s.isEmpty()) {
-            return -1;
-        }
+    // Method to calculate the decimal value of a binary linked list
+    long DecimalValue(Node head) {
+       
+        // Calculating the length of the linked list
+        int l = length(head) - 1;
+        
+        // Variable to store the final jawab
+        long jawab = 0;
+        
+        // Temporary node pointer for traversing the linked list
+        Node t = head;
 
-        // Determining the sign of the number (positive or negative)
-        int sign = s.charAt(0) == '-' ? -1 : 1;
-
-        // If the first character is a sign (+ or -), removing it from the string
-        if (s.charAt(0) == '-' || s.charAt(0) == '+') {
-            s = s.substring(1);
-        }
-
-        // Initializing a variable to store the result
-        int jawab = 0;
-
-        // Iterating through each character in the string
-        for (char c : s.toCharArray()) {
-            // Checking if the character is a digit
-            if (!Character.isDigit(c)) {
-                // If not a digit, returning -1 (invalid input)
-                return -1;
+        // Traverseing the linked list
+        while (t != null) {
+            // If the current node's data is 1, calculating the corresponding power of 2
+            if (t.data == 1) {
+                long powerOfTwo = modPow(2, l);
+                // Updating the answer with the calculated power of 2
+                jawab = (jawab + powerOfTwo) % MOD;
             }
-
-            // Updating the result by multiplying it by 10 and adding the digit
-            jawab = jawab * 10 + (c - '0');
+            // Moving to the next node and decreasing the length
+            l--;
+            t = t.next;
         }
+        // Returning the final answer
+        return jawab;
+    }
 
-        // Applying the sign to the result and cast it to an integer
-        return sign * jawab;
+    // Method to calculate the length of a linked list
+    static int length(Node head) {
+        // Temporary node pointer for traversing the linked list
+        Node t = head;
+        // Variable to store the length
+        int len = 0;
+        
+        // Traversing the linked list and count nodes
+        while (t != null) {
+            len++;
+            t = t.next;
+        }
+        // Returning the calculated length
+        return len;
+    }
+
+    // Method for modular exponentiation
+    static long modPow(long base, int exponent) {
+        // Variable to store the jawab of modular exponentiation
+        long jawab = 1;
+        
+        // Calculating modular exponentiation using binary exponentiation
+        while (exponent > 0) {
+            if (exponent % 2 == 1) {
+                jawab = (jawab * base) % MOD;
+            }
+            base = (base * base) % MOD;
+            exponent /= 2;
+        }
+        // Returning the jawab of modular exponentiation
+        return jawab;
     }
 }
 ```
