@@ -33,16 +33,11 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(s)$
+- Time complexity : $O(l)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$s$ :  length of the input string.
+$l$ : length of the linked list
 
-- Space complexity : $O(s)$ ( extra space required for the stripped string )
-  
-  Don't worry, stripping the string isn't necessary here beacuuse it isn't given that there may be leading and trailing whitespaces.
-  I have used stripping here so that I keep in mind that in similar questions it may be required.
-
-  So in this question, stripping can be skipped, then the time complexity will be $O(1)$ as asked in question.
+- Space complexity : $O(1)$ 
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code 
