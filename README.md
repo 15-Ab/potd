@@ -16,10 +16,15 @@ This problem involves converting a binary number represented by a linked list in
 ## Approach
 
 **Removed the Leading Zeros :** Remove leading zeros from both linked lists.
+
 **Size Comparison :** Compared the sizes of the linked lists to determine the larger and smaller numbers. If the sizes are equal, compared each digit to identify the larger number.
+
 **Reversed the Linked Lists :** Reversed both linked lists to simplify the subtraction process.
+
 **Performed Subtraction :** Iterated through the reversed linked lists and subtractd the corresponding digits. Handled borrowing if necessary.
+
 **Removed Leading Zeros from Result :** After subtraction, removed the leading zeros from the result.
+
 **Returned the Result :** The final result represented the subtraction of the smaller number from the larger one.
 
 ---
