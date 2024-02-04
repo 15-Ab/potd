@@ -2,8 +2,12 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 03-02-24 [Problem Link](https://www.geeksforgeeks.org/problems/decimal-equivalent-of-binary-linked-list/1)
-## Decimal Equivalent of Binary Linked List
+##### Today is 4, a very auspicious day for me. You know, some dates are such that you're bound to keep them in your grateful diary, for me 4 is that day. No words can ever express how grateful I am to god for that feeling. It's a request to all you guys reading my repository - Life is full of ups and downs, happy in a momment and pain in another, you cann't avoid any of these, so remember who you are and keep faith in yourself as I do.
+Enjoy my solution and keep coding :)
+
+
+## Today's 04-02-24 [Problem Link](https://www.geeksforgeeks.org/problems/subtraction-in-linked-list/1)
+## Subtraction in Linked List
 
 ## Intuition
 
@@ -11,114 +15,162 @@ This problem involves converting a binary number represented by a linked list in
 
 ## Approach
 
-**Calculated the Length of Linked List :**
-   - Created a helper method `length` to calculate the length of the linked list.
-
-**Traversed the Linked List :**
-   - Traversed the linked list from the head to the tail.
-   - For each node with a data value of 1, calculated the corresponding power of 2.
-   - Updated the result by adding the calculated the power of 2, taking modulo `1_000_000_007` to prevent overflow.
-
-**Modular Exponentiation :**
-   - Created a helper method `modPow` for modular exponentiation.
-   - Used binary exponentiation to efficiently calculate `base^exponent % MOD`.
-
-**Returned the Result :**
-   - Returned the final result, which represents the decimal value of the binary linked list.
-
-My approach ensures that the conversion from binary to decimal is performed efficiently using modular arithmetic to handle large values and prevent overflow.
+**Removed the Leading Zeros :** Remove leading zeros from both linked lists.
+**Size Comparison :** Compared the sizes of the linked lists to determine the larger and smaller numbers. If the sizes are equal, compared each digit to identify the larger number.
+**Reversed the Linked Lists :** Reversed both linked lists to simplify the subtraction process.
+**Performed Subtraction :** Iterated through the reversed linked lists and subtractd the corresponding digits. Handled borrowing if necessary.
+**Removed Leading Zeros from Result :** After subtraction, removed the leading zeros from the result.
+**Returned the Result :** The final result represented the subtraction of the smaller number from the larger one.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(l)$
+- Time complexity : $O(n + m)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$l$ : length of the linked list
 
-- Space complexity : $O(1)$ 
+n and m are the lengths of the linked lists representing the two numbers.
+
+- Space complexity : $O(n + m)$ 
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code 
 ```
-/* Node of a linked list
- class Node {
-   int data;
-    Node next;
-    Node(int d)  { data = d;  next = null; }
-}
- Linked List class
-class LinkedList
+/*
+
+Definition for singly Link List Node
+class Node
 {
-    Node head;  // head of list
+    int data;
+    Node next;
+
+    Node(int x){
+        data = x;
+        next = null;
+    }
 }
-This is method only submission.  You only need to complete the method. */
 
+You can also use the following for printing the link list.
+Node.printList(Node node);
+*/
 class Solution {
-    
-    // Modulo constant
-    static int MOD = 1_000_000_007;
+    // Function to subtract two linked lists representing large numbers
+    public Node subLinkedList(Node head1, Node head2) {
+        // Removing leading zeros
+        head1 = removeLeadingZeros(head1);
+        head2 = removeLeadingZeros(head2);
 
-    // Method to calculate the decimal value of a binary linked list
-    long DecimalValue(Node head) {
-       
-        // Calculating the length of the linked list
-        int l = length(head) - 1;
-        
-        // Variable to store the final jawab
-        long jawab = 0;
-        
-        // Temporary node pointer for traversing the linked list
-        Node t = head;
+        // Get the sizes of both linked lists
+        int size1 = getLinkedListSize(head1);
+        int size2 = getLinkedListSize(head2);
 
-        // Traverseing the linked list
-        while (t != null) {
-            // If the current node's data is 1, calculating the corresponding power of 2
-            if (t.data == 1) {
-                long powerOfTwo = modPow(2, l);
-                // Updating the answer with the calculated power of 2
-                jawab = (jawab + powerOfTwo) % MOD;
-            }
-            // Moving to the next node and decreasing the length
-            l--;
-            t = t.next;
+        // If both linked lists are empty, returning a new node with value 0
+        if (size1 == 0 && size2 == 0) {
+            return new Node(0);
         }
-        // Returning the final answer
-        return jawab;
+
+        // Swapping linked lists if the second one is larger
+        if (size2 > size1) {
+            Node temp = head1;
+            head1 = head2;
+            head2 = temp;
+        }
+
+        // If sizes are equal, comparing each digit to determine which number is larger
+        if (size1 == size2) {
+            Node curr1 = head1;
+            Node curr2 = head2;
+
+            while (curr1.data == curr2.data) {
+                curr1 = curr1.next;
+                curr2 = curr2.next;
+
+                // If both numbers are the same, returning a new node with value 0
+                if (curr1 == null) {
+                    return new Node(0);
+                }
+            }
+
+            // Swapping linked lists if the second number is larger
+            if (curr2.data > curr1.data) {
+                Node temp = head1;
+                head1 = head2;
+                head2 = temp;
+            }
+        }
+
+        // Reversing both linked lists
+        head1 = reverseLinkedList(head1);
+        head2 = reverseLinkedList(head2);
+
+        // Performing subtraction on reversed linked lists
+        Node result = performSubtraction(head1, head2);
+
+        // Removing leading zeros from the result
+        result = removeLeadingZeros(result);
+
+        return result;
     }
 
-    // Method to calculate the length of a linked list
-    static int length(Node head) {
-        // Temporary node pointer for traversing the linked list
-        Node t = head;
-        // Variable to store the length
-        int len = 0;
-        
-        // Traversing the linked list and count nodes
-        while (t != null) {
-            len++;
-            t = t.next;
+    // Helper function to remove leading zeros from a linked list
+    private Node removeLeadingZeros(Node head) {
+        while (head != null && head.data == 0) {
+            head = head.next;
         }
-        // Returning the calculated length
-        return len;
+        return head;
     }
 
-    // Method for modular exponentiation
-    static long modPow(long base, int exponent) {
-        // Variable to store the jawab of modular exponentiation
-        long jawab = 1;
-        
-        // Calculating modular exponentiation using binary exponentiation
-        while (exponent > 0) {
-            if (exponent % 2 == 1) {
-                jawab = (jawab * base) % MOD;
-            }
-            base = (base * base) % MOD;
-            exponent /= 2;
+    // Helper function to get the size of a linked list
+    private int getLinkedListSize(Node head) {
+        int count = 0;
+        for (Node current = head; current != null; current = current.next) {
+            count++;
         }
-        // Returning the jawab of modular exponentiation
-        return jawab;
+        return count;
+    }
+
+    // Helper function to reverse a linked list
+    private Node reverseLinkedList(Node head) {
+        Node prev = null;
+        Node current = head;
+        Node next = null;
+
+        while (current != null) {
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+
+        return prev;
+    }
+
+    // Helper function to perform subtraction on reversed linked lists
+    private Node performSubtraction(Node head1, Node head2) {
+        Node result = null;
+
+        while (head1 != null) {
+            int num1 = head1.data;
+            int num2 = (head2 != null) ? head2.data : 0;
+
+            if (num1 < num2) {
+                if (head1.next != null) {
+                    head1.next.data -= 1;
+                }
+                num1 += 10;
+            }
+
+            Node current = new Node(num1 - num2);
+            current.next = result;
+            result = current;
+
+            head1 = head1.next;
+            if (head2 != null)
+                head2 = head2.next;
+        }
+
+        return result;
     }
 }
 ```
