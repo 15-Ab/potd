@@ -2,181 +2,117 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-##### Today is 4, a very auspicious day for me. You know, some dates are such that you're bound to keep them in your grateful diary, for me 4 is that day. No words can ever express how grateful I am to god for that feeling. It's a request to all you guys reading my repository - Life is full of ups and downs, happy in a momment and pain in another, you cann't avoid any of these, so remember who you are and keep faith in yourself as I do.
-Enjoy my solution and keep coding :)
-
-
-## Today's 04-02-24 [Problem Link](https://www.geeksforgeeks.org/problems/subtraction-in-linked-list/1)
-## Subtraction in Linked List
+## Today's 05-02-24 [Problem Link](https://www.geeksforgeeks.org/problems/sorted-insert-for-circular-linked-list/1)
+## Sorted insert for circular linked list
 
 ## Intuition
 
-This problem involves converting a binary number represented by a linked list into its decimal equivalent. The linked list represents a binary number, where the significance of the bits decreases with increasing index in the linked list. The goal is to calculate the decimal value of this binary representation.
+The goal of my code is to insert a new node with the given data into a sorted circular linked list while maintaining the sorting order.
 
 ## Approach
 
-**Removed the Leading Zeros :** Removed leading zeros from both linked lists.
+**Checked if Linked List is Empty :**
+   - If the linked list is empty (head is null), created a new node with the given data and make it circular by pointing to itself.
+   - Returned the new node as the new head.
 
-**Size Comparison :** Compared the sizes of the linked lists to determine the larger and smaller numbers. If the sizes are equal, compared each digit to identify the larger number.
+**Traversed the Linked List :**
+   - Initialized two pointers, `h` (current node) and `p` (previous node), both initially pointing to the head.
+   - Traversed the circular linked list until reaching back to the head.
 
-**Reversed the Linked Lists :** Reversed both linked lists to simplify the subtraction process.
+**Find Insertion Point :**
+   - While traversing, found the correct position (`p` and `h`) to insert the new node based on the sorting order.
+   - If `h.data` is less than the new data, moved the pointers to the next nodes.
+   - Broke the loop if the correct position is found.
 
-**Performed Subtraction :** Iterated through the reversed linked lists and subtractd the corresponding digits. Handled borrowing if necessary.
+**Insert the New Node :**
+   - Created a new node (`in`) with the given data.
 
-**Removed Leading Zeros from Result :** After subtraction, removed the leading zeros from the result.
+**Three Cases for Insertion :**
+   - **Case 1 : Inserted at the Head :**
+      - If `h` is equal to the head and `h.data` is greater than the new data, inserted the new node at the head.
+   - **Case 2 : Inserted at the Last :**
+      - If `h.next` is equal to the head and both `p.data` and `h.data` are less than the new data, inserted the new node at the last.
+   - **Case 3 : Inserted in the Middle :**
+      - Otherwise, inserted the new node in the middle between `p` and `p.next`.
 
-**Returned the Result :** The final result represented the subtraction of the smaller number from the larger one.
+**Return Updated Head :**
+   - Returned the updated head of the circular linked list.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(n + m)$
+- Time complexity : $O(n)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 
-n and m are the lengths of the linked lists representing the two numbers.
+$n$ : number of nodes in the circular linked list.
 
-- Space complexity : $O(n + m)$ 
+- Space complexity : $O(1)$ 
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code 
-It may appears lengthy but I have knowingly created helper functions for better understanding.
+
 ```
-/*
-
-Definition for singly Link List Node
-class Node
-{
-    int data;
-    Node next;
-
-    Node(int x){
-        data = x;
-        next = null;
-    }
-}
-
-You can also use the following for printing the link list.
-Node.printList(Node node);
-*/
+//User function Template for Java
 class Solution {
-    // Function to subtract two linked lists representing large numbers
-    public Node subLinkedList(Node head1, Node head2) {
-        // Removing leading zeros
-        head1 = removeLeadingZeros(head1);
-        head2 = removeLeadingZeros(head2);
-
-        // Get the sizes of both linked lists
-        int size1 = getLinkedListSize(head1);
-        int size2 = getLinkedListSize(head2);
-
-        // If both linked lists are empty, returning a new node with value 0
-        if (size1 == 0 && size2 == 0) {
-            return new Node(0);
+    // Function to insert a node with the given data in a sorted circular linked list
+    public Node sortedInsert(Node head, int data) {
+        // If the linked list is empty, creating a new node and returning it as the new head
+        if (head == null) {
+            Node n = new Node(data);
+            n.next = n;
+            return n;
         }
-
-        // Swapping linked lists if the second one is larger
-        if (size2 > size1) {
-            Node temp = head1;
-            head1 = head2;
-            head2 = temp;
-        }
-
-        // If sizes are equal, comparing each digit to determine which number is larger
-        if (size1 == size2) {
-            Node curr1 = head1;
-            Node curr2 = head2;
-
-            while (curr1.data == curr2.data) {
-                curr1 = curr1.next;
-                curr2 = curr2.next;
-
-                // If both numbers are the same, returning a new node with value 0
-                if (curr1 == null) {
-                    return new Node(0);
-                }
-            }
-
-            // Swapping linked lists if the second number is larger
-            if (curr2.data > curr1.data) {
-                Node temp = head1;
-                head1 = head2;
-                head2 = temp;
+        
+        // Initializing pointers for traversal
+        Node h = head;  // Current node
+        Node p = head;  // Previous node
+        
+        // Traversing the circular linked list
+        while (h.next != head) {
+            // Moving pointers until finding the correct position to insert the new node
+            if (h.data < data) {
+                p = h;
+                h = h.next;
+            } else {
+                // Breaking the loop if the correct position is found
+                break;
             }
         }
-
-        // Reversing both linked lists
-        head1 = reverseLinkedList(head1);
-        head2 = reverseLinkedList(head2);
-
-        // Performing subtraction on reversed linked lists
-        Node result = performSubtraction(head1, head2);
-
-        // Removing leading zeros from the result
-        result = removeLeadingZeros(result);
-
-        return result;
-    }
-
-    // Helper function to remove leading zeros from a linked list
-    private Node removeLeadingZeros(Node head) {
-        while (head != null && head.data == 0) {
-            head = head.next;
+        
+        // Creating a new node with the given data
+        Node in = new Node(data);
+        
+        // Inserting the new node based on different cases
+        
+        // Case 1 : Inserting at the head
+        if (h == head && h.data > data) {
+            Node last = head;
+            // Traversing to the last node of the circular linked list
+            while (last.next != head) {
+                last = last.next;
+            }
+            // Updating pointers to insert the new node at the head
+            last.next = in;
+            in.next = head;
+            head = in;
         }
+        // Case 2 : Inserting at the last
+        else if (h.next == head && p.data < data && h.data < data) {
+            // Updating pointers to insert the new node at the last
+            h.next = in;
+            in.next = head;
+        }
+        // Case 3 : Inserting in the middle
+        else {
+            // Updating pointers to insert the new node in the middle
+            in.next = p.next;
+            p.next = in;
+        }
+        
+        // Returning the updated head of the circular linked list
         return head;
-    }
-
-    // Helper function to get the size of a linked list
-    private int getLinkedListSize(Node head) {
-        int count = 0;
-        for (Node current = head; current != null; current = current.next) {
-            count++;
-        }
-        return count;
-    }
-
-    // Helper function to reverse a linked list
-    private Node reverseLinkedList(Node head) {
-        Node prev = null;
-        Node current = head;
-        Node next = null;
-
-        while (current != null) {
-            next = current.next;
-            current.next = prev;
-            prev = current;
-            current = next;
-        }
-
-        return prev;
-    }
-
-    // Helper function to perform subtraction on reversed linked lists
-    private Node performSubtraction(Node head1, Node head2) {
-        Node result = null;
-
-        while (head1 != null) {
-            int num1 = head1.data;
-            int num2 = (head2 != null) ? head2.data : 0;
-
-            if (num1 < num2) {
-                if (head1.next != null) {
-                    head1.next.data -= 1;
-                }
-                num1 += 10;
-            }
-
-            Node current = new Node(num1 - num2);
-            current.next = result;
-            result = current;
-
-            head1 = head1.next;
-            if (head2 != null)
-                head2 = head2.next;
-        }
-
-        return result;
     }
 }
 ```
