@@ -35,7 +35,7 @@ The goal of my code is to insert a new node with the given data into a sorted ci
    - **Case 3 : Inserted in the Middle :**
       - Otherwise, inserted the new node in the middle between `p` and `p.next`.
 
-**Return Updated Head :**
+**Returned Updated Head :**
    - Returned the updated head of the circular linked list.
 
 ---
