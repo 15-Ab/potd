@@ -19,12 +19,12 @@ The goal of my code is to insert a new node with the given data into a sorted ci
    - Initialized two pointers, `h` (current node) and `p` (previous node), both initially pointing to the head.
    - Traversed the circular linked list until reaching back to the head.
 
-**Find Insertion Point :**
+**Found Insertion Point :**
    - While traversing, found the correct position (`p` and `h`) to insert the new node based on the sorting order.
    - If `h.data` is less than the new data, moved the pointers to the next nodes.
    - Broke the loop if the correct position is found.
 
-**Insert the New Node :**
+**Inserted the New Node :**
    - Created a new node (`in`) with the given data.
 
 **Three Cases for Insertion :**
