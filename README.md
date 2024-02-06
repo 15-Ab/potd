@@ -7,7 +7,7 @@ This is my attempt to make the coding experience easier for you guys so that you
 
 ## Intuition
 
-This problem involves counting the nodes at a given distance (`k`) from leaf nodes in a binary tree. To achieve this, I employed a Depth-First Search (DFS) traversal to explore the tree, keeping track of the current path and identifying leaf nodes at the specified distance.
+The task is to find the distance between two nodes (`a` and `b`) in a binary tree. The distance is defined as the number of edges on the path from one node to the other. To solve this problem efficiently, I employed a Depth-First Search (DFS) approach.
 
 ## Approach
 
