@@ -2,8 +2,8 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 06-02-24 [Problem Link](https://www.geeksforgeeks.org/problems/node-at-distance/1)
-## Count the nodes at distance K from leaf
+## Today's 07-02-24 [Problem Link](https://www.geeksforgeeks.org/problems/min-distance-between-two-given-nodes-of-a-binary-tree/1)
+## Min distance between two given nodes of a Binary Tree
 
 ## Intuition
 
@@ -11,18 +11,18 @@ This problem involves counting the nodes at a given distance (`k`) from leaf nod
 
 ## Approach
 
- **DFS Traversal :**
-   - Utilized a recursive DFS traversal for exploring the binary tree.
-   - Maintained a current path list to record encountered nodes during traversal.
+**DFS Traversal :**
+   - Utilized a recursive DFS traversal to explore the binary tree.
+   - Kept track of the distance between the current node and the target nodes `a` and `b` in the left and right subtrees.
 
-**Checked Leaf Nodes :**
-   - Upon reaching a leaf node, examined if the distance from the leaf node to the current node is equal to the given distance (`k`).
-   - If the condition is satisfied, incorporated the node at the appropriate position in the current path to a HashSet, ensuring uniqueness.
+**Updated Distance (`jawab`):**
+   - If the current node is one of the target nodes (`a` or `b`), updated the `jawab` variable based on the distances obtained from the left and right subtrees.
+   - Handled the cases where both target nodes are found, only one target node is found, or neither target node is found.
 
-**Returned the Count :**
-   - Upon completing the traversal, returned the count of unique nodes stored in the HashSet as the final result.
+**Returned the Result :**
+   - The final result is stored in the `jawab` variable, which represents the distance between the two target nodes in the binary tree.
 
-My approach ensured comprehensive exploration of the tree while preserving the current path. At each leaf node, the distance condition is checked, and the HashSet is updated accordingly. The HashSet is used to store unique nodes at the desired distance, and its size provides the count of such nodes. The recursive DFS ensures a thorough examination of the entire tree.
+My approach ensured an efficient exploration of the binary tree, updating the distance as soon as both target nodes are found. My recursive DFS traversal allowed for a systematic examination of the tree, and the `jawab` variable was updated based on the conditions encountered during traversal.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -35,65 +35,71 @@ Keep Solving.:)
 
 $N$ : number of nodes in the binary tree.
 
-- Space complexity : $O(H + N)$ 
+- Space complexity : $O(H)$ 
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 $H$ : height of the tree.
 
 ## Code 
 
 ```
-//User function Template for Java
 
-// class Node  
-// { 
-//     int data; 
-//     Node left, right; 
-   
-//     public Node(int d)  
-//     { 
-//         data = d; 
-//         left = right = null; 
-//     } 
-// }
-
-class Solution
+// FUNCTION CODE
+/* A Binary Tree node
+class Node
 {
-    private static HashSet<Node> jawab;
-    private static ArrayList<Node> currentPath;
+    int data;
+    Node left, right;
+   Node(int item)    {
+        data = item;
+        left = right = null;
+    }
+} */
 
-    // Function to return count of nodes at a given distance from leaf nodes.
-    int printKDistantfromLeaf(Node root, int k){
-        // Initializing the HashSet and ArrayList
-        jawab = new HashSet<>();
-        currentPath = new ArrayList<>();
+/* Should return minimum distance between a and b
+   in a tree with given root*/
+class GfG {
+    
+    static int jawab;
 
-        // Helper function for DFS traversal
-        dfsHelper(root, k);
-
-        // Returning the count of unique nodes at distance k from leaf nodes
-        return jawab.size();
+    // Function to find the distance between two nodes in a binary tree
+    int findDist(Node root, int a, int b) {
+        // Your code here
+        jawab = 0;
+        helper(root, a, b);
+        return jawab;
     }
 
-    // Helper function for DFS traversal
-    private static void dfsHelper(Node root, int k){
+    // Helper function for DFS traversal to find the distance between two nodes
+    static int helper(Node root, int a, int b) {
         if (root == null) {
-            return;
-        }
-
-        // Adding the current node to the path list
-        currentPath.add(root);
-
-        // Checking if the current node is a leaf node and satisfies the distance condition
-        if (root.left == null && root.right == null && currentPath.size() > k) {
-            jawab.add(currentPath.get(currentPath.size() - 1 - k));
+            return 0;
         }
 
         // Recursive calls for left and right subtrees
-        dfsHelper(root.left, k);
-        dfsHelper(root.right, k);
+        int l = helper(root.left, a, b);
+        int r = helper(root.right, a, b);
 
-        // Removing the last node from the path list
-        currentPath.remove(currentPath.size() - 1);
+        // Checking if the current node is one of the target nodes
+        if (root.data == a || root.data == b) {
+            // If one of the target nodes is found, then updating jawab based on left and right distances
+            if (l != 0 || r != 0) {
+                jawab = Math.max(l, r);
+                return 0;
+            } else {
+                // If the current node is a target node with no valid distance found, then returning 1
+                return 1;
+            }
+        } else if (l != 0 && r != 0) {
+            // If both target nodes are found in left and right subtrees, then updating jawab accordingly
+            jawab = l + r;
+            return 0;
+        } else if (l != 0 || r != 0) {
+            // If one target node is found, then returning the maximum distance from either subtree plus 1
+            return Math.max(l, r) + 1;
+        }
+
+        // Default case, returning 0
+        return 0;
     }
 }
 ```
