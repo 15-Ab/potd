@@ -40,12 +40,12 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(n)$
+- Time complexity : $O(N)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 
 $N$ : number of nodes in the tree.
 
-- Space complexity : $O(n)$ 
+- Space complexity : $O(N)$ 
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code 
@@ -69,7 +69,7 @@ class Node
 
 class Solution {
 
-    // Check if the tree is balanced
+    // Checking if the tree is balanced
     boolean check(Node root) {
         // Finding the maximum and minimum depths
         int maxDepth = findMaxDepth(root);
