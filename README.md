@@ -14,7 +14,7 @@ This problem at hand involved verifying whether every node in a tree adheres to 
 **Checked for Empty Tree :**
 - If the tree is empty, it trivially satisfies the sum property.
 
-**Initialized Queue for Level Order Traversal :**
+**Initialized a Queue for Level Order Traversal :**
 - Established a queue tailored for a level-order traversal.
 
 **Level Order Traversal :**
@@ -126,4 +126,3 @@ class Solution {
     }
 }    
 ```
-
