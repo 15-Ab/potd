@@ -7,7 +7,7 @@ This is my attempt to make the coding experience easier for you guys so that you
 
 ## Intuition
 
-This problem involved finding the number of paths in a 2D matrix from the top-left corner to the bottom-right corner, such that the sum of values along the path is equal to a given target value 'k'. Each cell in the matrix has a value, and you can move only down or right.
+This problem involved finding the number of paths in a 2D matrix from the top-left corner to the bottom-right corner, such that the sum of values along the path is equal to a given target value 'k'. Each cell in the matrix has a value, and I can move only down or right.
 
 To efficiently solve this problem, I employed dynamic programming with memoization. My idea was to store and reuse the results of subproblems to avoid redundant computations.
 
@@ -40,12 +40,12 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(Nn x n x 101)$ {\equiv} $O(n^2)$ 
+- Time complexity : $O(n * n * 101)$ {\equiv} $O(n^2)$ gith
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 
 $n$ : size of the matrix (assuming `n` rows and `n` columns).
 
-- Space complexity : $O(Nn x n x 101)$ {\equiv} $O(n^2)$ 
+- Space complexity : $O(n * n * 101)$ {\equiv} $O(n^2)$ 
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code 
