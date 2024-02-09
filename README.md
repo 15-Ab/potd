@@ -40,12 +40,12 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(n * n * 101)$ {\equiv} $O(n^2)$ gith
+- Time complexity : $O(n * n * 101)$ $\equiv$ $O(n^2)$ gith
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 
 $n$ : size of the matrix (assuming `n` rows and `n` columns).
 
-- Space complexity : $O(n * n * 101)$ {\equiv} $O(n^2)$ 
+- Space complexity : $O(n * n * 101)$ $\equiv$ $O(n^2)$ 
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code 
