@@ -19,20 +19,20 @@ The Recaman Sequence is a mathematical sequence defined by the following rules :
 - Initialized a HashSet (`h`) to efficiently check for the existence of elements.
 
 **Base Case :**
-- If the requested length 'n' is 0, returned an empty ArrayList as there are no elements to generate.
+- If the requested length `n` is 0, returned an empty ArrayList as there are no elements to generate.
 
 **Sequence Generation :**
 - Started with 0 as the first element and added it to both the ArrayList and HashSet.
-- Iterated from 1 to 'n-1' to generated the subsequent elements in the sequence.
+- Iterated from 1 to `n-1` to generated the subsequent elements in the sequence.
 - For each iteration :
-  - Calculated the potential next element by subtracting 'i' or adding 'i' to the previous element.
+  - Calculated the potential next element by subtracting `i` or adding `i` to the previous element.
   - Checked if the calculated value is valid (greater than 0) and not already present in the HashSet.
   - If valid, added the element to both the ArrayList and HashSet; otherwise, used the addition operation.
 
 **Return the Result :**
 - Returned the generated Recaman sequence stored in the ArrayList.
 
-##### Summary :
+### Summary :
 My approach involved a systematic generation of elements in the Recaman sequence, adhering to specific rules at each step. Efficient element existence checked using a HashSet prevented duplicates in the sequence. The final result is the Recaman sequence stored in an ArrayList.
 
 ---
