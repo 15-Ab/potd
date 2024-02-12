@@ -38,12 +38,12 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(n)$
+- Time complexity : $O(n^2)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 
-$n$ : given
+$n$ : given input parameter 
 
-- Space complexity : $O(n)$
+- Space complexity : $O(1)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code 
