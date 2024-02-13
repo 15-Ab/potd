@@ -43,8 +43,8 @@ $V$ : number of nodes (vertices)
 $E$ : number of edges in the graph
 
 - Space complexity : $O(N)$
-$N$ : total number of nodes in the original graph
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
+$N$ : total number of nodes in the original graph
 
 ## Code 
 
