@@ -2,35 +2,32 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 12*02=24 [Problem Link](https://www.geeksforgeeks.org/problems/recursive-sequence1611/1)
-## Recursive sequence
+## Today's 13-02-24 [Problem Link](https://www.geeksforgeeks.org/problems/clone-graph/1)
+## Clone an Undirected Graph
 
 ## Intuition
-My code aimed to calculate a sequence based on the given logic. It used modular arithmetic to prevent integer overflow while performing calculations. The sequence involved iteratively multiplying consecutive integers starting from 1 and accumulating the results.
+The goal of this problem is to clone an undirected graph represented as a set of nodes. The graph is given as a collection of nodes, each having a value and a list of neighbors. 
+
+The intuition behind my approach was to perform a Breadth-First Search (BFS) traversal of the original graph while creating a clone of each node and maintaining a mapping between the original nodes and their corresponding cloned nodes. This ensured that each node and its neighbors are cloned exactly once, preventing the creation of duplicate nodes.
 
 ## Approach
 
-- Initialized two static variables :
-   - `mod` : A constant representing the modulus for performing modular arithmetic.
-   - `jawab` : A static variable to store the final answer.
+##### Clone Node Function (`cloneNode`) :
 
-- Defined a static function `sequence` that takes an integer `n` as input and returns a long value.
+- The `cloneNode` function is my helper function that recursively cloned a single node and its neighbors.
+- It checked if the original node is null or if it has already been cloned. If so, it returned the corresponding cloned node from the HashMap.
+- Otherwise, it created a new cloned node with the same value and added the original and cloned nodes to the HashMap.
+- It then recursively cloned each neighbor of the original node and addedd the cloned neighbors to the neighbors list of the cloned node.
 
-- Inside the function :
-   - Initialized `jawab` to 0, representing the cumulative result of the sequence.
-   - Initialized a temporary variable `t` to 1, which is used for consecutive integer multiplication.
+##### Clone Graph Function (`cloneGraph`) :
 
-- Iterated from 1 to `n` :
-   - Initialized a temporary variable `m` to 1, representing the product.
-   - Used a counter `c` to perform `c` consecutive multiplications.
-   - Multiplied `m` by `t`, update `t`, and take the result modulo `mod`.
-   - Accumulated the result of `m % mod` to `jawab`, updating it with each iteration.
+- The `cloneGraph` function initialized a queue for BFS traversal (`q`) and a HashMap (`m`) to store the mapping between original and cloned nodes.
+- It enqueued the original node into the queue and started the BFS traversal.
+- During BFS, for each dequeued node, it called the `cloneNode` function to clone the node and its neighbors.
+- The BFS ensured that each node and its neighbors are processed in a level-order fashion, ensuring the creation of the entire cloned graph.
+- The function returned the cloned graph, which is the cloned node corresponding to the original node that was enqueued initially.
 
-- After the loop, `jawab` contained the final result of the sequence.
-
-- Returned the final result `jawab`.
-
-My code effectively calculated the specified sequence by iteratively multiplying consecutive integers, taking care to use modular arithmetic to handle large results and prevent overflow.
+Overall, my approach involved using BFS to traverse the original graph, creating a clone of each node and its neighbors using the `cloneNode` function. The HashMap (`m`) ensured that each original node is cloned exactly once, preventing duplication. The time complexity is O(V + E), where V is the number of nodes (vertices) and E is the number of edges in the graph.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -38,12 +35,15 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(n^2)$
+- Time complexity : $O(V + E)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 
-$n$ : given input parameter 
+$V$ : number of nodes (vertices)
 
-- Space complexity : $O(1)$
+$E$ : number of edges in the graph
+
+- Space complexity : $O(N)$
+$N$ : total number of nodes in the original graph
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code 
@@ -51,40 +51,79 @@ $n$ : given input parameter
 ```
 // User function Template for Java
 
-class Solution{
+/*
+    class Node{
+        int val;
+        ArrayList<Node> neighbors;
+        public Node(){
+            val = 0;
+            neighbors = new ArrayList<>();
+        }
     
-    // Static variables for modulus and the final answer
-    static int mod = 1_000_000_007;
-    static long jawab;
+        public Node(int val){
+            this.val = val;
+            neighbors = new ArrayList<>();
+        }
+    
+        public Node(int val, ArrayList<Node> neighbors){
+            this.val = val;
+            this.neighbors = neighbors;
+        }
+    }
+*/
 
-    // Function to calculate the sequence
-    static long sequence(int n){
-        
-        // Initializing the answer variable
-        jawab = 0;
-        // Temporary variable for multiplication
-        int t = 1;
+class Solution {
+    
+    // HashMap to store the mapping between original nodes and their corresponding cloned nodes
+    HashMap<Node, Node> m;
+    // Queue for BFS traversal
+    Queue<Node> q;
 
-        // Iterating from 1 to n
-        for (int i = 1; i <= n; i++) {
-            // Temporary variable for the product
-            long m = 1;
-            // Counter variable
-            int c = i;
-
-            // Calculating the product of t * (t + 1) * ... * (t + c - 1)
-            while (c-- > 0) {
-                m *= t;
-                m %= mod;
-                t++;
-            }
-
-            // Updating the final answer with the calculated product, modulo mod
-            jawab = (jawab + m % mod) % mod;
+    // Helper function to clone a single node and its neighbors
+    private Node cloneNode(Node originalNode) {
+        // Checking if the original node is null
+        if (originalNode == null) {
+            return null;
         }
 
-        // Returning the final answer
-        return jawab;
+        // Checking if the original node is already cloned, if yes, returning the cloned node
+        if (m.containsKey(originalNode)) {
+            return m.get(originalNode);
+        }
+
+        // Creating a new cloned node with the same value
+        Node clonedNode = new Node(originalNode.val);
+        // Adding the original and cloned nodes to the HashMap
+        m.put(originalNode, clonedNode);
+
+        // Checking if the original node has neighbors
+        if (originalNode.neighbors != null) {
+            // Iterating through the neighbors
+            for (Node neighbor : originalNode.neighbors) {
+                // Recursively cloning each neighbor and adding the cloned neighbor to the cloned node's neighbors list
+                clonedNode.neighbors.add(cloneNode(neighbor));
+            }
+        }
+
+        // Returning the cloned node
+        return clonedNode;
     }
-}     
+
+    // Function to clone the entire graph
+    public Node cloneGraph(Node node) {
+        
+        // Initializing the queue with the original node
+        q = new LinkedList<>();
+        q.add(node);
+
+        // Initializing the HashMap to store the mapping between original and cloned nodes
+        m = new HashMap<>();
+        
+        // Cloning the entire graph starting from the original node
+        Node clonedGraph = cloneNode(node);
+
+        // Returning the cloned graph
+        return clonedGraph;
+    }
+}  
 ```
