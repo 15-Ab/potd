@@ -1,33 +1,36 @@
+# बसंत पंचमी की हार्दिक शुभकामनाएं। 
+# I'm bowing to the goddess of knowledge without whom I'm nothing.
+
 ## Problem Of The Day Solutions
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 13-02-24 [Problem Link](https://www.geeksforgeeks.org/problems/clone-graph/1)
-## Clone an Undirected Graph
+## Today's 14-02-24 [Problem](https://www.geeksforgeeks.org/problems/critical-connections/1)
+## Find all Critical Connections in the Graph
 
 ## Intuition
-The goal of this problem is to clone an undirected graph represented as a set of nodes. The graph is given as a collection of nodes, each having a value and a list of neighbors. 
-
-The intuition behind my approach was to perform a Breadth-First Search (BFS) traversal of the original graph while creating a clone of each node and maintaining a mapping between the original nodes and their corresponding cloned nodes. This ensured that each node and its neighbors are cloned exactly once, preventing the creation of duplicate nodes.
+This problem aimed to find critical connections (bridges) in a network represented as an undirected graph. Critical connections are edges that, if removed, would increase the number of connected components in the graph.
 
 ## Approach
 
-##### Clone Node Function (`cloneNode`) :
+**Depth-First Search (DFS) :**
+   - Initialized arrays to store node ranks (`nodeRanks`), visited nodes (`visitedNodes`), and critical connections (`criticalConnections`).
+   - Started DFS from the first node (`0`) to discover critical connections in the graph.
 
-- The `cloneNode` function is my helper function that recursively cloned a single node and its neighbors.
-- It checked if the original node is null or if it has already been cloned. If so, it returned the corresponding cloned node from the HashMap.
-- Otherwise, it created a new cloned node with the same value and added the original and cloned nodes to the HashMap.
-- It then recursively cloned each neighbor of the original node and addedd the cloned neighbors to the neighbors list of the cloned node.
+**DFS Function (`dfs`) :**
+   - For each node, set its rank and mark it as visited.
+   - Explored its neighbors:
+     - If a neighbor is already visited, updated the minimum depth.
+     - If the neighbor is not visited, recursively called DFS on it.
+   - Checked for critical connections:
+     - If the rank of the current node is less than the minimum depth, added the edge to `criticalConnections`.
 
-##### Clone Graph Function (`cloneGraph`) :
+**Sorted :**
+   - After DFS, sorted each edge in ascending order of nodes.
+   - Sorted the list of critical connections.
 
-- The `cloneGraph` function initialized a queue for BFS traversal (`q`) and a HashMap (`m`) to store the mapping between original and cloned nodes.
-- It enqueued the original node into the queue and started the BFS traversal.
-- During BFS, for each dequeued node, it called the `cloneNode` function to clone the node and its neighbors.
-- The BFS ensured that each node and its neighbors are processed in a level-order fashion, ensuring the creation of the entire cloned graph.
-- The function returned the cloned graph, which is the cloned node corresponding to the original node that was enqueued initially.
-
-Overall, my approach involved using BFS to traverse the original graph, creating a clone of each node and its neighbors using the `cloneNode` function. The HashMap (`m`) ensured that each original node is cloned exactly once, preventing duplication. The time complexity is O(V + E), where V is the number of nodes (vertices) and E is the number of edges in the graph.
+**Returned the Result :**
+   - Returned the sorted list of critical connections.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -38,11 +41,11 @@ Keep Solving.:)
 - Time complexity : $O(V + E)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 
-$V$ : number of nodes (vertices)
+$V$ : number of vertices
 
 $E$ : number of edges in the graph
 
-- Space complexity : $O(N)$
+- Space complexity : $O(V + E)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 $N$ : total number of nodes in the original graph
 
@@ -51,79 +54,70 @@ $N$ : total number of nodes in the original graph
 ```
 // User function Template for Java
 
-/*
-    class Node{
-        int val;
-        ArrayList<Node> neighbors;
-        public Node(){
-            val = 0;
-            neighbors = new ArrayList<>();
-        }
-    
-        public Node(int val){
-            this.val = val;
-            neighbors = new ArrayList<>();
-        }
-    
-        public Node(int val, ArrayList<Node> neighbors){
-            this.val = val;
-            this.neighbors = neighbors;
-        }
-    }
-*/
-
 class Solution {
-    
-    // HashMap to store the mapping between original nodes and their corresponding cloned nodes
-    HashMap<Node, Node> m;
-    // Queue for BFS traversal
-    Queue<Node> q;
+    private static final int MAX_DEPTH = Integer.MAX_VALUE;
+    private static ArrayList<ArrayList<Integer>> criticalConnections;
+    private static int[] nodeRanks;
+    private static int[] visitedNodes;
 
-    // Helper function to clone a single node and its neighbors
-    private Node cloneNode(Node originalNode) {
-        // Checking if the original node is null
-        if (originalNode == null) {
-            return null;
+    public ArrayList<ArrayList<Integer>> criticalConnections(int v, ArrayList<ArrayList<Integer>> adj) {
+        // Initialization
+        criticalConnections = new ArrayList<>();
+        nodeRanks = new int[v];
+        Arrays.fill(nodeRanks, -1);
+        visitedNodes = new int[v];
+
+        // Starting DFS to find critical connections
+        dfs(0, -1, 0, adj);
+
+        // Sorting each edge in ascending order of nodes
+        for (ArrayList<Integer> edge : criticalConnections) {
+            Collections.sort(edge);
         }
 
-        // Checking if the original node is already cloned, if yes, returning the cloned node
-        if (m.containsKey(originalNode)) {
-            return m.get(originalNode);
-        }
+        // Sorting the list of edges
+        criticalConnections.sort((a, b) -> {
+            if (a.get(0).equals(b.get(0))) {
+                return a.get(1) - b.get(1);
+            }
+            return a.get(0) - b.get(0);
+        });
 
-        // Creating a new cloned node with the same value
-        Node clonedNode = new Node(originalNode.val);
-        // Adding the original and cloned nodes to the HashMap
-        m.put(originalNode, clonedNode);
+        return criticalConnections;
+    }
 
-        // Checking if the original node has neighbors
-        if (originalNode.neighbors != null) {
-            // Iterating through the neighbors
-            for (Node neighbor : originalNode.neighbors) {
-                // Recursively cloning each neighbor and adding the cloned neighbor to the cloned node's neighbors list
-                clonedNode.neighbors.add(cloneNode(neighbor));
+    // Depth-first search to find critical connections
+    private static int dfs(int currentNode, int parent, int currentRank,
+                           ArrayList<ArrayList<Integer>> adjacencyList) {
+        // Set node rank and mark as visited
+        nodeRanks[currentNode] = currentRank;
+        visitedNodes[currentNode] = 1;
+        int minDepth = MAX_DEPTH;
+
+        // Exploring neighbors
+        for (int child : adjacencyList.get(currentNode)) {
+            if (child != parent) {
+                // If neighbor is visited, updating minDepth
+                if (visitedNodes[child] == 1) {
+                    minDepth = Math.min(minDepth, nodeRanks[child]);
+                } else {
+                    // Continuing DFS for unvisited neighbor
+                    int minRank = dfs(child, currentNode, currentRank + 1, adjacencyList);
+
+                    // Checking for critical connection
+                    if (nodeRanks[currentNode] < minRank) {
+                        ArrayList<Integer> edge = new ArrayList<>();
+                        edge.add(currentNode);
+                        edge.add(child);
+                        criticalConnections.add(edge);
+                    }
+
+                    // Updating minDepth
+                    minDepth = Math.min(minRank, minDepth);
+                }
             }
         }
-
-        // Returning the cloned node
-        return clonedNode;
+        return minDepth;
     }
-
-    // Function to clone the entire graph
-    public Node cloneGraph(Node node) {
-        
-        // Initializing the queue with the original node
-        q = new LinkedList<>();
-        q.add(node);
-
-        // Initializing the HashMap to store the mapping between original and cloned nodes
-        m = new HashMap<>();
-        
-        // Cloning the entire graph starting from the original node
-        Node clonedGraph = cloneNode(node);
-
-        // Returning the cloned graph
-        return clonedGraph;
-    }
-}  
+}
 ```
