@@ -1,36 +1,28 @@
-# बसंत पंचमी की हार्दिक शुभकामनाएं। 
-# I'm bowing to the goddess of knowledge without whom I'm nothing.
-
 ## Problem Of The Day Solutions
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 14-02-24 [Problem](https://www.geeksforgeeks.org/problems/critical-connections/1)
-## Find all Critical Connections in the Graph
+## Today's 15-02-24 [Problem](https://www.geeksforgeeks.org/problems/castle-run3644/1)
+## Count all Possible Path
 
 ## Intuition
-This problem aimed to find critical connections (bridges) in a network represented as an undirected graph. Critical connections are edges that, if removed, would increase the number of connected components in the graph.
+The goal is to determine if it is possible for each path in a 2D array to have an even sum. This involved checking the sum of elements in each row and verifying whether the sum is even or not.
 
 ## Approach
 
-**Depth-First Search (DFS) :**
-   - Initialized arrays to store node ranks (`nodeRanks`), visited nodes (`visitedNodes`), and critical connections (`criticalConnections`).
-   - Started DFS from the first node (`0`) to discover critical connections in the graph.
+**Iterated Through Paths** : 
+- Looped through each path in the 2D array.
 
-**DFS Function (`dfs`) :**
-   - For each node, set its rank and mark it as visited.
-   - Explored its neighbors:
-     - If a neighbor is already visited, updated the minimum depth.
-     - If the neighbor is not visited, recursively called DFS on it.
-   - Checked for critical connections:
-     - If the rank of the current node is less than the minimum depth, added the edge to `criticalConnections`.
+**Calculated Sum** : 
+- For each path, calculated the sum of its elements by iterating through them.
 
-**Sorted :**
-   - After DFS, sorted each edge in ascending order of nodes.
-   - Sorted the list of critical connections.
+**Checked Sum Parity** :
+- Checked if the sum obtained is even. If the sum is not even, returned 0, indicating that it is not possible for that specific path.
 
-**Returned the Result :**
-   - Returned the sorted list of critical connections.
+**Final Result** : 
+- If all paths have even sums, returned 1, indicating that it is possible for each path to have an even sum.
+
+My approach ensured that the code checked each path individually and returned the final result based on whether it is possible for all paths to have even sums or not.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -38,86 +30,44 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(V + E)$
+- Time complexity : $O(r * c)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 
-$V$ : number of vertices
+$r$ : number of rows in the 2D `paths` array 
 
-$E$ : number of edges in the graph
+$c$ : number of columns in the 2D `paths` array 
 
-- Space complexity : $O(V + E)$
+- Space complexity : $O(1)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
-$N$ : total number of nodes in the original graph
-
 ## Code 
 
 ```
 // User function Template for Java
 
 class Solution {
-    private static final int MAX_DEPTH = Integer.MAX_VALUE;
-    private static ArrayList<ArrayList<Integer>> criticalConnections;
-    private static int[] nodeRanks;
-    private static int[] visitedNodes;
+    
+    // Function to check if it is possible for each path to have an even sum
+    public int isPossible(int[][] paths) {
+        // Code here
 
-    public ArrayList<ArrayList<Integer>> criticalConnections(int v, ArrayList<ArrayList<Integer>> adj) {
-        // Initialization
-        criticalConnections = new ArrayList<>();
-        nodeRanks = new int[v];
-        Arrays.fill(nodeRanks, -1);
-        visitedNodes = new int[v];
+        // Iterating through each path
+        for (int[] rasta : paths) {
+            int sum = 0;
 
-        // Starting DFS to find critical connections
-        dfs(0, -1, 0, adj);
-
-        // Sorting each edge in ascending order of nodes
-        for (ArrayList<Integer> edge : criticalConnections) {
-            Collections.sort(edge);
-        }
-
-        // Sorting the list of edges
-        criticalConnections.sort((a, b) -> {
-            if (a.get(0).equals(b.get(0))) {
-                return a.get(1) - b.get(1);
+            // Calculating the sum of elements in the current path
+            for (int val : rasta) {
+                sum += val;
             }
-            return a.get(0) - b.get(0);
-        });
 
-        return criticalConnections;
-    }
-
-    // Depth-first search to find critical connections
-    private static int dfs(int currentNode, int parent, int currentRank,
-                           ArrayList<ArrayList<Integer>> adjacencyList) {
-        // Set node rank and mark as visited
-        nodeRanks[currentNode] = currentRank;
-        visitedNodes[currentNode] = 1;
-        int minDepth = MAX_DEPTH;
-
-        // Exploring neighbors
-        for (int child : adjacencyList.get(currentNode)) {
-            if (child != parent) {
-                // If neighbor is visited, updating minDepth
-                if (visitedNodes[child] == 1) {
-                    minDepth = Math.min(minDepth, nodeRanks[child]);
-                } else {
-                    // Continuing DFS for unvisited neighbor
-                    int minRank = dfs(child, currentNode, currentRank + 1, adjacencyList);
-
-                    // Checking for critical connection
-                    if (nodeRanks[currentNode] < minRank) {
-                        ArrayList<Integer> edge = new ArrayList<>();
-                        edge.add(currentNode);
-                        edge.add(child);
-                        criticalConnections.add(edge);
-                    }
-
-                    // Updating minDepth
-                    minDepth = Math.min(minRank, minDepth);
-                }
+            // Checking if the sum is not even
+            if (sum % 2 != 0) {
+                // If the sum is not even, returning 0 (indicating it is not possible)
+                return 0;
             }
         }
-        return minDepth;
+
+        // If all paths have even sums, returning 1 (indicating it is possible)
+        return 1;
     }
 }
 ```
