@@ -6,7 +6,7 @@ This is my attempt to make the coding experience easier for you guys so that you
 ## Flatten BST to sorted list
 
 ## Intuition
-The goal is to flatten a Binary Search Tree (BST) into a sorted doubly linked list. My Java code used an in-order traversal to achieve this. During the traversal, I maintained a previous node (`pichla`) to properly link the nodes in the doubly linked list.
+The goal is to flatten a Binary Search Tree (BST) into a sorted doubly linked list. My Java code used an in-order traversal to achieve this. During the traversal, Igi maintained a previous node (`pichla`) to properly link the nodes in the doubly linked list.
 
 
 ## Approach
@@ -27,12 +27,10 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(r * c)$
+- Time complexity : $O(N)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 
-$r$ : number of rows in the 2D `paths` array 
-
-$c$ : number of columns in the 2D `paths` array 
+$N$ : number of nodes in the Binary Search Tree.
 
 - Space complexity : $O(1)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
