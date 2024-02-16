@@ -12,7 +12,7 @@ The goal is to flatten a Binary Search Tree (BST) into a sorted doubly linked li
 ## Approach
 
 - Initialized a dummy node (`tatkal`) to serve as the head of the resulting doubly linked list. Also, initialized `pichla` as the dummy node.
-- Implement an in-order traversal of the BST.
+- Implemented an in-order traversal of the BST.
    - Recursively traversed the left subtree.
    - Set the left and right pointers of the current node, updating `pichla` accordingly.
    - Recursively traversed the right subtree.
