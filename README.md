@@ -32,7 +32,7 @@ Keep Solving.:)
 
 $N$ : number of nodes in the Binary Search Tree.
 
-- Space complexity : $O(1)$
+- Space complexity : $O(N)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 ## Code 
 
