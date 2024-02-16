@@ -34,6 +34,8 @@ $N$ : number of nodes in the Binary Search Tree.
 
 - Space complexity : $O(N)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
+Keep in mind that the space complexity is dominated by the recursion stack in this case. If the BST is balanced, the space complexity would be $O(log N)$.
+
 ## Code 
 
 ```
