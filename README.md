@@ -35,7 +35,7 @@ Keep Solving.:)
 
   - $n$ : given size of array
   - My loop iterated through the array up to the second last level of the heap 
-$((n−1)/2)$. ~ $O(n)$
+$((n−1)/2)$ ~ $O(n)$
 
 - Space complexity : $O(1)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
