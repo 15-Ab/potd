@@ -11,14 +11,14 @@ This problem aimed to check whether a given array forms a max heap or not. A max
 ## Approach
 
 **Iterated Through the Array :**
-- The function iterated through the array up to the second last level of the heap (index `(n - 1) / 2`).
+- My function iterated through the array up to the second last level of the heap (index `(n - 1) / 2`).
 - Each iteration checked whether the current node is greater than or equal to its left and right children.
 
 **Checked Max Heap Property :**
 - For each node at index `i`, calculated the indices of its left and right children (`2 * i + 1` and `2 * i + 2`).
 - Checked if the left child is within the array bounds and greater than the current node OR if the right child is within the array bounds and greater than the current node.
 
-**Return Result :**
+**Returned the Result :**
 - If any of the conditions in the check step are true, it means the array doesn't satisfy the max heap property, and my function returned `false`.
 - If the loop completed without returning false, the array satisfies the max heap property, and my function returned `true`.
 
