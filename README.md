@@ -2,24 +2,27 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 16-02-24 [Problem Link](https://www.geeksforgeeks.org/problems/flatten-bst-to-sorted-list--111950/1)
-## Flatten BST to sorted list
+## Today's 17-02-24 [Problem Link](https://www.geeksforgeeks.org/problems/does-array-represent-heap4345/1)
+## Does array represent Heap
 
 ## Intuition
-The goal is to flatten a Binary Search Tree (BST) into a sorted doubly linked list. My Java code used an in-order traversal to achieve this. During the traversal, Igi maintained a previous node (`pichla`) to properly link the nodes in the doubly linked list.
-
+This problem aimed to check whether a given array forms a max heap or not. A max heap is a binary tree where the value of each node is greater than or equal to the values of its children.
 
 ## Approach
 
-- Initialized a dummy node (`tatkal`) to serve as the head of the resulting doubly linked list. Also, initialized `pichla` as the dummy node.
-- Implemented an in-order traversal of the BST.
-   - Recursively traversed the left subtree.
-   - Set the left and right pointers of the current node, updating `pichla` accordingly.
-   - Recursively traversed the right subtree.
-- After the traversal, set the left and right pointers of the last node to null to complete the doubly linked list.
-- Returned the head of the flattened BST, which is `tatkal.right`.
+**Iterated Through the Array :**
+- The function iterated through the array up to the second last level of the heap (index `(n - 1) / 2`).
+- Each iteration checked whether the current node is greater than or equal to its left and right children.
 
-My in-order traversal ensured that the nodes are visited in ascending order, and by appropriately updating pointers, the BST is flattened into a doubly linked list.
+**Checked Max Heap Property :**
+- For each node at index `i`, calculated the indices of its left and right children (`2 * i + 1` and `2 * i + 2`).
+- Checked if the left child is within the array bounds and greater than the current node OR if the right child is within the array bounds and greater than the current node.
+
+**Return Result :**
+- If any of the conditions in the check step are true, it means the array doesn't satisfy the max heap property, and my function returned `false`.
+- If the loop completed without returning false, the array satisfies the max heap property, and my function returned `true`.
+
+My approach efficiently checked the max heap property by examining each node and its children, ensuring that the array represents a valid max heap structure.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -27,64 +30,39 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(N)$
+- Time complexity : $O(n)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 
-$N$ : number of nodes in the Binary Search Tree.
+$n$ : given size of array
 
-- Space complexity : $O(N)$
+- Space complexity : $O(1)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
-Keep in mind that the space complexity is dominated by the recursion stack in this case. If the BST is balanced, the space complexity would be $O(log N)$.
 
 ## Code 
 
 ```
-// User function Template for Java
+//User function Template for Java
 class Solution {
     
-    // Declaring static variables to keep track of the previous and current nodes
-    static Node pichla;
-    static Node tatkal;
+    // Function to check if the given array forms a max heap
+    public boolean countSub(long arr[], long n) {
+        
+        // Iterating through the array up to the second last level of the heap
+        for (int i = 0; i <= (n - 1) / 2; i++) {
+            int leftChild = 2 * i + 1;
+            int rightChild = 2 * i + 2;
 
-    // Function to flatten a BST
-    public Node flattenBST(Node root) {
-        // Code here
-
-        // Initializing the 'tatkal' node as a dummy node
-        tatkal = new Node(-1);
-        // Initializing the 'pichla' node as the dummy node
-        pichla = tatkal;
-
-        // Performing inorder traversal to flatten the BST
-        inorder(root);
-
-        // Set the left and right pointers of the last node to null
-        pichla.left = null;
-        pichla.right = null;
-
-        // Returning the head of the flattened BST
-        return tatkal.right;
-    }
-
-    // Helper function for inorder traversal
-    static void inorder(Node r) {
-        // Base case : If the current node is null, return
-        if (r == null) {
-            return;
+            // Checking if the left child is within the array bounds and greater than the current node
+            // OR if the right child is within the array bounds and greater than the current node
+            
+            if ((leftChild < n && arr[i] < arr[leftChild]) || (rightChild < n && arr[i] < arr[rightChild])) {
+                // If any condition is true, the array doesn't satisfy the max heap property, returning false
+                return false;
+            }
         }
-
-        // Recursively traversing the left subtree
-        inorder(r.left);
-
-        // Set the left and right pointers of the current node
-        pichla.left = null;
-        pichla.right = r;
-
-        // Updating 'pichla' to the current node
-        pichla = r;
-
-        // Recursively traversing the right subtree
-        inorder(r.right);
+        
+        // If the loop completes without returning false, the array satisfies the max heap property, returning true
+        return true;
     }
 }
 ```
