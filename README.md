@@ -33,7 +33,9 @@ Keep Solving.:)
 - Time complexity : $O(n)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 
-$n$ : given size of array
+  - $n$ : given size of array
+  - The loop iterates through the array up to the second last level of the heap 
+$((n−1)/2)$.
 
 - Space complexity : $O(1)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
