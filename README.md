@@ -30,7 +30,7 @@ Keep Solving.:)
 
 ## Complexity
 - Time complexity : $O(n)$
-  - - $n$ : number of nodes in the tree
+  - $n$ : number of nodes in the tree
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 
 - Space complexity : $O(n)$
