@@ -15,7 +15,7 @@ This is my attempt to make the coding experience easier for you guys so that you
 - Created a main function `sumOfLeafNodes` that takes the root of the binary search tree as input.
 - Reset the `jawab` variable before each function call.
 - Called a helper function, say `helper`, passing the root of the binary search tree.
-- Inside the `helper` function:
+- Inside the `helper` function :
    - Base case : If the current node is null, return.
    - Recursively called `helper` for the left and right subtrees.
    - If the current node is a leaf node (both left and right children are null), added its data to the `jawab` variable.
