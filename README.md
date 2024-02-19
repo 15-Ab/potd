@@ -2,38 +2,53 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 18-02-24 [Problem Link](https://www.geeksforgeeks.org/problems/sum-of-leaf-nodes-in-bst/1)
-## Sum of leaf nodes in BST
+## Today's 19-02-24 [Problem Link](https://www.geeksforgeeks.org/problems/game-with-string4100/1)
+## Game with String
 
 ## Intuition
-- To calculate the sum of leaf nodes, I need to traverse the binary search tree and identify the leaf nodes.
-- A leaf node is a node with no left and right children.
+The task is to find the minimum sum of squares of characters in the string after performing at most `k` removals. The character frequencies play a crucial role in determining the contribution to the sum, and the goal is to minimize this sum.
 
 ## Approach
 
-- I initialized a global variable `jawab` to store the sum of leaf nodes.
-- Created a main function `sumOfLeafNodes` that takes the root of the binary search tree as input.
-- Reset the `jawab` variable before each function call.
-- Called a helper function, say `helper`, passing the root of the binary search tree.
-- Inside the `helper` function :
-   - Base case : If the current node is null, return.
-   - Recursively called `helper` for the left and right subtrees.
-   - If the current node is a leaf node (both left and right children are null), added its data to the `jawab` variable.
-- After the traversal is complete, returned the final value of `jawab`.
+**Initialized the Variables :**
+   - `maxF` : Variable to store the maximum frequency encountered.
+   - `m` : HashMap to store character frequencies.
+   - `sco` : Array to store frequency counts.
 
-My approach recursively traversed the binary search tree, identified leaf nodes and added their data to the sum. The final result is the sum of all leaf nodes in the given binary search tree.
+**Counted Character Frequencies :**
+   - Iterated through the characters in the input string `s`.
+   - Updated the frequency count in the HashMap `m`.
+   - Kept track of the maximum frequency encountered (`maxF`).
 
+**Initialized the Frequency Count Array (`sco`) :**
+   - Created an array `sco` with a size of `s.length() + 1` to store frequency counts.
+   - Counted the occurrences of each frequency in the HashMap and update the `sco` array.
+
+**Performed Removals :**
+   - While `k` is greater than 0 :
+     - Identified the count of characters with the maximum frequency (`sbsejada`).
+     - If `sbsejada` is less than or equal to `k`, performed removals and updated the `sco` array.
+     - If `sbsejada` is greater than `k`, partially removed characters with the maximum frequency and updated `sco`.
+     - Broke the loop as the required removals are completed.
+
+**Calculated Minimum Sum of Squares:**
+   - Iterated through the `sco` array and calculated the minimum sum of squares based on the frequency counts.
+
+**Return the Result :**
+   - Returned the calculated minimum sum of squares.
+
+My approach utilized a HashMap to efficiently count character frequencies and an array (`sco`) to keep track of the counts of different frequencies. Removals were performed based on the maximum frequency encountered, ensuring the minimum sum of squares is achieved.
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(n)$
+- Time complexity : $O(s)$
   - $n$ : number of nodes in the tree
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-
-- Space complexity : $O(n)$
+$s$ : length of the string
+- Space complexity : $O(unique characters)$
   -  $O(n)$ in the worst case and $O(log n)$ in the average case for a balanced tree
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
    
@@ -42,50 +57,60 @@ Keep Solving.:)
 ```
 // User function Template for Java
 
-/* Node class for the binary search tree 
-class Node {
-    int data;
-    Node left, right;
-
-    // Constructor to initialize a Node with a key
-    Node(int key) {
-        data = key;
-        left = right = null;
-    }
-}
-*/
-
 class Solution {
-    // Variable to store the sum of leaf nodes
-    static int jawab;
-
-    // Main function to calculate the sum of leaf nodes
-    public static int sumOfLeafNodes(Node root) {
-        // Resetting the answer variable before each function call
-        jawab = 0;
+    
+    static int maxF;  // Variable to store the maximum frequency
+    static HashMap<Character, Integer> m;  // HashMap to store character frequencies
+    static int[] sco;  // Array to store frequency counts
+    
+    static int minValue(String s, int k) {
         
-        // Calling the helper function to traverse the tree and calculate the sum
-        helper(root);
+        // Initializing maxF and HashMap
+        maxF = 0;
+        m = new HashMap<>();
         
-        // Returning the final sum of leaf nodes
+        // Counting character frequencies and update maxF
+        for (char c : s.toCharArray()) {
+            m.put(c, m.getOrDefault(c, 0) + 1);
+            maxF = Math.max(maxF, m.get(c));
+        }
+        
+        // Initializing sco array with size + 1
+        sco = new int[s.length() + 1];
+        
+        // Counting frequency occurrences and update sco array
+        for (int v : m.values()) {
+            sco[v]++;
+        }
+        
+        // Performing removals until k becomes 0
+        while (k > 0) {
+            int sbsejada = sco[maxF];
+            if (sbsejada <= k) {
+                // If the count of characters with maximum frequency is less than or equal to k,
+                // performing removals and updating the sco array
+                k -= sbsejada;
+                sco[maxF - 1] += sbsejada;
+                sco[maxF] = 0;
+                maxF--;
+            } else {
+                // If the count of characters with maximum frequency is greater than k,
+                // partially removing them and updated the sco array
+                sco[maxF] -= k;
+                maxF--;
+                sco[maxF] += k;
+                break;
+            }
+        }
+        
+        int jawab = 0;
+        
+        // Calculating the minimum sum of squares
+        for (int i = 0; i < s.length() + 1; i++) {
+            jawab += (i * i) * sco[i];
+        }
+        
         return jawab;
-    }
-
-    // Helper function to recursively traverse the tree and calculate the sum of leaf nodes
-    static void helper(Node r) {
-        // Base case: if the current node is null, return
-        if (r == null) {
-            return;
-        }
-
-        // Recursively calling the helper function for the left and right subtrees
-        helper(r.left);
-        helper(r.right);
-
-        // If the current node is a leaf node, adding its data to the answer variable
-        if (r.left == null && r.right == null) {
-            jawab += r.data;
-        }
     }
 }
 ```
