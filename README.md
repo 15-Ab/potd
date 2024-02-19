@@ -45,7 +45,7 @@ Keep Solving.:)
 
 ## Complexity
 - Time complexity : $O(s)$
-  - $n$ : number of nodes in the tree
+  - $s$ : number of nodes in the tree
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 $s$ : length of the string
 - Space complexity : $O(u)$
