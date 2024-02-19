@@ -22,7 +22,7 @@ The task is to find the minimum sum of squares of characters in the string after
 
 **Initialized the Frequency Count Array (`sco`) :**
    - Created an array `sco` with a size of `s.length() + 1` to store frequency counts.
-   - Counted the occurrences of each frequency in the HashMap and update the `sco` array.
+   - Counted the occurrences of each frequency in the HashMap and updated the `sco` array.
 
 **Performed Removals :**
    - While `k` is greater than 0 :
@@ -48,9 +48,9 @@ Keep Solving.:)
   - $n$ : number of nodes in the tree
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 $s$ : length of the string
-- Space complexity : $O(unique characters)$
-  -  $O(n)$ in the worst case and $O(log n)$ in the average case for a balanced tree
+- Space complexity : $O(u)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
+$u$ : unique characters
    
 ## Code 
 
