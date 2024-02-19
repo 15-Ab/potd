@@ -38,6 +38,7 @@ The task is to find the minimum sum of squares of characters in the string after
    - Returned the calculated minimum sum of squares.
 
 My approach utilized a HashMap to efficiently count character frequencies and an array (`sco`) to keep track of the counts of different frequencies. Removals were performed based on the maximum frequency encountered, ensuring the minimum sum of squares is achieved.
+
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
 
