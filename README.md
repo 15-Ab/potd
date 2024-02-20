@@ -36,7 +36,7 @@ Keep Solving.:)
 ## Complexity
 - Time complexity : $O(2^s)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$s$ :  length of the input string
+  - $s$ :  length of the input string
 - Space complexity : $O(s)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
    
