@@ -16,7 +16,7 @@ The goal of this problem is to determine if a given string `s` can be broken int
 **Dictionary Population :**
    - Iterated through the given `dictionary` and added each word to the HashSet.
 
-3**Recursive Break Check :**
+**Recursive Break Check :**
    - Used a recursive function (`bnsktakya`) to check if the input string can be broken.
    - Base case : If the input string is empty, returned true (it can always be broken).
    - Iterated through the characters of the string, accumulating them in a temporary string.
@@ -35,7 +35,6 @@ Keep Solving.:)
 
 ## Complexity
 - Time complexity : $O(2^s)$
-  - $s$ : number of nodes in the tree
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 $s$ :  length of the input string
 - Space complexity : $O(s)$
