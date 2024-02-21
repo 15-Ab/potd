@@ -39,10 +39,10 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(s*s*s)$ = $O(s^3)$
+- Time complexity : $O(s.s.s)$ = $O(s^3)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 $s$ :  length of the input string
-- Space complexity : $O(s*s*2)$ = $O(s2)$
+- Space complexity : $O(s.s.2)$ = $O(s2)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
    
 ## Code 
