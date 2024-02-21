@@ -2,31 +2,36 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 20-02-24 [Problem Link](https://www.geeksforgeeks.org/problems/word-break1352/1)
-## Word Break
+## Today's 21-02-24 [Problem Link](https://www.geeksforgeeks.org/problems/boolean-parenthesization5610/1)
+## Boolean Parenthesization
 
 ## Intuition
-The goal of this problem is to determine if a given string `s` can be broken into words from a provided dictionary.
+
+- The goal of this problem is to count the number of ways to parenthesize a given boolean expression such that it evaluates to true or false.
+
+- The recursive nature of the problem lies in breaking down the boolean expression into subproblems. For a subexpression between indices `i` and `j`, and a boolean value to achieve (`kyasch`), I will recursively calculate the number of ways to parenthesize the subexpression to obtain the desired result.
 
 ## Approach
 
-**HashSet Initialization :**
-   - Created a HashSet (`h`) to store dictionary words for quick lookup.
+**Memoization Array (`gp`) :**
+   - Initialized a 3D memoization array `gp` to store the computed results for subproblems.
+   - `gp[i][j][kyasch]` represented the number of ways to parenthesize the subexpression from index `i` to `j` to achieve the boolean value `kyasch`.
 
-**Dictionary Population :**
-   - Iterated through the given `dictionary` and added each word to the HashSet.
+**Base Cases :**
+   - If `i > j`, returned 0, as the expression is empty.
+   - If `i == j`, returned 1 if the character at index `i` matches the desired boolean value (`kyasch`), otherwise returned 0.
 
-**Recursive Break Check :**
-   - Used a recursive function (`bnsktakya`) to check if the input string can be broken.
-   - Base case : If the input string is empty, returned true (it can always be broken).
-   - Iterated through the characters of the string, accumulating them in a temporary string.
-   - If the accumulated string is in the dictionary and the remaining part can also be broken recursively, returned true.
+**Recursion and Dynamic Programming :**
+   - For each operator ('&', '|', '^') at an odd index `k` between `i` and `j`, calculated the results for the left and right subexpressions.
+   - Recursively called the `helper` function for these subexpressions and updated the memoization array.
+   - Applied the operator to the left and right results based on the current operator at index `k`.
+   - Accumulated the results for different combinations.
 
-**Result :**
-   - If the `bnsktakya` function returns true, the original string can be broken, and the function returns 1.
-   - Otherwise, it returns 0.
+**Return Result :**
+   - The final result is stored in `tatkal`, which represents the number of ways to parenthesize the entire expression to achieve the desired boolean value (`kyasch`).
 
-My approach leverages HashSet for efficient word lookup and recursion to explore possible word breaks in the input string.
+My dynamic programming approach with memoization helped to avoid redundant calculations and efficiently computed the number of ways to parenthesize the boolean expression.
+
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -34,60 +39,99 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(2^s)$
+- Time complexity : $O(s^3)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 $s$ :  length of the input string
-- Space complexity : $O(s)$
+- Space complexity : $O(s^2)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
    
 ## Code 
 
 ```
-// User function Template for Java
+//User function Template for Java
 
-class Solution
-{
-    // HashSet to store the dictionary words for quick lookup
-    static HashSet<String> h;
+class Solution{
+    static int M = 1003;
+    static int [][][] gp;
 
-    // Main function to check if the input string can be broken into words from the dictionary
-    public static int wordBreak(int n, String s, ArrayList<String> dictionary ){
-        
-        // Initializing the HashSet with dictionary words
-        h = new HashSet<>();
-        for( String str : dictionary ){
-            h.add(str);
-        }
-        
-        // Checking if it is possible to break the input string
-        if( bnsktakya(s)){
-            return 1; // Returning 1 if possible
-        }
-        return 0; // Returning 0 if not possible
-    }
-    
-    // Recursive function to check if the string can be broken into words
-    static boolean bnsktakya( String s){
-        // Base case: an empty string can always be broken
-        if( s.length() == 0){
-            return true;
-        }
+    // Function to count the number of ways to parenthesize the boolean expression
+    static int countWays(int n, String s){
+        gp = new int[n + 1][n + 1][2];
 
-        // Temporary string to accumulate characters
-        String temp = "";
-
-        // Iterating through the characters of the string
-        for( int i = 0; i < s.length(); i++){
-            // Appending the current character to the temporary string
-            temp += s.charAt(i);
-
-            // Checking if the accumulated string is in the dictionary, and if the remaining part can also be broken
-            if( h.contains(temp) && bnsktakya(s.substring(i+1))){
-                return true; // Return true if it can be broken
+        // Initializing the dp array with -1
+        for (int r[][] : gp){
+            for (int c[] : r){
+                Arrays.fill(c, -1);
             }
         }
 
-        return false; // Returning false if no valid break is found
+        // Calling the helper function to compute the result
+        return helper(s, 0, n - 1, 1);
+    }
+    
+    // Helper function to recursively compute the number of ways
+    static int helper(String s, int i, int j, int kyasch){
+        
+        // Base case : If the expression is empty, return 0
+        if (i > j){
+            return 0;
+        }
+
+        // Base case : If there is only one character in the expression
+        if (i == j){
+            // Checking if the character is 'T' or 'F' based on kyasch
+            return (kyasch == 1) ? (s.charAt(i) == 'T' ? 1 : 0) : (s.charAt(i) == 'F' ? 1 : 0);
+        }
+
+        // If the result for the current subproblem is already computed, returning it
+        if (gp[i][j][kyasch] != -1){
+            return gp[i][j][kyasch];
+        }
+
+        // Initializing variables for the result and intermediate results
+        int tatkal = 0, lT, rT, lF, rF;
+
+        // Iterating through the operators in the expression
+        for (int k = i + 1; k <= j - 1; k = k + 2) {
+
+            // Calculating left and right results for 'T' and 'F'
+            lT = (gp[i][k - 1][1] != -1) ? gp[i][k - 1][1] : helper(s, i, k - 1, 1);
+            lF = (gp[i][k - 1][0] != -1) ? gp[i][k - 1][0] : helper(s, i, k - 1, 0);
+            rT = (gp[k + 1][j][1] != -1) ? gp[k + 1][j][1] : helper(s, k + 1, j, 1);
+            rF = (gp[k + 1][j][0] != -1) ? gp[k + 1][j][0] : helper(s, k + 1, j, 0);
+
+            // Applying the operator and updating the result
+            if (s.charAt(k) == '&'){
+                if (kyasch == 1) {
+                    tatkal = (tatkal + (lT * rT) % M) % M;
+                }
+                else{
+                    tatkal = (tatkal + (lT * rF) % M + (lF * rT) % M + (lF * rF) % M) % M;
+                }
+            }
+            else if (s.charAt(k) == '|'){
+                if (kyasch == 1){
+                    tatkal = (tatkal + (lT * rT) % M + (lT * rF) % M + (lF * rT) % M) % M;
+                }
+                else{
+                    tatkal = (tatkal + (lF * rF) % M) % M;
+                }
+            }
+            else if (s.charAt(k) == '^'){
+                if (kyasch == 1){
+                    tatkal = (tatkal + (lT * rF) % M + (lF * rT) % M) % M;
+                }
+                else{
+                    tatkal = (tatkal + (lT * rT) % M + (lF * rF) % M) % M;
+                }
+            }
+
+            // Updating the result in the dp array
+            gp[i][j][kyasch] = tatkal;
+        }
+
+        // Returning the final result
+        return tatkal;
     }
 }
 ```
