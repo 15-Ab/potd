@@ -42,7 +42,7 @@ Keep Solving.:)
 - Time complexity : $O(s.s.s)$ = $O(s^3)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 $s$ :  length of the input string
-- Space complexity : $O(s.s.2)$ = $O(s2)$
+- Space complexity : $O(s.s.2)$ = $O(s^2)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
    
 ## Code 
