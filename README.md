@@ -2,8 +2,8 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 21-02-24 [Problem Link](https://www.geeksforgeeks.org/problems/boolean-parenthesization5610/1)
-## Boolean Parenthesization
+## Today's 22+02=24 [Problem Link](https://www.geeksforgeeks.org/problems/distinct-occurrences/1)
+## Distinct occurrences
 
 ## Intuition
 
@@ -13,25 +13,30 @@ This is my attempt to make the coding experience easier for you guys so that you
 
 ## Approach
 
-**Memoization Array (`gp`) :**
-   - Initialized a 3D memoization array `gp` to store the computed results for subproblems.
-   - `gp[i][j][kyasch]` represented the number of ways to parenthesize the subexpression from index `i` to `j` to achieve the boolean value `kyasch`.
+**Initialization :**
+   - Initialized static variables `sh` and `th` to store input strings `s` and `t`.
+   - Created a memoization array `gp` to store intermediate results, initialized with -1.
+   - Set the modulo value `m` to 1,000,000,007.
 
-**Base Cases :**
-   - If `i > j`, returned 0, as the expression is empty.
-   - If `i == j`, returned 1 if the character at index `i` matches the desired boolean value (`kyasch`), otherwise returned 0.
+**Recursive Helper Function :**
+   - Defined a recursive helper function `helper(i, j)` to calculate the count of subsequences starting from indices `i` and `j` in strings `s` and `t`, respectively.
+   - Base Cases:
+     - If the remaining characters in `t` are more than the remaining characters in `s`, returned 0.
+     - If all characters in `t` are processed, returned 1 (subsequence found).
+     - If all characters in `s` are processed, returned 0 (subsequence not found).
 
-**Recursion and Dynamic Programming :**
-   - For each operator ('&', '|', '^') at an odd index `k` between `i` and `j`, calculated the results for the left and right subexpressions.
-   - Recursively called the `helper` function for these subexpressions and updated the memoization array.
-   - Applied the operator to the left and right results based on the current operator at index `k`.
-   - Accumulated the results for different combinations.
+**Memoization :**
+   - Used the memoization array `gp` to store and retrieved already calculated results to avoid redundant calculations.
 
-**Return Result :**
-   - The final result is stored in `tatkal`, which represents the number of ways to parenthesize the entire expression to achieve the desired boolean value (`kyasch`).
+**Recursive Calls :**
+   - If the current characters in `s` and `t` match, recursively calculated for both including and excluding the character in `s`.
+   - If the characters do not match, recursively calculated for excluding the character in `s`.
 
-My dynamic programming approach with memoization helped to avoid redundant calculations and efficiently computed the number of ways to parenthesize the boolean expression.
+**Result :**
+   - The result of the helper function with the initial indices (0, 0) represented the total count of subsequences of `t` in `s`.
 
+**Modulo Operation :**
+   - Applied modulo operation `% m` to handle large values and prevent overflow.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -39,10 +44,12 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(s.s.s)$ = $O(s^3)$
+- Time complexity : $O(n.m)$ 
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$s$ :  length of the input string
-- Space complexity : $O(s.s.2)$ = $O(s^2)$
+$n$ :  length of string 's'
+
+$m$ :  length of string 't'
+- Space complexity : $O(n.m)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
    
 ## Code 
@@ -50,88 +57,64 @@ $s$ :  length of the input string
 ```
 //User function Template for Java
 
-class Solution{
-    static int M = 1003;
-    static int [][][] gp;
+/* You are required to complete this method */
 
-    // Function to count the number of ways to parenthesize the boolean expression
-    static int countWays(int n, String s){
-        gp = new int[n + 1][n + 1][2];
+class Solution {
+   
+    // Static variables to store the input strings and memoization array
+    static String sh;
+    static String th;
+    static int[][] gp;
+    static int m = 1_000_000_007;
 
-        // Initializing the dp array with -1
-        for (int r[][] : gp){
-            for (int c[] : r){
-                Arrays.fill(c, -1);
-            }
+    // Method to calculate the count of subsequences
+    int subsequenceCount(String s, String t) {
+       
+       // Initializing static variables with input strings
+        sh = s;
+        th = t;
+        
+        // Initializing memoization array
+        gp = new int[s.length() + 1][t.length() + 1];
+
+        // Filling the memoization array with -1
+        for (int i = 0; i < s.length() + 1; i++) {
+            Arrays.fill(gp[i], -1);
         }
 
-        // Calling the helper function to compute the result
-        return helper(s, 0, n - 1, 1);
+        // Calling the helper function to perform the calculation
+        return helper(0, 0);
     }
-    
-    // Helper function to recursively compute the number of ways
-    static int helper(String s, int i, int j, int kyasch){
-        
-        // Base case : If the expression is empty, return 0
-        if (i > j){
+
+    // Helper function to perform the recursive calculation
+    static int helper(int i, int j) {
+        // Base case : If the remaining characters in t are more than the remaining characters in s, returning 0
+        if (th.length() - j > sh.length() - i) {
             return 0;
         }
 
-        // Base case : If there is only one character in the expression
-        if (i == j){
-            // Checking if the character is 'T' or 'F' based on kyasch
-            return (kyasch == 1) ? (s.charAt(i) == 'T' ? 1 : 0) : (s.charAt(i) == 'F' ? 1 : 0);
+        // Base case : If all characters in t are processed, returning 1 (subsequence found)
+        if (j == th.length()) {
+            return 1;
         }
 
-        // If the result for the current subproblem is already computed, returning it
-        if (gp[i][j][kyasch] != -1){
-            return gp[i][j][kyasch];
+        // Base case : If all characters in s are processed, returning 0 (subsequence not found)
+        if (i == sh.length()) {
+            return 0;
         }
 
-        // Initializing variables for the result and intermediate results
-        int tatkal = 0, lT, rT, lF, rF;
-
-        // Iterating through the operators in the expression
-        for (int k = i + 1; k <= j - 1; k = k + 2) {
-
-            // Calculating left and right results for 'T' and 'F'
-            lT = (gp[i][k - 1][1] != -1) ? gp[i][k - 1][1] : helper(s, i, k - 1, 1);
-            lF = (gp[i][k - 1][0] != -1) ? gp[i][k - 1][0] : helper(s, i, k - 1, 0);
-            rT = (gp[k + 1][j][1] != -1) ? gp[k + 1][j][1] : helper(s, k + 1, j, 1);
-            rF = (gp[k + 1][j][0] != -1) ? gp[k + 1][j][0] : helper(s, k + 1, j, 0);
-
-            // Applying the operator and updating the result
-            if (s.charAt(k) == '&'){
-                if (kyasch == 1) {
-                    tatkal = (tatkal + (lT * rT) % M) % M;
-                }
-                else{
-                    tatkal = (tatkal + (lT * rF) % M + (lF * rT) % M + (lF * rF) % M) % M;
-                }
-            }
-            else if (s.charAt(k) == '|'){
-                if (kyasch == 1){
-                    tatkal = (tatkal + (lT * rT) % M + (lT * rF) % M + (lF * rT) % M) % M;
-                }
-                else{
-                    tatkal = (tatkal + (lF * rF) % M) % M;
-                }
-            }
-            else if (s.charAt(k) == '^'){
-                if (kyasch == 1){
-                    tatkal = (tatkal + (lT * rF) % M + (lF * rT) % M) % M;
-                }
-                else{
-                    tatkal = (tatkal + (lT * rT) % M + (lF * rF) % M) % M;
-                }
-            }
-
-            // Updating the result in the dp array
-            gp[i][j][kyasch] = tatkal;
+        // If the result is already calculated, returning it
+        if (gp[i][j] != -1) {
+            return gp[i][j];
         }
 
-        // Returning the final result
-        return tatkal;
+        // If the current characters match, recursively calculating for both including and excluding the character
+        if (sh.charAt(i) == th.charAt(j)) {
+            return gp[i][j] = (helper(i + 1, j + 1) % m + helper(i + 1, j) % m) % m;
+        }
+
+        // If the current characters do not match, recursively calculating for excluding the character in s
+        return gp[i][j] = (helper(i + 1, j)) % m;
     }
 }
 ```
