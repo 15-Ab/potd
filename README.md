@@ -44,12 +44,12 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(n.m)$ 
+- Time complexity : $O(n*m)$ 
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$n$ :  length of string 's'
+$n$ :  length of string `s`
 
-$m$ :  length of string 't'
-- Space complexity : $O(n.m)$
+$m$ :  length of string `t`
+- Space complexity : $O(n*m)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
    
 ## Code 
