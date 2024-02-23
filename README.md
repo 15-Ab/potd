@@ -35,7 +35,7 @@ Keep Solving.:)
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 $n$ : number of days or the length of the input stock prices array
 
-- Space complexity : $O((n+1)*2*3) ~ O(n)$
+- Space complexity : $O((n+1)*2*3)$ ~ $O(n)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
    
 ## Code 
