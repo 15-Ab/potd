@@ -37,7 +37,7 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(1)$ OR $O(2)$ OR $O(3)$ ${/equiv}$ $O(1)$
+- Time complexity : $O(1)$ OR $O(2)$ OR $O(3)$ ${\equiv}$ $O(1)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 
 - Space complexity : $O(1)$
