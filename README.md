@@ -2,8 +2,8 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 24-02-24 [Problem Link](https://www.geeksforgeeks.org/problems/maximum-sum-problem2211/1)
-## Maximum Sum Problem
+## Today's 28-02-24 [Problem Link](https://www.geeksforgeeks.org/problems/check-if-a-number-is-divisible-by-83957/1)
+## Check if a number is divisible by 8
 
 ## Intuition
 The goal of the function `DivisibleByEight` is to determine whether a given string is divisible by 8.
