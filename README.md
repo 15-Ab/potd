@@ -6,15 +6,30 @@ This is my attempt to make the coding experience easier for you guys so that you
 ## Maximum Sum Problem
 
 ## Intuition
-- This problem involves finding the maximum sum for a given number `n`.
-- The decision at each step is to either include the current number or divide it into parts and consider the sum of those parts.
+The goal of the function `DivisibleByEight` is to determine whether a given string is divisible by 8.
 
 ## Approach
 
-- Initialized an array `a` to store the maximum sum for each index up to `n+1`.
-- Set base cases `a[0] = 0` and `a[1] = 1`.
-- Iterated from `2` to `n`, calculating the maximum sum as the maximum of `i`, `a[i/2] + a[i/3] + a[i/4]`.
-- The final result is stored in `a[n]`, representing the maximum sum.
+**Checked Length :**
+   - If the length of the string (`s`) is less than or equal to 3 :
+     - Converted the entire string to an integer.
+     - Checked if the integer is divisible by 8.
+     - Returned 1 if divisible, -1 otherwise.
+
+**Considered Last Three Digits :**
+   - If the length of the string is greater than 3 :
+     - Considered the last three characters of the string.
+     - Converted this substring to an integer.
+     - Checked if the integer is divisible by 8.
+     - Returned 1 if divisible, -1 otherwise.
+
+
+- My approach leveraged the fact that a number is divisible by 8 if its last three digits are divisible by 8.
+- If the string is short (length <= 3), the entire string is checked for divisibility.
+- If the string is longer, only the last three characters are considered.
+- The function returned 1 if the condition is met, and -1 otherwise.
+
+My approach optimally handled both short and long strings, making use of the divisibility rule for 8.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -22,11 +37,10 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(n)$ 
+- Time complexity : $O(1)$ OR $O(2)$ OR $O(3)$ ${/equiv}$ $O(1)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$n$ : given
 
-- Space complexity : $O(n)$
+- Space complexity : $O(1)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
    
 ## Code 
@@ -34,33 +48,27 @@ $n$ : given
 ```
 // User function Template for Java
 
-class Solution {
+class Solution{
     
-    // Static array to store results for dynamic programming
-    static int[] a;
-
-    // Function to find the maximum sum
-    public int maxSum(int n) { 
+    // Function to check if a substring or the whole string is divisible by 8
+    int DivisibleByEight(String s){
+        // Code here
         
-        if( n == 0){
-            return 0;
+        // Checking if the length of the string is less than or equal to 3
+        if( s.length() <= 3){
+            // If yes, converting the string to an integer and checking if it's divisible by 8
+            if( Integer.parseInt(s) % 8 == 0 ){
+                return 1; // Returning 1 if divisible by 8
+            }
+            return -1; // Returning -1 if not divisible by 8
         }
-        
-        // Initializing the array with size n+1
-        a = new int[n+1];
-        
-        // Base cases
-        a[0] = 0;
-        a[1] = 1;
-
-        // Dynamic programming approach to find the maximum sum
-        for (int i = 2; i <= n; i++) {
-            // The maximum sum at index i is the maximum of i, a[i/2] + a[i/3] + a[i/4]
-            a[i] = Math.max(i, a[i/2] + a[i/3] + a[i/4]);
+        else{
+            // If the length is greater than 3, considering the last three characters of the string
+            if( Integer.parseInt( s.substring(s.length()-3) ) % 8 == 0 ){
+                return 1; // Returning 1 if the last three characters are divisible by 8
+            }
+            return -1; // Returning -1 if the last three characters are not divisible by 8
         }
-        
-        // Returning the maximum sum at index n
-        return a[n];
-    } 
+    }
 }
 ```
