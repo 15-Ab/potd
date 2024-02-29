@@ -2,11 +2,11 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 28-02-24 [Problem Link](https://www.geeksforgeeks.org/problems/check-if-a-number-is-divisible-by-83957/1)
-## Check if a number is divisible by 8
+## Today's 29-02-24 [Problem Link](https://www.geeksforgeeks.org/problems/sum-of-bit-differences2937/1)
+## Sum of bit differences
 
 ## Intuition
-The goal of the function `DivisibleByEight` is to determine whether a given string is divisible by 8.
+The problem involves finding the sum of bit differences across all pairs of elements in an array. Bit difference at a particular position is the count of pairs where one element has the bit set (1) and the other has the bit unset (0) at that position.
 
 ## Approach
 
