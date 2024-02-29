@@ -10,26 +10,27 @@ The goal of the function `DivisibleByEight` is to determine whether a given stri
 
 ## Approach
 
-**Checked Length :**
-   - If the length of the string (`s`) is less than or equal to 3 :
-     - Converted the entire string to an integer.
-     - Checked if the integer is divisible by 8.
-     - Returned 1 if divisible, -1 otherwise.
+**Initialized the Result :** I initialized a variable (`jawab`) to store the final result.
 
-**Considered Last Three Digits :**
-   - If the length of the string is greater than 3 :
-     - Considered the last three characters of the string.
-     - Converted this substring to an integer.
-     - Checked if the integer is divisible by 8.
-     - Returned 1 if divisible, -1 otherwise.
+**Iterated Through Bits (0 to 31) :** Looped through each bit position (from 0 to 31 for 32-bit integers).
+
+**Count Set Bits :** For each bit position, I counted the number of elements in the array where the bit is set (1) at that position.
+
+**Updated the Result :** Updated the result (`jawab`) by adding twice the product of the count of set bits and the count of unset bits at the current position.
+
+**Repeated for Each Bit Position :** Repeated steps 3-4 for all 32 bit positions.
+
+**Result:** Returned the final result (`jawab`).
 
 
-- My approach leveraged the fact that a number is divisible by 8 if its last three digits are divisible by 8.
-- If the string is short (length <= 3), the entire string is checked for divisibility.
-- If the string is longer, only the last three characters are considered.
-- The function returned 1 if the condition is met, and -1 otherwise.
+- For each bit position, I counted the number of set bits and unset bits in the array.
+- The count of set bits (`c`) represented the number of elements where the bit is set at that position.
+- The count of unset bits is `(n - c)`, where `n` is the total number of elements.
+- The bit differences for the current position are given by `2 * (n - c) * c`.
+- Summing up these bit differences for all positions gived the final result.
 
-My approach optimally handled both short and long strings, making use of the divisibility rule for 8.
+
+My approach ensures an efficient calculation of the sum of bit differences without explicitly comparing each pair of elements.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -37,38 +38,84 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(1)$ OR $O(2)$ OR $O(3)$ ${\equiv}$ $O(1)$
+- Time complexity : $O(32 * n)$ ${\equiv}$ $O(n)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 
 - Space complexity : $O(1)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
    
-## Code 
+**ETON :** My java is correct but giving error on last five test cases. ( It passed 1100 / 1115 testcases.) So I submitted the same logic in Python language and it gets accepted. This may be due to server error from GeeksforGeeks end, anyways I have provided my Python code as well. You just grasp the logic.
+
+## Java Code
 
 ```
 // User function Template for Java
 
-class Solution{
+class Solution {
     
-    // Function to check if a substring or the whole string is divisible by 8
-    int DivisibleByEight(String s){
-        // Code here
+    // Variable to store the final result
+    static long jawab;
+
+    // Function to calculate the sum of bit differences
+    long sumBitDifferences(int[] arr, int n) {
         
-        // Checking if the length of the string is less than or equal to 3
-        if( s.length() <= 3){
-            // If yes, converting the string to an integer and checking if it's divisible by 8
-            if( Integer.parseInt(s) % 8 == 0 ){
-                return 1; // Returning 1 if divisible by 8
+        // Initializing the result variable
+        jawab = 0;
+
+        // Iterating through each bit position (0 to 31 for 32-bit integers)
+        for (int i = 0; i < 32; i++) {
+            // Counting the number of set bits at the current position
+            int c = 0;
+            for (int j = 0; j < n; j++) {
+                // Checking if the bit at the current position is set in the current element
+                if (((1 << i) & arr[j]) != 0) {
+                    c++;
+                }
             }
-            return -1; // Returning -1 if not divisible by 8
+
+            // Updating the result using the count of set and unset bits at the current position
+            jawab += (2 * (n - c) * c);
         }
-        else{
-            // If the length is greater than 3, considering the last three characters of the string
-            if( Integer.parseInt( s.substring(s.length()-3) ) % 8 == 0 ){
-                return 1; // Returning 1 if the last three characters are divisible by 8
+
+        // Returning the final result
+        return jawab;
+    }
+}
+```
+
+## Python Code
+
+```
+// User function Template for Java
+
+class Solution {
+    
+    // Variable to store the final result
+    static long jawab;
+
+    // Function to calculate the sum of bit differences
+    long sumBitDifferences(int[] arr, int n) {
+        
+        // Initializing the result variable
+        jawab = 0;
+
+        // Iterating through each bit position (0 to 31 for 32-bit integers)
+        for (int i = 0; i < 32; i++) {
+            // Counting the number of set bits at the current position
+            int c = 0;
+            for (int j = 0; j < n; j++) {
+                // Checking if the bit at the current position is set in the current element
+                if (((1 << i) & arr[j]) != 0) {
+                    c++;
+                }
             }
-            return -1; // Returning -1 if the last three characters are not divisible by 8
+
+            // Updating the result using the count of set and unset bits at the current position
+            jawab += (2 * (n - c) * c);
         }
+
+        // Returning the final result
+        return jawab;
     }
 }
 ```
