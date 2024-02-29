@@ -45,7 +45,7 @@ Keep Solving.:)
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
    
 ## ETON 
-My java code is correct but giving error on last five test cases. ( It passed 1100 / 1115 testcases.) So I submitted the same logic in Python language and it gets accepted. This may be due to server error from GeeksforGeeks end, anyways I have provided my Python code as well. You just grasp the logic.
+My java code is correct but giving error on last five test cases ( It passed 1100 / 1115 testcases). So I submitted the same logic in Python language and it gets accepted. This may be due to server error from GeeksforGeeks end, anyways I have provided my Python code as well. You just grasp the logic as both code's logic are same.
 
 ## Java Code
 
@@ -90,6 +90,7 @@ class Solution {
 # User function Template for python3
 
 class Solution:
+
     # Static variable to store the result
     jawab = 0
     
@@ -97,9 +98,9 @@ class Solution:
         # Initialize result
         Solution.jawab = 0
 
-        # Iterate through each bit position (0 to 31 for 32-bit integers)
+        # Iterated through each bit position (0 to 31 for 32-bit integers)
         for i in range(0, 32):
-            # Count number of elements with i'th bit set
+            # Counted number of elements with i'th bit set
             c = 0
             for j in range(0, n):
                 if ( (1 << i) & arr[j] ):
