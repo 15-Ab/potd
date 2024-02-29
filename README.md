@@ -44,7 +44,8 @@ Keep Solving.:)
 - Space complexity : $O(1)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
    
-**ETON :** My java is correct but giving error on last five test cases. ( It passed 1100 / 1115 testcases.) So I submitted the same logic in Python language and it gets accepted. This may be due to server error from GeeksforGeeks end, anyways I have provided my Python code as well. You just grasp the logic.
+## ETON 
+My java code is correct but giving error on last five test cases. ( It passed 1100 / 1115 testcases.) So I submitted the same logic in Python language and it gets accepted. This may be due to server error from GeeksforGeeks end, anyways I have provided my Python code as well. You just grasp the logic.
 
 ## Java Code
 
@@ -86,7 +87,7 @@ class Solution {
 ## Python Code
 
 ```
-// User function Template for Java
+// User function Template for Python
 
 class Solution {
     
