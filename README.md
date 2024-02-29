@@ -87,36 +87,24 @@ class Solution {
 ## Python Code
 
 ```
-// User function Template for Python
+# User function Template for python3
 
-class Solution {
+class Solution:
+    # Static variable to store the result
+    jawab = 0
     
-    // Variable to store the final result
-    static long jawab;
+    def sumBitDifferences(self, arr, n):
+        # Initialize result
+        Solution.jawab = 0
 
-    // Function to calculate the sum of bit differences
-    long sumBitDifferences(int[] arr, int n) {
-        
-        // Initializing the result variable
-        jawab = 0;
+        # Iterate through each bit position (0 to 31 for 32-bit integers)
+        for i in range(0, 32):
+            # Count number of elements with i'th bit set
+            c = 0
+            for j in range(0, n):
+                if ( (1 << i) & arr[j] ):
+                    c += 1
+            Solution.jawab += (2 * (n - c) * c)
 
-        // Iterating through each bit position (0 to 31 for 32-bit integers)
-        for (int i = 0; i < 32; i++) {
-            // Counting the number of set bits at the current position
-            int c = 0;
-            for (int j = 0; j < n; j++) {
-                // Checking if the bit at the current position is set in the current element
-                if (((1 << i) & arr[j]) != 0) {
-                    c++;
-                }
-            }
-
-            // Updating the result using the count of set and unset bits at the current position
-            jawab += (2 * (n - c) * c);
-        }
-
-        // Returning the final result
-        return jawab;
-    }
-}
+        return Solution.jawab
 ```
