@@ -2,36 +2,32 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 01-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/peak-element/1)
-## Peak element
+## Today's 02-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/first-element-to-occur-k-times5150/1)
+## First element to occur k times
 
 ## Intuition
-The goal is to find a peak element in the given array. A peak element is an element that is greater than or equal to its neighbors. The code uses a binary search approach to efficiently locate a peak element.
+The goal of the provided code is to find the first element in an array that occurs exactly k times. It employs a HashMap to keep track of the frequency of each element during a linear traversal of the input array.
+
+## Ap
 
 ## Approach
 
- **Binary Search :**
-   - I initialized the pointers `l`, `r`, and `m` for binary search. `l` points to the start of the array, `r` points to the end, and `m` represents the middle index.
-   - Performed a binary search until a peak element is found.
-  
-**Checked for Peak Element :**
-   - At each step, checked if the element at index `m` is a peak.
-   - A peak element must be greater than or equal to its neighbors (if they exist).
+**I initialized HashMap:**
+   - Declared a static HashMap named `m` to store the frequency of elements.
 
-**Updated Search Space :**
-   - If the middle element is not a peak, adjusted the search space based on the comparisons with its neighbors.
-     - If the element to the left of `m` is greater, searched in the left half.
-     - If the element to the right of `m` is greater or equal, searched in the right half.
+**Iterated Through Array:**
+   - Traversed the given array `a`.
+   - For each element in the array :
+     - Updated the frequency of the element in the HashMap using `m.put(a[i], m.getOrDefault(a[i], 0) + 1)`.
 
-**Break Condition :**
-   - Break out of the binary search loop when a peak element is found (the conditions for a peak are satisfied).
+**Checked Frequency :**
+   - After updating the frequency, checked if the frequency of the current element is equal to `k`.
+     - If true, returned the current element as it occurs exactly `k` times.
 
-**Returned Peak Index :**
-   - Returned the index `m` as the result, representing the index of the peak element.
+- **Returned -1 if Not Found :**
+   - If no element is found with frequency `k` after the traversal, returned -1.
 
-The binary search efficiently reduces the search space in each iteration, making the algorithm more time-efficient.
-
-My code ensured that it finds a valid peak element by considering edge cases at the boundaries of the array.
+My approach efficiently utilized a HashMap to keep track of element frequencies while traversing the array linearly. The code stops and returns the first element that satisfies the condition of occurring exactly `k` times.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -39,10 +35,11 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O( log n)$
+- Time complexity : $O( N )$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-
-- Space complexity : $O(1)$
+$N$ :  size of the input array
+$U$ :  number of unique elements in the input array
+- Space complexity : $O( U )$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code
@@ -50,43 +47,31 @@ Keep Solving.:)
 ```
 // User function Template for Java
 
-/*Complete the function below*/
-
 class Solution {
-    // Function to find the peak element
-    // arr[]: input array
-    // n: size of array a[]
-    
-    public int peakElement(int[] arr, int n) {
+
+    // Declaring a static HashMap to store element frequencies
+    static HashMap<Integer, Integer> m;
+
+    // Method to find the first element occurring k times in an array
+    public int firstElementKTime(int n, int k, int[] a) {
         
-        // Initializing pointers for binary search
-        int l = 0;
-        int r = n - 1;
-        int m = 0; // Variable to store the middle index
+        // Initializing the HashMap
+        m = new HashMap<>();
 
-        // Performing binary search to find the peak element
-        while (l <= r) {
-            
-            // Calculating the middle index using bitwise right shift (equivalent to dividing by 2)
-            m = (l + r) >> 1;
+        // Iterating through the array
+        for (int i = 0; i < a.length; i++) {
+            // Updating the frequency of the current element in the HashMap
+            m.put(a[i], m.getOrDefault(a[i], 0) + 1);
 
-            // Checking if the middle element is a peak (greater than or equal to its neighbors)
-            if ((m == 0 || arr[m - 1] <= arr[m]) && (m == n - 1 || arr[m + 1] <= arr[m])) {
-                // If it's a peak, break out of the loop
-                break;
-            }
-
-            // If the element to the left of the middle is greater, searching in the left half
-            if (m > 0 && arr[m - 1] > arr[m]) {
-                r = m - 1;
-            } else {
-                // If the element to the right of the middle is greater or equal, searching in the right half
-                l = m + 1;
+            // Checking if the frequency of the current element is equal to k
+            if (m.get(a[i]) == k) {
+                // Returning the element if the condition is met
+                return a[i];
             }
         }
 
-        // Returning the index of the peak element
-        return m;
+        // If no element is found with frequency k, returning -1
+        return -1;
     }
 }
 ```
