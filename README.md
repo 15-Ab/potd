@@ -8,14 +8,12 @@ This is my attempt to make the coding experience easier for you guys so that you
 ## Intuition
 The goal of the provided code is to find the first element in an array that occurs exactly k times. It employs a HashMap to keep track of the frequency of each element during a linear traversal of the input array.
 
-## Ap
-
 ## Approach
 
-**I initialized HashMap:**
+**I initialized a HashMap :**
    - Declared a static HashMap named `m` to store the frequency of elements.
 
-**Iterated Through Array:**
+**Iterated Through Array :**
    - Traversed the given array `a`.
    - For each element in the array :
      - Updated the frequency of the element in the HashMap using `m.put(a[i], m.getOrDefault(a[i], 0) + 1)`.
@@ -38,6 +36,7 @@ Keep Solving.:)
 - Time complexity : $O( N )$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 $N$ :  size of the input array
+
 $U$ :  number of unique elements in the input array
 - Space complexity : $O( U )$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
