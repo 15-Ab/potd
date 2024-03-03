@@ -2,30 +2,30 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 02-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/first-element-to-occur-k-times5150/1)
-## First element to occur k times
+## Today's 03=03-24 [Problem Link](https://www.geeksforgeeks.org/problems/largest-number-formed-from-an-array1117/1)
+## Largest Number formed from an Array
 
 ## Intuition
-The goal of the provided code is to find the first element in an array that occurs exactly k times. It employs a HashMap to keep track of the frequency of each element during a linear traversal of the input array.
+The goal of the code is to find the largest number by concatenating the given array of integers. The approach involves sorting the array in a custom order to maximize the resulting concatenated number.
 
 ## Approach
 
-**I initialized a HashMap :**
-   - Declared a static HashMap named `m` to store the frequency of elements.
+**I sorted the array using a custom comparator :**
+   - The `Arrays.sort` method is applied to the array of integers.
+   - A custom comparator is used to compare two integers based on their concatenation.
+   - For integers `a` and `b`, the comparator compares `ba` with `ab`, ensuring a descending order.
 
-**Iterated Through Array :**
-   - Traversed the given array `a`.
-   - For each element in the array :
-     - Updated the frequency of the element in the HashMap using `m.put(a[i], m.getOrDefault(a[i], 0) + 1)`.
+**Concatenated the sorted integers :**
+   - After sorting, concatenated the integers in the sorted order to form the largest possible number.
+   - Concatenation is done using string concatenation to preserve leading zeros.
 
-**Checked Frequency :**
-   - After updating the frequency, checked if the frequency of the current element is equal to `k`.
-     - If true, returned the current element as it occurs exactly `k` times.
+**Stored the result :**
+   - The final concatenated result is stored in the static variable `jawab` for later retrieval.
 
-- **Returned -1 if Not Found :**
-   - If no element is found with frequency `k` after the traversal, returned -1.
+**Result :**
+   - The `printLargest` method returned the stored result.
 
-My approach efficiently utilized a HashMap to keep track of element frequencies while traversing the array linearly. The code stops and returns the first element that satisfies the condition of occurring exactly `k` times.
+My approach ensured that the integers are arranged in a way that maximizes the concatenated result, leading to the formation of the largest number.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -33,12 +33,10 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O( N )$
+- Time complexity : $O( n * logn )$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$N$ :  size of the input array
-
-$U$ :  number of unique elements in the input array
-- Space complexity : $O( U )$
+$n$ : length of the array
+- Space complexity : $O( n + logn )$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code
@@ -47,30 +45,39 @@ $U$ :  number of unique elements in the input array
 // User function Template for Java
 
 class Solution {
+    // Static variable to store the result
+    static String jawab;
 
-    // Declaring a static HashMap to store element frequencies
-    static HashMap<Integer, Integer> m;
-
-    // Method to find the first element occurring k times in an array
-    public int firstElementKTime(int n, int k, int[] a) {
+    // Main function to print the largest number
+    String printLargest(int n, String[] arr) {
         
-        // Initializing the HashMap
-        m = new HashMap<>();
+        // Calling the helper function to perform the sorting and concatenation
+        helper(arr);
+        // Returning the result
+        return jawab;
+    }
 
-        // Iterating through the array
-        for (int i = 0; i < a.length; i++) {
-            // Updating the frequency of the current element in the HashMap
-            m.put(a[i], m.getOrDefault(a[i], 0) + 1);
-
-            // Checking if the frequency of the current element is equal to k
-            if (m.get(a[i]) == k) {
-                // Returning the element if the condition is met
-                return a[i];
+    // Helper function to sort the array of strings in descending order
+    static void helper(String[] arr) {
+        // Using Arrays.sort with a custom comparator
+        Arrays.sort(arr, new Comparator<String>() {
+            @Override
+            public int compare(String a, String b) {
+                // Concatenating strings in different orders to compare
+                String ab = a + b;
+                String ba = b + a;
+                // Comparing in descending order
+                return ba.compareTo(ab);
             }
-        }
+        });
 
-        // If no element is found with frequency k, returning -1
-        return -1;
+        // Initializing the result string
+        jawab = "";
+
+        // Concatenating the sorted strings to form the final result
+        for (int i = 0; i < arr.length; i++) {
+            jawab += arr[i];
+        }
     }
 }
 ```
