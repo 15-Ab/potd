@@ -1,31 +1,38 @@
+# 🌟 Today is 4 🌟
+
+A very auspicious day for me. Some dates are etched in the heart, and for me, 4 is that magical day. Words fall short in expressing the depth of gratitude I feel towards the divine for this profound emotion.
+
+📖 It's a humble request to all you amazing souls reading my repository :
+
+Life is a journey filled with highs and lows, moments of joy and instances of pain. Embrace every facet, for each contributes to the beautiful tapestry of existence. Remember who you are and maintain unwavering faith in yourself, just as I do.
+
+🚀 Enjoy exploring my solution and keep the coding spirit alive! Happy coding ! ✨
+
 ## Problem Of The Day Solutions
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 03=03-24 [Problem Link](https://www.geeksforgeeks.org/problems/largest-number-formed-from-an-array1117/1)
-## Largest Number formed from an Array
+## Today's 04-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/need-some-change/1)
+## Swap the array elements
 
 ## Intuition
-The goal of the code is to find the largest number by concatenating the given array of integers. The approach involves sorting the array in a custom order to maximize the resulting concatenated number.
+The goal of the code is to swap every pair of elements in the given array. 
 
 ## Approach
 
-**I sorted the array using a custom comparator :**
-   - The `Arrays.sort` method is applied to the array of integers.
-   - A custom comparator is used to compare two integers based on their concatenation.
-   - For integers `a` and `b`, the comparator compares `ba` with `ab`, ensuring a descending order.
+- My approach involved iterating through the array and swapping each element with the one located two positions ahead.
 
-**Concatenated the sorted integers :**
-   - After sorting, concatenated the integers in the sorted order to form the largest possible number.
-   - Concatenation is done using string concatenation to preserve leading zeros.
+**I iterated through the array :**
+   - Used a loop to iterate through the given array.
 
-**Stored the result :**
-   - The final concatenated result is stored in the static variable `jawab` for later retrieval.
+**Swapped elements in pairs :**
+   - For each iteration, swapped the current element with the element located two positions ahead in the array.
+   - The swapping is performed using a temporary variable to ensure the values are exchanged correctly.
 
-**Result :**
-   - The `printLargest` method returned the stored result.
+**Repeated until the second-to-last pair:**
+   - Iterated until the second-to-last pair to avoid accessing an index that is out of bounds.
 
-My approach ensured that the integers are arranged in a way that maximizes the concatenated result, leading to the formation of the largest number.
+I assumed the array length is sufficient for pair-wise swapping and does not handle odd-length arrays.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -33,10 +40,10 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O( n * logn )$
+- Time complexity : $O( n )$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 $n$ : length of the array
-- Space complexity : $O( n + logn )$
+- Space complexity : $O( 1 )$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code
@@ -44,39 +51,22 @@ $n$ : length of the array
 ```
 // User function Template for Java
 
-class Solution {
-    // Static variable to store the result
-    static String jawab;
-
-    // Main function to print the largest number
-    String printLargest(int n, String[] arr) {
+class Solution{
+    
+    // Function to swap every pair of elements in an array
+    public void swapElements(int[] arr, int n){
         
-        // Calling the helper function to perform the sorting and concatenation
-        helper(arr);
-        // Returning the result
-        return jawab;
-    }
-
-    // Helper function to sort the array of strings in descending order
-    static void helper(String[] arr) {
-        // Using Arrays.sort with a custom comparator
-        Arrays.sort(arr, new Comparator<String>() {
-            @Override
-            public int compare(String a, String b) {
-                // Concatenating strings in different orders to compare
-                String ab = a + b;
-                String ba = b + a;
-                // Comparing in descending order
-                return ba.compareTo(ab);
-            }
-        });
-
-        // Initializing the result string
-        jawab = "";
-
-        // Concatenating the sorted strings to form the final result
-        for (int i = 0; i < arr.length; i++) {
-            jawab += arr[i];
+        // Iterating through the array, swapping elements in pairs
+        for( int i = 0; i < arr.length - 2; i++){
+            
+            // Temporary variable to store the current element
+            int t = arr[i];
+            
+            // Swapping the current element with the element two positions ahead
+            arr[i] = arr[i+2];
+            
+            // Assigning the temporary variable value to the element two positions ahead
+            arr[i+2] = t;
         }
     }
 }
