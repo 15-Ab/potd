@@ -4,37 +4,38 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 05-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/maximum-index-1587115620/1)
-## Maximum Index
+## Today's 06-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/search-pattern-rabin-karp-algorithm--141631/1)
+## Search Pattern (Rabin-Karp Algorithm)
 
 ## Intuition
-The goal is to find the maximum index difference between two elements, where the element on the left is smaller than or equal to the element on the right. This can be achieved by maintaining an array (`lMin`) that stores the minimum value from the left side for each element in the input array (`a`). By comparing each element in `a` with its corresponding minimum from the left, we can determine the maximum index difference.
+The Robin-Karp algorithm is a string searching algorithm that uses hashing to efficiently find a pattern within a larger text. The idea is to hash the pattern and substrings of the text, comparing the hash values for potential matches. If the hash values match, the algorithm performs a character-by-character check to confirm the match.
 
 ## Approach
 
-**I initialized Left Minimum Array (`lMin`) :**
-   - Created a static array `lMin` to store the minimum value from the left side.
-   - Set the first element of `lMin` as the first element of the input array.
+**Hashing Scheme :**
+   - I used a hashing scheme to convert strings into numerical values.
+   - Choosed a prime number (`primeNumber`) and a base value (`baseValue`) for hashing.
 
-**Fill Left Minimum Array (`lMin`) :**
-   - Used a loop to iterate through the input array from the second element onwards.
-   - For each element, updated the corresponding element in `lMin` with the minimum of the previous `lMin` element and the current element from the input array.
+**Initialized Hash Values :**
+   - Calculated the initial hash values for the pattern and the first substring of the text.
+   - Defined a base multiplier (`baseMultiplier`) for efficient hash value updates.
 
-**Initialized Variables :**
-   - Initialized a variable `jawab` with the minimum integer value. This variable will store the final answer for the maximum index difference.
+**Pattern Search :**
+   - Iterated through substrings of the text with the same length as the pattern.
+   - Calculated the hash value for each substring and compare it with the hash value of the pattern.
+   
+**Character-by-Character Check :**
+   - If the hash values match, performed a character-by-character check to confirm the match.
+   - If all characters match, added the index of the starting position of the pattern in the text to the result list.
 
-**Found Maximum Index Difference :**
-   - Used two pointers (`i` and `j`) starting from the end of the array.
-   - Iterated through the array and compare the current element from the input array (`a[j]`) with the corresponding minimum from the left (`lMin[i]`).
-   - If the current element from the input array is greater than or equal to the corresponding minimum from the left :
-     - Updated the answer (`jawab`) with the maximum of its current value and the difference between `j` and `i`.
-     - Moved to the next element from the left (`i`).
-   - If the condition is not satisfied, moved to the next element from the input array (`j`).
+**Updated Hash Value Efficiently :**
+   - For each subsequent substring, updated the hash value efficiently using the previous hash value.
+   - Ensured the hash value is within the range [0, primeNumber) to avoid overflow issues.
 
 **Result :**
-   - The final answer for the maximum index difference is stored in the variable `jawab`. Return this value as the result of the function.
+   - Returned the list of indices where the pattern is found in the text.
 
-My approach ensured that I find the maximum index difference satisfying the given condition efficiently.
+This approach provides an efficient way to find all occurrences of a pattern in a given text.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -42,10 +43,12 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O( N )$
+- Time complexity : $O( N + M )$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$N$ : size of the input array
-- Space complexity : $O( N )$
+$N$ : length of the text
+
+$M$ : length of the pattern
+- Space complexity : $O( 1 )$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code
@@ -53,57 +56,76 @@ $N$ : size of the input array
 ```
 // User function Template for Java
 
-class Solution{
+class Solution {
     
-    // A[]: input array
-    // N: size of array
-    // Function to find the maximum index difference.
+    // Static ArrayList to store the indices of matching patterns
+    static ArrayList<Integer> jawab;
 
-    // Declaring a static array to store the minimum value from the left side.
-    static int[] lMin;
-    
-    // Variable to store the final answer for the maximum index difference.
-    static int jawab;
+    // Prime number and base value for hash calculation
+    static int primeNumber = 101;
+    static int baseValue = 256;
 
-    // Function to find the maximum index difference.
-    static int maxIndexDiff(int a[], int n){
+    // Function to search for a pattern in a text
+    ArrayList<Integer> search(String pattern, String text) {
         
-        // Initializing the left minimum array.
-        lMin = new int[n];
+        // Initializing the result list
+        jawab = new ArrayList<>();
         
-        // Setting the first element of lMin as the first element of the input array.
-        lMin[0] = a[0];
-        
-        // Loop to fill the lMin array with minimum values from the left side.
-        for(int i = 1; i < n; i++)
-          lMin[i] = Math.min(lMin[i - 1] , a[i]);
+        // Performing the pattern search using the Robin-Karp algorithm
+        robinKarpSearch(pattern, text, primeNumber);
 
-        // Initializing the jawab variable with the minimum integer value.
-        jawab = Integer.MIN_VALUE;
-        
-        // Initializing two pointers for comparison.
-        int i = n - 1, j = n - 1;
+        // Returning the list of matching indices
+        return jawab;
+    }
 
-        // Loop to find the maximum index difference.
-        while(i >= 0 && j >= 0){
-            
-          // Checking if the current element from the original array is greater than or equal to the corresponding minimum from the left side.
-          if(a[j] >= lMin[i]){
-            
-            // Updating the answer if the condition is satisfied.
-            jawab = Math.max( jawab, j - i );
-            
-            // Moving to the next element from the left side.
-            i--;
-          }
-          else{
-            // If the condition is not satisfied, move to the next element from the original array.
-            j--;
-          }
+    // Robin-Karp search algorithm for pattern matching
+    static void robinKarpSearch(String pattern, String text, int prime) {
+        int patternLength = pattern.length();
+        int textLength = text.length();
+
+        int patternHash = 0;
+        int textHash = 0;
+        int baseMultiplier = 1;
+
+        // Calculating the baseMultiplier (d^patternLength-1) % prime
+        for (int i = 0; i < patternLength - 1; i++) {
+            baseMultiplier = (baseMultiplier * baseValue) % prime;
         }
 
-        // Returning the final answer.
-        return jawab;
+        // Calculating the initial hash values for pattern and the first substring of text
+        for (int i = 0; i < patternLength; i++) {
+            patternHash = (baseValue * patternHash + pattern.charAt(i)) % prime;
+            textHash = (baseValue * textHash + text.charAt(i)) % prime;
+        }
+
+        // Iterating through the text to find matching patterns
+        for (int i = 0; i <= textLength - patternLength; i++) {
+            // Checking if the hash values match
+            if (patternHash == textHash) {
+                // Checking character by character for a match
+                int j;
+                for (j = 0; j < patternLength; j++) {
+                    if (text.charAt(i + j) != pattern.charAt(j)) {
+                        break;
+                    }
+                }
+
+                // If j reached patternLength, it means a match is found, adding the index to the result list
+                if (j == patternLength) {
+                    jawab.add(i + 1);
+                }
+            }
+
+            // Calculating the hash value for the next substring of text
+            if (i < textLength - patternLength) {
+                textHash = (baseValue * (textHash - text.charAt(i) * baseMultiplier) + text.charAt(i + patternLength)) % prime;
+
+                // Ensuring the hash value is non-negative
+                if (textHash < 0) {
+                    textHash = (textHash + prime);
+                }
+            }
+        }
     }
 }
 ```
