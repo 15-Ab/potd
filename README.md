@@ -4,38 +4,27 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 06-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/search-pattern-rabin-karp-algorithm--141631/1)
-## Search Pattern (Rabin-Karp Algorithm)
+## Today's 07-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/longest-repeating-and-non-overlapping-substring3421/1)
+## Longest repeating and non-overlapping substring
 
 ## Intuition
-The Robin-Karp algorithm is a string searching algorithm that uses hashing to efficiently find a pattern within a larger text. The idea is to hash the pattern and substrings of the text, comparing the hash values for potential matches. If the hash values match, the algorithm performs a character-by-character check to confirm the match.
+Given a string `s` of length `n`, the task is to find the longest substring with repeating characters.
 
 ## Approach
 
-**Hashing Scheme :**
-   - I used a hashing scheme to convert strings into numerical values.
-   - Choosed a prime number (`primeNumber`) and a base value (`baseValue`) for hashing.
+To find the longest repeating substring, my provided solution used a dynamic programming approach with a two-dimensional array `lcs` to store the lengths of common substrings.
 
-**Initialized Hash Values :**
-   - Calculated the initial hash values for the pattern and the first substring of the text.
-   - Defined a base multiplier (`baseMultiplier`) for efficient hash value updates.
+- If the length of the string is 1, returned "-1" as there is no repeating substring in a single-character string.
 
-**Pattern Search :**
-   - Iterated through substrings of the text with the same length as the pattern.
-   - Calculated the hash value for each substring and compare it with the hash value of the pattern.
-   
-**Character-by-Character Check :**
-   - If the hash values match, performed a character-by-character check to confirm the match.
-   - If all characters match, added the index of the starting position of the pattern in the text to the result list.
+- Initialized the `lcs` array to store the lengths of common substrings and variables (`jawab`, `jawabL`, `in`) to store the final answer.
 
-**Updated Hash Value Efficiently :**
-   - For each subsequent substring, updated the hash value efficiently using the previous hash value.
-   - Ensured the hash value is within the range [0, primeNumber) to avoid overflow issues.
+- Used nested loops to iterate over the string characters and populate the `lcs` array based on matching characters.
 
-**Result :**
-   - Returned the list of indices where the pattern is found in the text.
+- Updated the `jawab` and related variables whenever a longer repeating substring is found.
 
-This approach provides an efficient way to find all occurrences of a pattern in a given text.
+- Built the longest repeating substring using the stored information.
+
+- Returned the final answer.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -43,89 +32,68 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O( N + M )$
+- Time complexity : $O( n^2 )$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$N$ : length of the text
-
-$M$ : length of the pattern
-- Space complexity : $O( 1 )$
+$n$ : length of the input string `s`
+- Space complexity : $O( n^2 )$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code
 
 ```
-// User function Template for Java
+//  User function Template for Java
 
 class Solution {
     
-    // Static ArrayList to store the indices of matching patterns
-    static ArrayList<Integer> jawab;
-
-    // Prime number and base value for hash calculation
-    static int primeNumber = 101;
-    static int baseValue = 256;
-
-    // Function to search for a pattern in a text
-    ArrayList<Integer> search(String pattern, String text) {
+    // Static array to store the lengths of common substrings
+    static int lcs[][];
+    
+    // Variable to store the final answer
+    static String jawab;
+    
+    // Function to find the longest substring with repeating characters
+    static String longestSubstring(String s, int n) {
+        // Code here
         
-        // Initializing the result list
-        jawab = new ArrayList<>();
+        // Special case : If the string has only one character, there is no repeating substring
+        if( n == 1){
+            return "-1";
+        }
         
-        // Performing the pattern search using the Robin-Karp algorithm
-        robinKarpSearch(pattern, text, primeNumber);
+        // Initializing the array to store lengths of common substrings
+        lcs = new int[n + 1][n + 1];
+ 
+        // Initializing variables for the final answer
+        jawab = "";
+        int jawabL = 0;
+        int in = 0;
+        
+        // Dynamic programming approach to find the lengths of common substrings
+        for (int i = 1; i <= n; i++) {
+            for (int j = i + 1; j <= n; j++) {
+                if (s.charAt(i - 1) == s.charAt(j - 1) && lcs[i - 1][j - 1] < (j - i)) {
+                    lcs[i][j] = lcs[i - 1][j - 1] + 1;
+                    if (lcs[i][j] > jawabL) {
+                        jawabL = lcs[i][j];
+                        in = Math.max(i, in);
+                    }
+                } 
+                else {
+                    lcs[i][j] = 0;
+                }
+            }
+        }
 
-        // Returning the list of matching indices
+        // Building the longest repeating substring using the stored information
+        if (jawabL > 0) {
+            for (int i = in - jawabL + 1; i <= in; i++) {
+                jawab += s.charAt(i - 1);
+            }
+        }
+ 
+        // Returning the final answer
         return jawab;
     }
-
-    // Robin-Karp search algorithm for pattern matching
-    static void robinKarpSearch(String pattern, String text, int prime) {
-        int patternLength = pattern.length();
-        int textLength = text.length();
-
-        int patternHash = 0;
-        int textHash = 0;
-        int baseMultiplier = 1;
-
-        // Calculating the baseMultiplier (d^patternLength-1) % prime
-        for (int i = 0; i < patternLength - 1; i++) {
-            baseMultiplier = (baseMultiplier * baseValue) % prime;
-        }
-
-        // Calculating the initial hash values for pattern and the first substring of text
-        for (int i = 0; i < patternLength; i++) {
-            patternHash = (baseValue * patternHash + pattern.charAt(i)) % prime;
-            textHash = (baseValue * textHash + text.charAt(i)) % prime;
-        }
-
-        // Iterating through the text to find matching patterns
-        for (int i = 0; i <= textLength - patternLength; i++) {
-            // Checking if the hash values match
-            if (patternHash == textHash) {
-                // Checking character by character for a match
-                int j;
-                for (j = 0; j < patternLength; j++) {
-                    if (text.charAt(i + j) != pattern.charAt(j)) {
-                        break;
-                    }
-                }
-
-                // If j reached patternLength, it means a match is found, adding the index to the result list
-                if (j == patternLength) {
-                    jawab.add(i + 1);
-                }
-            }
-
-            // Calculating the hash value for the next substring of text
-            if (i < textLength - patternLength) {
-                textHash = (baseValue * (textHash - text.charAt(i) * baseMultiplier) + text.charAt(i + patternLength)) % prime;
-
-                // Ensuring the hash value is non-negative
-                if (textHash < 0) {
-                    textHash = (textHash + prime);
-                }
-            }
-        }
-    }
-}
+    
+};
 ```
