@@ -1,30 +1,36 @@
+# 🔱 Embracing the cosmic energy this Mahashivratri ! 
+## Wishing everyone a day filled with devotion, introspection, and coding adventures. Let the blessings of Lord Shiva guide our paths in the coding realm. 🖥️🕉️ #Mahashivratri #CodeWithDevotion #GitHubDiaries
+
 🚀 Enjoy exploring my solution and keep the coding spirit alive! Happy coding ! ✨
+
 
 ## Problem Of The Day Solutions
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 07-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/longest-repeating-and-non-overlapping-substring3421/1)
-## Longest repeating and non-overlapping substring
+## Today's 07-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/check-frequencies4211/1)
+## Check if frequencies can be equal
 
 ## Intuition
-Given a string `s` of length `n`, the task is to find the longest substring with repeating characters.
+The goal is to determine if it's possible to rearrange the characters in a given string such that they all have the same frequency or if they already have the same frequency.
+I think it will involve checking the initial frequencies and attempting a rearrangement if needed.
 
 ## Approach
 
-To find the longest repeating substring, my provided solution used a dynamic programming approach with a two-dimensional array `lcs` to store the lengths of common substrings.
+**Checked Initial Frequency :**
+   - The `sbSame` function iterates through the character frequencies in the given string.
+   - It ensured that there is only one distinct frequency, indicating whether all characters have the same initial frequency.
 
-- If the length of the string is 1, returned "-1" as there is no repeating substring in a single-character string.
+**Attempt Rearrangement :**
+   - If the initial frequencies are the same, the string already satisfies the condition, and the function returns true.
+   - If the initial frequencies differ, attempt to make them equal by decrementing the frequency of each character one by one.
+   - After each decrement, checked if all frequencies become the same.
+   - If at any point all frequencies become the same, the function returned true.
 
-- Initialized the `lcs` array to store the lengths of common substrings and variables (`jawab`, `jawabL`, `in`) to store the final answer.
+**Final Result :**
+   - If neither the initial frequencies nor any rearrangement satisfies the condition, the function returned false.
 
-- Used nested loops to iterate over the string characters and populate the `lcs` array based on matching characters.
-
-- Updated the `jawab` and related variables whenever a longer repeating substring is found.
-
-- Built the longest repeating substring using the stored information.
-
-- Returned the final answer.
+My approach efficiently checked whether the string can have the same frequency for all characters by either having them initially equal or making them equal through a single decrement for at most one character.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -32,10 +38,10 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O( n^2 )$
+- Time complexity : $O( n )$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 $n$ : length of the input string `s`
-- Space complexity : $O( n^2 )$
+- Space complexity : $O( 26 )$ ${/equiv}$ $O( 1 )$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code
@@ -45,55 +51,57 @@ $n$ : length of the input string `s`
 
 class Solution {
     
-    // Static array to store the lengths of common substrings
-    static int lcs[][];
     
-    // Variable to store the final answer
-    static String jawab;
+    // Array to store the frequency of each character
+    static int[] kitnibaar;
     
-    // Function to find the longest substring with repeating characters
-    static String longestSubstring(String s, int n) {
-        // Code here
+    // Main method to check if the string has the same frequency for all characters
+    boolean sameFreq(String s) {
         
-        // Special case : If the string has only one character, there is no repeating substring
-        if( n == 1){
-            return "-1";
+        // Initializing the frequency array
+        kitnibaar = new int[26];
+ 
+        // Updating the frequency array based on the characters in the string
+        for (char c : s.toCharArray()) {
+            kitnibaar[c - 'a']++;
         }
         
-        // Initializing the array to store lengths of common substrings
-        lcs = new int[n + 1][n + 1];
+        // Checking if all frequencies are initially the same
+        if (sbSame()) {
+            return true;
+        }
  
-        // Initializing variables for the final answer
-        jawab = "";
-        int jawabL = 0;
-        int in = 0;
-        
-        // Dynamic programming approach to find the lengths of common substrings
-        for (int i = 1; i <= n; i++) {
-            for (int j = i + 1; j <= n; j++) {
-                if (s.charAt(i - 1) == s.charAt(j - 1) && lcs[i - 1][j - 1] < (j - i)) {
-                    lcs[i][j] = lcs[i - 1][j - 1] + 1;
-                    if (lcs[i][j] > jawabL) {
-                        jawabL = lcs[i][j];
-                        in = Math.max(i, in);
+        // Trying decrementing each character's frequency and checking if all frequencies become the same
+        for (int i = 0; i < 26; i++) {
+            if (kitnibaar[i] > 0) {
+                kitnibaar[i]--;
+                if (sbSame()) {
+                    return true;
+                }
+                kitnibaar[i]++;
+            }
+        }
+ 
+        // If no such rearrangement is possible, returning false
+        return false;
+    }
+    
+    // Method to check if all frequencies are the same
+    static boolean sbSame() {
+        int ekjaisa = 0;
+        for (int i = 0; i < 26; i++) {
+            if (kitnibaar[i] > 0) {
+                ekjaisa = kitnibaar[i];
+                for (int j = i + 1; j < 26; j++) {
+                    if (kitnibaar[j] > 0 && kitnibaar[j] != ekjaisa) {
+                        return false;
                     }
-                } 
-                else {
-                    lcs[i][j] = 0;
                 }
             }
         }
-
-        // Building the longest repeating substring using the stored information
-        if (jawabL > 0) {
-            for (int i = in - jawabL + 1; i <= in; i++) {
-                jawab += s.charAt(i - 1);
-            }
-        }
- 
-        // Returning the final answer
-        return jawab;
+        
+        return true;
     }
     
-};
+}
 ```
