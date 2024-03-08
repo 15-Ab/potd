@@ -8,7 +8,7 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 07-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/check-frequencies4211/1)
+## Today's 08-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/check-frequencies4211/1)
 ## Check if frequencies can be equal
 
 ## Intuition
@@ -41,7 +41,7 @@ Keep Solving.:)
 - Time complexity : $O( n )$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 $n$ : length of the input string `s`
-- Space complexity : $O( 26 )$ ${/equiv}$ $O( 1 )$
+- Space complexity : $O( 26 )$ ${\equiv}$ $O( 1 )$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code
