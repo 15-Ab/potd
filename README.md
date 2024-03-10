@@ -8,29 +8,34 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 08-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/check-frequencies4211/1)
-## Check if frequencies can be equal
+## Today's 10-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/remove-all-duplicates-from-a-given-string4321/1)
+## Remove all duplicates from a given string
 
 ## Intuition
-The goal is to determine if it's possible to rearrange the characters in a given string such that they all have the same frequency or if they already have the same frequency.
-I think it will involve checking the initial frequencies and attempting a rearrangement if needed.
+The objective is to remove duplicate characters from a given string and return the modified string. The code utilizes a HashSet to efficiently track unique characters and build the resulting string without duplicates.
 
 ## Approach
 
-**Checked Initial Frequency :**
-   - The `sbSame` function iterates through the character frequencies in the given string.
-   - It ensured that there is only one distinct frequency, indicating whether all characters have the same initial frequency.
+**Initialization **
+   - Initialized an empty string (`jawab`) to store the result.
+   - Initialized a HashSet (`h`) to keep track of unique characters encountered.
 
-**Attempt Rearrangement :**
-   - If the initial frequencies are the same, the string already satisfies the condition, and the function returns true.
-   - If the initial frequencies differ, attempt to make them equal by decrementing the frequency of each character one by one.
-   - After each decrement, checked if all frequencies become the same.
-   - If at any point all frequencies become the same, the function returned true.
+**Character Iteration **
+   - Iterated through each character (`c`) in the input string (`str`).
 
-**Final Result :**
-   - If neither the initial frequencies nor any rearrangement satisfies the condition, the function returned false.
+**Duplicate Check **
+   - Checked if the HashSet (`h`) does not contain the current character (`c`).
+     - If true, proceeded to the next step.
+     - If false, skipped the current iteration as the character is a duplicate.
 
-My approach efficiently checked whether the string can have the same frequency for all characters by either having them initially equal or making them equal through a single decrement for at most one character.
+**Result String Update **
+   - Added the non-duplicate character (`c`) to the result string (`jawab`).
+
+**HashSet Update **
+   - Added the character (`c`) to the HashSet (`h`) to mark it as encountered.
+
+**Result **
+   - Returned the final string (`jawab`) with duplicates removed.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -41,7 +46,9 @@ Keep Solving.:)
 - Time complexity : $O( n )$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 $n$ : length of the input string `s`
-- Space complexity : $O( 26 )$ ${\equiv}$ $O( 1 )$
+
+$u$ : number of unique characters encountered during the iteration
+- Space complexity : $O( u )$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code
@@ -51,57 +58,32 @@ $n$ : length of the input string `s`
 
 class Solution {
     
-    
-    // Array to store the frequency of each character
-    static int[] kitnibaar;
-    
-    // Main method to check if the string has the same frequency for all characters
-    boolean sameFreq(String s) {
-        
-        // Initializing the frequency array
-        kitnibaar = new int[26];
- 
-        // Updating the frequency array based on the characters in the string
-        for (char c : s.toCharArray()) {
-            kitnibaar[c - 'a']++;
-        }
-        
-        // Checking if all frequencies are initially the same
-        if (sbSame()) {
-            return true;
-        }
- 
-        // Trying decrementing each character's frequency and checking if all frequencies become the same
-        for (int i = 0; i < 26; i++) {
-            if (kitnibaar[i] > 0) {
-                kitnibaar[i]--;
-                if (sbSame()) {
-                    return true;
-                }
-                kitnibaar[i]++;
+    // Static variables for storing the result and a HashSet for efficient duplicate checking.
+    static String jawab;
+    static HashSet<Character> h;
+
+    // Method to remove duplicates from the input string.
+    String removeDuplicates(String str) {
+        // Initializing an empty string to store the result.
+        jawab = "";
+
+        // Initializing a HashSet to keep track of unique characters.
+        h = new HashSet<>();
+
+        // Iterating through each character in the input string.
+        for (char c : str.toCharArray()) {
+            // Check if the character is not already in the HashSet (duplicate check).
+            if (!h.contains(c)) {
+                // Adding the character to the result string.
+                jawab += c;
+
+                // Adding the character to the HashSet to mark it as encountered.
+                h.add(c);
             }
         }
- 
-        // If no such rearrangement is possible, returning false
-        return false;
+
+        // Returning the string with duplicates removed.
+        return jawab;
     }
-    
-    // Method to check if all frequencies are the same
-    static boolean sbSame() {
-        int ekjaisa = 0;
-        for (int i = 0; i < 26; i++) {
-            if (kitnibaar[i] > 0) {
-                ekjaisa = kitnibaar[i];
-                for (int j = i + 1; j < 26; j++) {
-                    if (kitnibaar[j] > 0 && kitnibaar[j] != ekjaisa) {
-                        return false;
-                    }
-                }
-            }
-        }
-        
-        return true;
-    }
-    
 }
 ```
