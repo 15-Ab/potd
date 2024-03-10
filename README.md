@@ -13,25 +13,25 @@ The objective is to remove duplicate characters from a given string and return t
 
 ## Approach
 
-**Initialization **
+**Initialization :**
    - Initialized an empty string (`jawab`) to store the result.
    - Initialized a HashSet (`h`) to keep track of unique characters encountered.
 
-**Character Iteration **
+**Character Iteration :**
    - Iterated through each character (`c`) in the input string (`str`).
 
-**Duplicate Check **
+**Duplicate Check :**
    - Checked if the HashSet (`h`) does not contain the current character (`c`).
      - If true, proceeded to the next step.
      - If false, skipped the current iteration as the character is a duplicate.
 
-**Result String Update **
+**Result String Update :**
    - Added the non-duplicate character (`c`) to the result string (`jawab`).
 
-**HashSet Update **
+**HashSet Update :**
    - Added the character (`c`) to the HashSet (`h`) to mark it as encountered.
 
-**Result **
+**Result :**
    - Returned the final string (`jawab`) with duplicates removed.
 
 ---
@@ -42,7 +42,7 @@ Keep Solving.:)
 ## Complexity
 - Time complexity : $O( n )$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$n$ : length of the input string `s`
+$n$ : length of the input string `str`
 
 $u$ : number of unique characters encountered during the iteration
 - Space complexity : $O( u )$
