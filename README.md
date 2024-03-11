@@ -29,7 +29,7 @@ My provided code defines a class `Solution` with a method `countPairs` that calc
 ##### Result :
 - The final count of pairs is stored in the variable `jawab`.
 
-My approach ensured that unique values from both matrices are stored in separate HashSet objects, and then it iterates through one HashSet to check for pairs in the other HashSet whose sum equals the given value `x`.
+My approach ensured that unique values from both matrices are stored in separate HashSet objects, and then it iterated through one HashSet to check for pairs in the other HashSet whose sum equals the given value `x`.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
