@@ -5,34 +5,31 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 10-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/remove-all-duplicates-from-a-given-string4321/1)
-## Remove all duplicates from a given string
+## Today's 11-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/count-pairs-sum-in-matrices4332/1)
+## Count pairs Sum in matrices
 
 ## Intuition
-The objective is to remove duplicate characters from a given string and return the modified string. The code utilizes a HashSet to efficiently track unique characters and build the resulting string without duplicates.
+My provided code defines a class `Solution` with a method `countPairs` that calculates the count of pairs from two matrices whose sum equals a given value `x`.
 
 ## Approach
 
-**Initialization :**
-   - Initialized an empty string (`jawab`) to store the result.
-   - Initialized a HashSet (`h`) to keep track of unique characters encountered.
+##### Initialization :
+- Initialized two HashSet objects, `h1` and `h2`, to store unique values from the first and second matrices, respectively.
+- Initialized an integer variable `jawab` to store the count of pairs.
 
-**Character Iteration :**
-   - Iterated through each character (`c`) in the input string (`str`).
+##### Populated the HashSets :
+- Iterated through each element of the first matrix (`mat1`) and added its value to `h1`.
+- Iterated through each element of the second matrix (`mat2`) and added its value to `h2`.
 
-**Duplicate Check :**
-   - Checked if the HashSet (`h`) does not contain the current character (`c`).
-     - If true, proceeded to the next step.
-     - If false, skipped the current iteration as the character is a duplicate.
+##### Counting Pairs :
+- Iterated through the values in `h1`.
+- For each value `v` in `h1`, checked if there exists a value in `h2` such that their sum equals the given value `x - v`.
+- If such a value is found in `h2`, incremented the count (`jawab`) for each pair.
 
-**Result String Update :**
-   - Added the non-duplicate character (`c`) to the result string (`jawab`).
+##### Result :
+- The final count of pairs is stored in the variable `jawab`.
 
-**HashSet Update :**
-   - Added the character (`c`) to the HashSet (`h`) to mark it as encountered.
-
-**Result :**
-   - Returned the final string (`jawab`) with duplicates removed.
+My approach ensured that unique values from both matrices are stored in separate HashSet objects, and then it iterates through one HashSet to check for pairs in the other HashSet whose sum equals the given value `x`.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -40,12 +37,12 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O( n )$
+- Time complexity : $O( N1 + N2 )$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$n$ : length of the input string `str`
+$N1$ : total number of elements in the first matrix
 
-$u$ : number of unique characters encountered during the iteration
-- Space complexity : $O( u )$
+$N2$ : total number of elements in the second matrix
+- Space complexity : $O( N1 + N2 )$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code
@@ -55,31 +52,45 @@ $u$ : number of unique characters encountered during the iteration
 
 class Solution {
     
-    // Static variables for storing the result and a HashSet for efficient duplicate checking.
-    static String jawab;
-    static HashSet<Character> h;
+    // HashSet to store unique values from the first matrix
+    static HashSet<Integer> h1;
+    // HashSet to store unique values from the second matrix
+    static HashSet<Integer> h2;
+    // Variable to store the count of pairs
+    static int jawab;
 
-    // Method to remove duplicates from the input string.
-    String removeDuplicates(String str) {
-        // Initializing an empty string to store the result.
-        jawab = "";
-
-        // Initializing a HashSet to keep track of unique characters.
-        h = new HashSet<>();
-
-        // Iterating through each character in the input string.
-        for (char c : str.toCharArray()) {
-            // Check if the character is not already in the HashSet (duplicate check).
-            if (!h.contains(c)) {
-                // Adding the character to the result string.
-                jawab += c;
-
-                // Adding the character to the HashSet to mark it as encountered.
-                h.add(c);
+    // Method to count pairs from two matrices whose sum equals x
+    int countPairs(int mat1[][], int mat2[][], int n, int x) {
+    
+        // Initializing HashSet h1 with unique values from the first matrix
+        h1 = new HashSet<>();
+        for (int i = 0; i < mat1.length; i++) {
+            for (int j = 0; j < mat1[0].length; j++) {
+                h1.add(mat1[i][j]);
             }
         }
 
-        // Returning the string with duplicates removed.
+        // Initializing HashSet h2 with unique values from the second matrix
+        h2 = new HashSet<>();
+        for (int i = 0; i < mat2.length; i++) {
+            for (int j = 0; j < mat2[0].length; j++) {
+                h2.add(mat2[i][j]);
+            }
+        }
+
+        // Initializing jawab (count) to 0
+        jawab = 0;
+
+        // Iterating through values in h1
+        for (int v : h1) {
+            // Checking if there exists a value in h2 such that their sum equals x
+            if (h2.contains(x - v)) {
+                // Incrementing the count for each such pair
+                jawab++;
+            }
+        }
+
+        // Returning the final count of pairs
         return jawab;
     }
 }
