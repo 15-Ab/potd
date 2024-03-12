@@ -19,17 +19,17 @@ The approach involved representing the Fibonacci transformation as a matrix and 
    - Initialized a static 3x3 matrix `hm` representing the identity matrix.
 
 **genFibNum Function :**
-    - Defined a function `genFibNum` that takes the coefficients a, b, c, the target Fibonacci term `n`, and the modulo value `m`.
-    - Base Case : If `n` is less than or equal to 2, return 1.
-    - Initialized the matrix `h1` with the identity matrix `hm`.
-    - Initialized the transformation matrix `h2` with the given coefficients.
-    - Subtracted 2 from `n` as the base cases are already handled.
-    - Used binary exponentiation to calculate `h1 = h2^n % m`.
-    - Calculated the sum of the first row of the resulting matrix `h1` modulo `m` and return the result.
+   - Defined a function `genFibNum` that takes the coefficients a, b, c, the target Fibonacci term `n`, and the modulo value `m`.
+   - Base Case : If `n` is less than or equal to 2, return 1.
+   - Initialized the matrix `h1` with the identity matrix `hm`.
+   - Initialized the transformation matrix `h2` with the given coefficients.
+   - Subtracted 2 from `n` as the base cases are already handled.
+   - Used binary exponentiation to calculate `h1 = h2^n % m`.
+   - Calculated the sum of the first row of the resulting matrix `h1` modulo `m` and return the result.
 
 **multiplyMatrices Function :**
-    - Defined a helper function `multiplyMatrices` to perform matrix multiplication modulo `m`.
-    - Iterated through the matrices `mat1` and `mat2` to calculate the product, considering the modulo operation.
+   - Defined a helper function `multiplyMatrices` to perform matrix multiplication modulo `m`.
+   - Iterated through the matrices `mat1` and `mat2` to calculate the product, considering the modulo operation.
 
 My algorithm leveraged matrix exponentiation to efficiently compute the Fibonacci number modulo `m`, providing a scalable and optimized solution for large Fibonacci terms.
 
