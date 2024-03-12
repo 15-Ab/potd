@@ -16,7 +16,7 @@ The goal of my algorithm should be to efficiently calculate the Fibonacci number
 The approach involved representing the Fibonacci transformation as a matrix and then using binary exponentiation to compute the matrix power.
 
 **Identity Matrix Initialization :**
-    - Initialized a static 3x3 matrix `hm` representing the identity matrix.
+   - Initialized a static 3x3 matrix `hm` representing the identity matrix.
 
 **genFibNum Function :**
     - Defined a function `genFibNum` that takes the coefficients a, b, c, the target Fibonacci term `n`, and the modulo value `m`.
