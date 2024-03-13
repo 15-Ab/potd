@@ -5,33 +5,29 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 12-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/generalised-fibonacci-numbers1820/1)
-## Generalised Fibonacci numbers
+## Today's 13-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/print-matrix-in-diagonal-pattern/1)
+## Print matrix in diagonal pattern
 
 ## Intuition
-The goal of my algorithm should be to efficiently calculate the Fibonacci number modulo m using matrix exponentiation. 
+The goal of the `matrixDiagonally` function is to traverse a given matrix diagonally and collect the elements in a linear arrangement.
 
 ## Approach
 
-The approach involved representing the Fibonacci transformation as a matrix and then using binary exponentiation to compute the matrix power.
+**Initialization** : I initialized variables including the size of the matrix, an array to store the result, and indices for traversal.
 
-**Identity Matrix Initialization :**
-   - Initialized a static 3x3 matrix `hm` representing the identity matrix.
+**Diagonal Traversal Loop** : Used a loop to traverse the matrix diagonally. The traversal alternates between moving upward and moving downward.
 
-**genFibNum Function :**
-   - Defined a function `genFibNum` that takes the coefficients a, b, c, the target Fibonacci term `n`, and the modulo value `m`.
-   - Base Case : If `n` is less than or equal to 2, returned 1.
-   - Initialized the matrix `h1` with the identity matrix `hm`.
-   - Initialized the transformation matrix `h2` with the given coefficients.
-   - Subtracted 2 from `n` as the base cases are already handled.
-   - Used binary exponentiation to calculate `h1 = h2^n % m`.
-   - Calculated the sum of the first row of the resulting matrix `h1` modulo `m` and returned the result.
+   - **Moving Upward** : Traversed the diagonal upward, updating the row and column indices accordingly. Handled boundary conditions for matrix edges.
 
-**multiplyMatrices Function :**
-   - Defined a helper function `multiplyMatrices` to perform matrix multiplication modulo `m`.
-   - Iterated through the matrices `mat1` and `mat2` to calculate the product, considering the modulo operation.
+   - **Moving Downward** : Traversed the diagonal downward, updating the row and column indices accordingly. Handled boundary conditions for matrix edges.
 
-My algorithm leveraged matrix exponentiation to efficiently compute the Fibonacci number modulo `m`, providing a scalable and optimized solution for large Fibonacci terms.
+**Switched Direction** : Switched the direction (upward/downward) for the next diagonal traversal.
+
+**Result Array** : Collected the elements in the result array during traversal.
+
+**Returned Result** : Returned the resulting array containing the elements in the specified diagonal pattern.
+
+My algorithm efficiently captured the diagonal pattern of the matrix elements by traversing it in a zigzag manner.
 
 
 ---
@@ -40,11 +36,11 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O( log n )$
+- Time complexity : $O( N^2 )$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$n$ : target Fibonacci term
+$N$ : size of the matrix
 
-- Space complexity : $O( 1 )$
+- Space complexity : $O( N^2 )$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code
@@ -53,69 +49,61 @@ $n$ : target Fibonacci term
 //  User function Template for Java
 
 class Solution {
-    
-    // Static matrix representing the identity matrix
-    static long[][] hm = {
-        {1, 0, 0},
-        {0, 1, 0},
-        {0, 0, 1}
-    };
+    public int[] matrixDiagonally(int[][] matrix) {
+        
+        // Get the size of the matrix
+        int size = matrix.length;
+        
+        // Creating an array to store the result
+        int[] resultArray = new int[size * size];
+        
+        // Initializing variables
+        int currentIndex = 0;
+        int row = 0, col = 0;
+        boolean isMovingUp = true;
 
-    // Function to calculate Fibonacci number modulo m
-    static long genFibNum(Long a, Long b, Long c, long n, long m) {
-       
-        // Base case: return 1 if n is 1 or 2
-        if (n <= 2) {
-            return 1;
-        }
-
-        // Initializing the matrix h1 with the identity matrix
-        long[][] h1 = hm;
-
-        // Initializing the transformation matrix h2
-        long[][] h2 = {
-            {a, b, c},
-            {1, 0, 0},
-            {0, 0, 1}
-        };
-
-        // Subtracting 2 from n as the base cases are already handled
-        n -= 2;
-
-        // Performing matrix exponentiation using binary exponentiation
-        while (n > 0) {
-            if ((n & 1) == 1) {
-                h1 = multiplyMatrices(h1, h2, m);
-            }
-            h2 = multiplyMatrices(h2, h2, m);
-            n >>= 1;
-        }
-
-        // Calculating the sum of the first row of the resulting matrix modulo m
-        long result = 0;
-        for (long value : h1[0]) {
-            result = (result + value) % m;
-        }
-
-        return result;
-    }
-
-    // Helper function to multiply two matrices modulo m
-    static long[][] multiplyMatrices(long[][] mat1, long[][] mat2, long m) {
-        int rows = mat1.length;
-        int cols = mat2[0].length;
-        long[][] result = new long[rows][cols];
-
-        // Performing matrix multiplication
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                for (int k = 0; k < mat1[0].length; k++) {
-                    result[i][j] = (result[i][j] + (mat1[i][k] * mat2[k][j]) % m) % m;
+        // Looping through the matrix diagonally
+        for (int index = 0; index < size * size;) {
+            // If moving upward
+            if (isMovingUp) {
+                
+                // Traversing diagonal upward
+                for (; row >= 0 && col < size; col++, row--) {
+                    resultArray[currentIndex++] = matrix[row][col];
+                    index++;
+                }
+                
+                // Handling boundary conditions
+                if (row < 0 && col <= size - 1)
+                    row = 0;
+                if (col == size) {
+                    row = row + 2;
+                    col--;
+                }
+            } 
+            // If moving downward
+            else {
+                // Traversing diagonal downward
+                for (; col >= 0 && row < size; row++, col--) {
+                    resultArray[currentIndex++] = matrix[row][col];
+                    index++;
+                }
+                
+                // Handling boundary conditions
+                if (col < 0 && row <= size - 1)
+                    col = 0;
+                if (row == size) {
+                    col = col + 2;
+                    row--;
                 }
             }
+            
+            // Switching the direction for the next diagonal
+            isMovingUp = !isMovingUp;
         }
-
-        return result;
+        
+        // Returning the resulting array
+        return resultArray;
     }
 }
 ```
