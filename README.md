@@ -5,29 +5,29 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 14-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/largest-subsquare-surrounded-by-x0558/1)
-## Largest subsquare surrounded by X
+## Today's 15-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/linked-list-that-is-sorted-alternatingly/1)
+## Linked List that is Sorted Alternatingly
 
 ## Intuition
-Given a square matrix of characters `a[][]` of size `n x n`, we are tasked with finding the largest subsquare containing only the character 'X'. The subsquare must be composed of consecutive 'X's and must be formed by selecting a contiguous set of rows and columns from the matrix.
+We are given a singly linked list and tasked with sorting it in ascending order using a special sorting algorithm. My algorithm splits the list into two lists: one in ascending order and the other in descending order, then merges them while sorting.
 
 ## Approach
 
-**Dynamic Programming (DP) with 2D Array** : I utilized dynamic programming to solve this problem efficiently. I defined a 2D array `gp[][]` of type `Jora` to store information about the lengths of the subsquares.
+**Splitted the List** :
+   - I started by creating two dummy nodes, `ascendingHead` and `descendingHead`, which will serve as heads for the ascending and descending lists, respectively.
+   - I then traverse the original list, linking alternate nodes to the ascending and descending lists.
+   - After traversing, I terminated both lists by setting the `next` pointers of their last nodes to `null`.
 
-**Initialization** : I iterated through each cell `(i, j)` of the matrix. For each cell, if the character is 'X', we initialized a `Jora` object `p` with row and column lengths. If the character is not 'X', we initialized `p` with (0, 0).
+**Reversed the Descending List** :
+   - I reversed the descending list to ensure that both lists are sorted in ascending order for merging.
 
-**DP Transition** : I updated the lengths of `p.row` and `p.col` based on the adjacent cells. If the character at `(i, j)` is 'X', I checked the left adjacent cell `(i, j - 1)` for row length and the upper adjacent cell `(i - 1, j)` for column length.
+**Merged the Lists** :
+   - I merged the two sorted lists into one sorted list by repeatedly selecting the smaller of the two current nodes from the heads of the ascending and descending lists.
+   - I iterated through both lists, comparing their nodes and appending the smaller node to the merged list.
+   - Once one of the lists is exhausted, I appended the remaining nodes of the other list to the merged list.
 
-**Stored in DP Array** : I stored the `Jora` object `p` in the DP array `gp[i][j]`.
-
-**Founded Maximum Subsquare** : After initializing the DP array, I iterated through the matrix in reverse order. For each cell `(i, j)`, I computed the minimum of `gp[i][j].row` and `gp[i][j].col`. This minimum value represented the potential side length of the largest subsquare that can be formed at cell `(i, j)`.
-
-**Checked Subsquare Validity** : Starting from the potential maximum side length, I iteratively decreased the side length (`s`) and checked if there exists a subsquare of size `s` at cell `(i, j)`. I verified this condition by comparing the row length of the cell `(i, j - s + 1)` and the column length of the cell `(i - s + 1, j)`.
-
-**Updated the Maximum Size** : If a valid subsquare of size `s` is found, I updated the `maxSize` variable to `s`. I continued this process until I have checked all potential subsquare sizes at all cells.
-
-**Returned Maximum Size** : Finally, I returned the maximum subsquare size (`maxSize`) found during the iteration.
+**Returned the Sorted List** :
+   - Finally, I returned the head of the merged list as the sorted list.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -35,11 +35,11 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O( N^2 )$
+- Time complexity : $O( n )$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$N$ : size of the matrix
+$n$ : number of nodes in the original list
 
-- Space complexity : $O( N^2 )$
+- Space complexity : $O( 1 )$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code
@@ -47,65 +47,103 @@ $N$ : size of the matrix
 ```
 //  User function Template for Java
 
-class Jora {
-    int row;
-    int col;
-    Jora(int r, int c) {
-        row = r;
-        col = c;
+/*
+class Node {
+    int data;
+    Node next;
+    
+    public Node (int data){
+        this.data = data;
+        this.next = null;
     }
 }
+*/
 
 class Solution {
-    
-    int largestSubsquare(int n, char a[][]) {
+    public Node sort(Node head) {
         
-        // Defining a 2D array to store the lengths of subsquares
-        Jora[][] gp = new Jora[n][n];
+        // Creating dummy nodes for ascending and descending lists
+        Node ascendingHead = new Node(0);
+        Node descendingHead = new Node(0);
 
-        // Looping through each cell in the matrix
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                
-                // Initializing a Jora object with row and column lengths
-                Jora p = new Jora(0, 0);
-                
-                // If the current cell contains 'X', updating the lengths
-                if (a[i][j] == 'X') {
-                    // Updating row length based on the left adjacent cell
-                    p.row = (j - 1 >= 0) ? gp[i][j - 1].row + 1 : 1;
-                    // Updating column length based on the upper adjacent cell
-                    p.col = (i - 1 >= 0) ? gp[i - 1][j].col + 1 : 1;
-                }
-                
-                // Storing the Jora object in the gp array
-                gp[i][j] = p;
+        // Splitting the list into ascending and descending lists
+        splitList(head, ascendingHead, descendingHead);
+
+        // Removing dummy nodes and get the actual heads of ascending and descending lists
+        ascendingHead = ascendingHead.next;
+        descendingHead = descendingHead.next;
+
+        // Reversing the descending list
+        descendingHead = reverseList(descendingHead);
+
+        // Merging the ascending and descending lists
+        head = mergeLists(ascendingHead, descendingHead);
+
+        // Returning the head of the sorted list
+        return head;
+    }
+
+    // Function to reverse a linked list
+    private Node reverseList(Node head) {
+        Node current = head;
+        Node prev = null;
+        Node nextNode;
+        while (current != null) {
+            nextNode = current.next;
+            current.next = prev;
+            prev = current;
+            current = nextNode;
+        }
+        return prev;
+    }
+
+    // Function to merge two sorted linked lists
+    private Node mergeLists(Node head1, Node head2) {
+        if (head1 == null) return head2;
+        if (head2 == null) return head1;
+
+        Node mergedHead = new Node(0);
+        Node current = mergedHead;
+
+        while (head1 != null && head2 != null) {
+            if (head1.data <= head2.data) {
+                current.next = head1;
+                head1 = head1.next;
+            } else {
+                current.next = head2;
+                head2 = head2.next;
+            }
+            current = current.next;
+        }
+
+        current.next = (head1 != null) ? head1 : head2;
+        return mergedHead.next;
+    }
+
+    // Function to split the list into ascending and descending lists
+    private void splitList(Node head, Node ascendingHead, Node descendingHead) {
+        Node ascendingNode = ascendingHead;
+        Node descendingNode = descendingHead;
+        Node current = head;
+
+        // Linking alternate nodes to ascending and descending lists
+        while (current != null) {
+            // Link alternate nodes to ascending list
+            ascendingNode.next = current;
+            ascendingNode = ascendingNode.next;
+            current = current.next;
+
+            // If there's still a node, linking it to the descending list
+            if (current != null) {
+                descendingNode.next = current;
+                descendingNode = descendingNode.next;
+                current = current.next;
             }
         }
 
-        // Initializing a variable to store the maximum subsquare size
-        int maxSize = 0;
-
-        // Iterating over the matrix in reverse order to find the largest subsquare
-        for (int i = n - 1; i >= 0; i--) {
-            for (int j = n - 1; j >= 0; j--) {
-                // Getting the minimum of row and column length at the current cell
-                int s = Math.min(gp[i][j].row, gp[i][j].col);
-                // Iterating from the minimum length to maxSize
-                while (s > maxSize) {
-                    // Checking if there exists a subsquare of size 's'
-                    if (gp[i][j - s + 1].col >= s && gp[i - s + 1][j].row >= s) {
-                        // Updating maxSize if a subsquare of larger size is found
-                        maxSize = s;
-                        break; // Exit the loop once a larger subsquare is found
-                    }
-                    s--; // Decrementing the size to check smaller subsquares
-                }
-            }
-        }
-
-        // Returning the maximum subsquare size found
-        return maxSize;
+        // Terminating both lists
+        ascendingNode.next = null;
+        descendingNode.next = null;
     }
 }
 ```
