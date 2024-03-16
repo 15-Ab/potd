@@ -5,29 +5,24 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 15-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/linked-list-that-is-sorted-alternatingly/1)
-## Linked List that is Sorted Alternatingly
+## Today's 16-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/delete-without-head-pointer/1)
+## Delete without head pointer
 
 ## Intuition
-We are given a singly linked list and tasked with sorting it in ascending order using a special sorting algorithm. My algorithm splits the list into two lists: one in ascending order and the other in descending order, then merges them while sorting.
+The goal is to delete a node from a singly linked list given only access to that node (`del_node`). Deleting a node usually requires access to the previous node as well, but in this case, we only have access to the node to be deleted. 
 
 ## Approach
 
-**Splitted the List** :
-   - I started by creating two dummy nodes, `ascendingHead` and `descendingHead`, which will serve as heads for the ascending and descending lists, respectively.
-   - I then traverse the original list, linking alternate nodes to the ascending and descending lists.
-   - After traversing, I terminated both lists by setting the `next` pointers of their last nodes to `null`.
+**Special Cases Handling :**
+   - First, I checked if the given node to be deleted (`del_node`) is null. If it is null, it implied that the linked list is empty, so there's nothing to delete.
+   - Next, I checked if the next node of `del_node` is null. If it is null, it means `del_node` is the last node of the linked list. In this case, I cannot directly delete `del_node`, so I returned without performing any deletion.
 
-**Reversed the Descending List** :
-   - I reversed the descending list to ensure that both lists are sorted in ascending order for merging.
+**Copy Data and Update Pointers :**
+   - If neither of the above special cases holds true, it meant `del_node` is neither null nor the last node of the linked list.
+   - To delete `del_node`, I copied the data from its next node to `del_node`. This effectively maked `del_node` contain the data of its next node.
+   - Next, I updated the `next` pointer of `del_node` to skip the next node and point directly to the node after the next node. This effectively removed the next node from the linked list.
 
-**Merged the Lists** :
-   - I merged the two sorted lists into one sorted list by repeatedly selecting the smaller of the two current nodes from the heads of the ascending and descending lists.
-   - I iterated through both lists, comparing their nodes and appending the smaller node to the merged list.
-   - Once one of the lists is exhausted, I appended the remaining nodes of the other list to the merged list.
-
-**Returned the Sorted List** :
-   - Finally, I returned the head of the merged list as the sorted list.
+My approach allows to delete a node from a singly linked list given only access to that node, without needing access to the previous node.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -35,9 +30,8 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O( n )$
+- Time complexity : $O( 1 )$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$n$ : number of nodes in the original list
 
 - Space complexity : $O( 1 )$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
@@ -48,102 +42,38 @@ $n$ : number of nodes in the original list
 //  User function Template for Java
 
 /*
-class Node {
-    int data;
-    Node next;
-    
-    public Node (int data){
-        this.data = data;
-        this.next = null;
-    }
+class Node
+{
+	int data ;
+	Node next;
+	Node(int d)
+	{
+		data = d;
+		next = null;
+	}
 }
 */
 
-class Solution {
-    public Node sort(Node head) {
+//Function to delete a node without any reference to head pointer.
+class Solution
+{
+    void deleteNode(Node del_node)
+    {
+        // Your code here
         
-        // Creating dummy nodes for ascending and descending lists
-        Node ascendingHead = new Node(0);
-        Node descendingHead = new Node(0);
+        // Checking if the linked list is empty
+        if(del_node == null)
+            return; 
+        
+        // Checking if del_node is the last node
+        if(del_node.next == null)
+            return; 
 
-        // Splitting the list into ascending and descending lists
-        splitList(head, ascendingHead, descendingHead);
+        // Copying data from the next node to del_node
+        del_node.data = del_node.next.data;
 
-        // Removing dummy nodes and get the actual heads of ascending and descending lists
-        ascendingHead = ascendingHead.next;
-        descendingHead = descendingHead.next;
-
-        // Reversing the descending list
-        descendingHead = reverseList(descendingHead);
-
-        // Merging the ascending and descending lists
-        head = mergeLists(ascendingHead, descendingHead);
-
-        // Returning the head of the sorted list
-        return head;
-    }
-
-    // Function to reverse a linked list
-    private Node reverseList(Node head) {
-        Node current = head;
-        Node prev = null;
-        Node nextNode;
-        while (current != null) {
-            nextNode = current.next;
-            current.next = prev;
-            prev = current;
-            current = nextNode;
-        }
-        return prev;
-    }
-
-    // Function to merge two sorted linked lists
-    private Node mergeLists(Node head1, Node head2) {
-        if (head1 == null) return head2;
-        if (head2 == null) return head1;
-
-        Node mergedHead = new Node(0);
-        Node current = mergedHead;
-
-        while (head1 != null && head2 != null) {
-            if (head1.data <= head2.data) {
-                current.next = head1;
-                head1 = head1.next;
-            } else {
-                current.next = head2;
-                head2 = head2.next;
-            }
-            current = current.next;
-        }
-
-        current.next = (head1 != null) ? head1 : head2;
-        return mergedHead.next;
-    }
-
-    // Function to split the list into ascending and descending lists
-    private void splitList(Node head, Node ascendingHead, Node descendingHead) {
-        Node ascendingNode = ascendingHead;
-        Node descendingNode = descendingHead;
-        Node current = head;
-
-        // Linking alternate nodes to ascending and descending lists
-        while (current != null) {
-            // Link alternate nodes to ascending list
-            ascendingNode.next = current;
-            ascendingNode = ascendingNode.next;
-            current = current.next;
-
-            // If there's still a node, linking it to the descending list
-            if (current != null) {
-                descendingNode.next = current;
-                descendingNode = descendingNode.next;
-                current = current.next;
-            }
-        }
-
-        // Terminating both lists
-        ascendingNode.next = null;
-        descendingNode.next = null;
+        // Updating pointers to delete the next node
+        del_node.next = del_node.next.next;
     }
 }
 ```
