@@ -17,7 +17,7 @@ The goal is to delete a node from a singly linked list given only access to that
    - First, I checked if the given node to be deleted (`del_node`) is null. If it is null, it implied that the linked list is empty, so there's nothing to delete.
    - Next, I checked if the next node of `del_node` is null. If it is null, it means `del_node` is the last node of the linked list. In this case, I cannot directly delete `del_node`, so I returned without performing any deletion.
 
-**Copy Data and Update Pointers :**
+**Copied Data and Updated Pointers :**
    - If neither of the above special cases holds true, it meant `del_node` is neither null nor the last node of the linked list.
    - To delete `del_node`, I copied the data from its next node to `del_node`. This effectively maked `del_node` contain the data of its next node.
    - Next, I updated the `next` pointer of `del_node` to skip the next node and point directly to the node after the next node. This effectively removed the next node from the linked list.
