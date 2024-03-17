@@ -5,24 +5,20 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 16-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/delete-without-head-pointer/1)
-## Delete without head pointer
+## Today's 17-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/count-pairs-whose-sum-is-equal-to-x/1)
+## Count Pairs whose sum is equal to X
 
 ## Intuition
-The goal is to delete a node from a singly linked list given only access to that node (`del_node`). Deleting a node usually requires access to the previous node as well, but in this case, we only have access to the node to be deleted. 
+The task is to count pairs from two linked lists `head1` and `head2` that sum up to a given integer `x`. To achieve this, I can use a HashMap to store the frequencies of elements in the first linked list. Then, for each element in the second linked list, I check if its complement (i.e., `x - element`) exists in the HashMap. If it exists, I increment the count by the frequency of the complement.
 
 ## Approach
 
-**Special Cases Handling :**
-   - First, I checked if the given node to be deleted (`del_node`) is null. If it is null, it implied that the linked list is empty, so there's nothing to delete.
-   - Next, I checked if the next node of `del_node` is null. If it is null, it means `del_node` is the last node of the linked list. In this case, I cannot directly delete `del_node`, so I returned without performing any deletion.
-
-**Copied Data and Updated Pointers :**
-   - If neither of the above special cases holds true, it meant `del_node` is neither null nor the last node of the linked list.
-   - To delete `del_node`, I copied the data from its next node to `del_node`. This effectively maked `del_node` contain the data of its next node.
-   - Next, I updated the `next` pointer of `del_node` to skip the next node and point directly to the node after the next node. This effectively removed the next node from the linked list.
-
-My approach allows to delete a node from a singly linked list given only access to that node, without needing access to the previous node.
+- I initialized a HashMap to store the frequency of elements from `head1`.
+- Iterated through `head1` and populated the HashMap with the frequency of each element.
+- Iterated through `head2`.
+  - For each element `num` in `head2`, checked if `x - num` exists in the HashMap.
+  - If it exists, incremented the count by the frequency of `x - num`.
+- After iterating through `head2`, returned the count as the result.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -30,10 +26,10 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O( 1 )$
+- Time complexity : $O( n )$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-
-- Space complexity : $O( 1 )$
+$n$ :  total number of elements in both linked lists
+- Space complexity : $O( n )$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code
@@ -41,39 +37,44 @@ Keep Solving.:)
 ```
 //  User function Template for Java
 
+// your task is to complete this function
+
 /*
 class Node
 {
-	int data ;
-	Node next;
-	Node(int d)
-	{
-		data = d;
-		next = null;
-	}
+    int data;
+    Node next;
+
+    Node(int key)
+    {
+        data = key;
+        next = null;
+    }
 }
 */
 
-//Function to delete a node without any reference to head pointer.
-class Solution
-{
-    void deleteNode(Node del_node)
-    {
-        // Your code here
-        
-        // Checking if the linked list is empty
-        if(del_node == null)
-            return; 
-        
-        // Checking if del_node is the last node
-        if(del_node.next == null)
-            return; 
+class Solution {
+    
+    static HashMap<Integer, Integer> m;
 
-        // Copying data from the next node to del_node
-        del_node.data = del_node.next.data;
-
-        // Updating pointers to delete the next node
-        del_node.next = del_node.next.next;
+    public static int countPairs(LinkedList<Integer> head1, LinkedList<Integer> head2, int x) {
+        // add your code here
+        m = new HashMap<>();
+        int jawab = 0;
+        
+        // Counting occurrences of elements in head1
+        for (int num : head1) {
+            m.put(num, m.getOrDefault(num, 0) + 1);
+        }
+        
+        // Checking for pairs in head2
+        for (int num : head2) {
+            if (m.containsKey(x - num)) {
+                jawab += m.get(x - num);
+            }
+        }
+        
+        return jawab;
     }
 }
 ```
