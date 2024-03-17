@@ -17,7 +17,7 @@ The task is to count pairs from two linked lists `head1` and `head2` that sum up
 - Iterated through `head1` and populated the HashMap with the frequency of each element.
 - Iterated through `head2`.
   - For each element `num` in `head2`, checked if `x - num` exists in the HashMap.
-  - If it exists, incremented the count by the frequency of `x - num`.
+  - If it existed, incremented the count by the frequency of `x - num`.
 - After iterating through `head2`, returned the count as the result.
 
 ---
