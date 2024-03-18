@@ -37,7 +37,7 @@ Keep Solving.:)
 ## Complexity
 - Time complexity : $O( n )$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$n$ :  total number of elements in both linked lists
+$n$ :  number of nodes in the tree
 - Space complexity : $O( n )$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
