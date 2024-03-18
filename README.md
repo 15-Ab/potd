@@ -9,16 +9,25 @@ This is my attempt to make the coding experience easier for you guys so that you
 ## Count Pairs whose sum is equal to X
 
 ## Intuition
-The task is to count pairs from two linked lists `head1` and `head2` that sum up to a given integer `x`. To achieve this, I can use a HashMap to store the frequencies of elements in the first linked list. Then, for each element in the second linked list, I check if its complement (i.e., `x - element`) exists in the HashMap. If it exists, I increment the count by the frequency of the complement.
+- Perform a level order traversal of the binary tree.
+- Use a queue to keep track of nodes at each level.
+- Iterate through each level and add the nodes' values to the result list.
 
 ## Approach
 
-- I initialized a HashMap to store the frequency of elements from `head1`.
-- Iterated through `head1` and populated the HashMap with the frequency of each element.
-- Iterated through `head2`.
-  - For each element `num` in `head2`, checked if `x - num` exists in the HashMap.
-  - If it existed, incremented the count by the frequency of `x - num`.
-- After iterating through `head2`, returned the count as the result.
+**Initialization :** Initialized an empty ArrayList to store the level order traversal.
+
+**Base Case :** If the root is null, returned an empty ArrayList.
+
+**Breadth-First Traversal :** Used a queue to perform a breadth-first traversal of the tree.
+
+**Iterated Levels :** While the queue is not empty, iterated through each level :
+- For each node in the current level :
+        - Added its value to the result list.
+        - If the left child exists, enqueued it.
+        - If the right child exists, enqueued it.
+
+**Result :** Returned the ArrayList containing the level order traversal.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -37,43 +46,43 @@ $n$ :  total number of elements in both linked lists
 ```
 //  User function Template for Java
 
-// your task is to complete this function
-
 /*
 class Node
 {
     int data;
-    Node next;
+    Node left, right;
 
-    Node(int key)
+    Node(int item)
     {
-        data = key;
-        next = null;
+        data = item;
+        left = right = null;
     }
 }
 */
-
-class Solution {
-    
-    static HashMap<Integer, Integer> m;
-
-    public static int countPairs(LinkedList<Integer> head1, LinkedList<Integer> head2, int x) {
-        // add your code here
-        m = new HashMap<>();
-        int jawab = 0;
-        
-        // Counting occurrences of elements in head1
-        for (int num : head1) {
-            m.put(num, m.getOrDefault(num, 0) + 1);
+class Solution
+{
+    //Function to return the level order traversal of a tree.
+    static ArrayList <Integer> levelOrder(Node root) 
+    {
+        // Your code here
+        if( root == null){
+            return new ArrayList<>();
         }
-        
-        // Checking for pairs in head2
-        for (int num : head2) {
-            if (m.containsKey(x - num)) {
-                jawab += m.get(x - num);
+        ArrayList<Integer> jawab = new ArrayList<>();              // to store the jawabwer : initially added root node
+        Queue<Node> q = new ArrayDeque<>( Arrays.asList(root));  // maintaining queue to store nodes as they appear left to right in a level: 
+
+        while( !q.isEmpty()){
+            for( int i = q.size(); i > 0; i--){         // iterating over each element in that level
+                Node t = q.poll();                      // popping queue to get a node
+                jawab.add(t.data);                        // storing its value
+                if( t.left != null){                    // if left child present then adding it to queue to furthur iterations in upcoming levels
+                    q.offer(t.left);
+                }
+                if( t.right != null){                   // if right child present then adding it to queue to furthur iterations in upcoming levels
+                    q.offer(t.right);
+                }
             }
         }
-        
         return jawab;
     }
 }
