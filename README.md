@@ -23,9 +23,9 @@ This is my attempt to make the coding experience easier for you guys so that you
 
 **Iterated Levels :** While the queue is not empty, iterated through each level :
 - For each node in the current level :
-        - Added its value to the result list.
-        - If the left child exists, enqueued it.
-        - If the right child exists, enqueued it.
+  - Added its value to the result list.      
+  - If the left child exists, enqueued it.
+  - If the right child exists, enqueued it.
 
 **Result :** Returned the ArrayList containing the level order traversal.
 
