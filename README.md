@@ -5,8 +5,8 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 17-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/count-pairs-whose-sum-is-equal-to-x/1)
-## Count Pairs whose sum is equal to X
+## Today's 18-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/level-order-traversal/1)
+## Level order traversal
 
 ## Intuition
 - Perform a level order traversal of the binary tree.
