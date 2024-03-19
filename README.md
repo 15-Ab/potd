@@ -15,7 +15,7 @@ The given code implements a solution to find the maximum weighted edge for each 
 ## Approach
 
 **Disjoint Set Initialization** :
-- Initialized the parent and size arrays for the disjoint set.
+- I initialized the parent and size arrays for the disjoint set.
 - Each node is initially its own parent, and the size of each set is set to 1.
 
 **Processing Weighted Edges** :
@@ -149,5 +149,4 @@ class Solution {
         return resultArray;
     }
 }
-
 ```
