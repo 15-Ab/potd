@@ -13,23 +13,23 @@ The task is to perform a zigzag traversal of a binary tree, alternating between 
 
 ## Approach
 
-1. I created a function named `zigZagTraversal` that takes the root node of the binary tree as input and returns the zigzag traversal result as an ArrayList.
-2. Initialize an ArrayList named `jawab` to store the zigzag traversal result.
-3. Return an empty list if the root node is null, as there are no nodes to traverse.
-4. Create a Queue named `q` to perform level order traversal of the binary tree.
-5. Add the root node to the queue.
-6. Initialize a boolean variable `leftToRight` to true, indicating the direction of traversal.
-7. Iterate until the queue is empty :
--  - Get the size of the queue to determine the number of nodes at the current level.
--  - Create an ArrayList named `levelNodes` to store the nodes at the current level.
--  - Iterate over the nodes at the current level :
+- I created a function named `zigZagTraversal` that takes the root node of the binary tree as input and returns the zigzag traversal result as an ArrayList.
+- Initialize an ArrayList named `jawab` to store the zigzag traversal result.
+- Return an empty list if the root node is null, as there are no nodes to traverse.
+- Create a Queue named `q` to perform level order traversal of the binary tree.
+- Add the root node to the queue.
+- Initialize a boolean variable `leftToRight` to true, indicating the direction of traversal.
+- Iterate until the queue is empty :
+  - Get the size of the queue to determine the number of nodes at the current level.
+  - Create an ArrayList named `levelNodes` to store the nodes at the current level.
+  - Iterate over the nodes at the current level :
     - Poll the node from the front of the queue.
     - If the left child of the current node exists, add it to the queue.
     - If the right child of the current node exists, add it to the queue.
     - Add the value of the current node to the `levelNodes` list.
--  - If the traversal direction is from right to left, reverse the `levelNodes` list.
--  - Add all the nodes in the `levelNodes` list to the `jawab` list.
--  - Toggle the direction of traversal for the next level by negating the value of `leftToRight`.
+  - If the traversal direction is from right to left, reverse the `levelNodes` list.
+  - Add all the nodes in the `levelNodes` list to the `jawab` list.
+  - Toggle the direction of traversal for the next level by negating the value of `leftToRight`.
 8. Return the `jawab` list containing the zigzag traversal of the binary tree.
 
 ---
