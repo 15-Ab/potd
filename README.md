@@ -20,16 +20,16 @@ The task is to perform a zigzag traversal of a binary tree, alternating between 
 5. Add the root node to the queue.
 6. Initialize a boolean variable `leftToRight` to true, indicating the direction of traversal.
 7. Iterate until the queue is empty :
-  a. Get the size of the queue to determine the number of nodes at the current level.
-  b. Create an ArrayList named `levelNodes` to store the nodes at the current level.
-  c. Iterate over the nodes at the current level:
+  - Get the size of the queue to determine the number of nodes at the current level.
+  - Create an ArrayList named `levelNodes` to store the nodes at the current level.
+  - Iterate over the nodes at the current level:
         i. Poll the node from the front of the queue.
         ii. If the left child of the current node exists, add it to the queue.
         iii. If the right child of the current node exists, add it to the queue.
         iv. Add the value of the current node to the `levelNodes` list.
-  d. If the traversal direction is from right to left, reverse the `levelNodes` list.
-  e. Add all the nodes in the `levelNodes` list to the `jawab` list.
-  f. Toggle the direction of traversal for the next level by negating the value of `leftToRight`.
+  - If the traversal direction is from right to left, reverse the `levelNodes` list.
+  - Add all the nodes in the `levelNodes` list to the `jawab` list.
+  - Toggle the direction of traversal for the next level by negating the value of `leftToRight`.
 8. Return the `jawab` list containing the zigzag traversal of the binary tree.
 
 ---
