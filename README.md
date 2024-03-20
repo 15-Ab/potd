@@ -13,7 +13,7 @@ The task is to find the sum of the longest path from the root to a leaf node in 
 
 ## Approach
 
-1. Define a class named PathSumCalculator.
+1. I defined a class named PathSumCalculator.
 2. Inside the class, define two instance variables: maxHeight and longestPathSum, to keep track of the maximum height and sum of the longest path found so far.
 3. Define a recursive method named calculateLongestRootToLeafPathSum, which takes three parameters: currentNode (the current node being processed), currentHeight (the height of the current node), and currentSum (the sum of the path from the root to the current node).
 4. In the calculateLongestRootToLeafPathSum method:
@@ -34,7 +34,7 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $ O( n )$
+- Time complexity : $O( n )$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
 $n$ :  number of nodes 
 - Space complexity : $O( n )$
