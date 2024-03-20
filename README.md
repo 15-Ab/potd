@@ -5,7 +5,7 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 19-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/possible-paths--141628/1)
+## Today's 20-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/possible-paths--141628/1)
 ## Possible Paths in a Tree
 
 ## Intuition
