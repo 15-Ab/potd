@@ -30,7 +30,7 @@ The task is to perform a zigzag traversal of a binary tree, alternating between 
   - If the traversal direction is from right to left, reverse the `levelNodes` list.
   - Add all the nodes in the `levelNodes` list to the `jawab` list.
   - Toggle the direction of traversal for the next level by negating the value of `leftToRight`.
-8. Return the `jawab` list containing the zigzag traversal of the binary tree.
+- Return the `jawab` list containing the zigzag traversal of the binary tree.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
