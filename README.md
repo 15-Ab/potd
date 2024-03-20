@@ -22,11 +22,11 @@ The task is to perform a zigzag traversal of a binary tree, alternating between 
 7. Iterate until the queue is empty :
   - Get the size of the queue to determine the number of nodes at the current level.
   - Create an ArrayList named `levelNodes` to store the nodes at the current level.
-  - Iterate over the nodes at the current level:
-        i. Poll the node from the front of the queue.
-        ii. If the left child of the current node exists, add it to the queue.
-        iii. If the right child of the current node exists, add it to the queue.
-        iv. Add the value of the current node to the `levelNodes` list.
+  - Iterate over the nodes at the current level :
+    - Poll the node from the front of the queue.
+    - If the left child of the current node exists, add it to the queue.
+    - If the right child of the current node exists, add it to the queue.
+    - Add the value of the current node to the `levelNodes` list.
   - If the traversal direction is from right to left, reverse the `levelNodes` list.
   - Add all the nodes in the `levelNodes` list to the `jawab` list.
   - Toggle the direction of traversal for the next level by negating the value of `leftToRight`.
