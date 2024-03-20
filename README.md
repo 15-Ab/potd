@@ -53,100 +53,53 @@ $q$ : number of queries
 ```
 //  User function Template for Java
 
-class Solution {
+/*
+node class of binary tree
+class Node {
+    int data;
+    Node left, right;
     
-    // Static variable to store the result
-    static int result;
-
-    // Method to find the root of a node in the disjoint set
-    static int findRoot(int node, int[] parent) {
-        
-        // Path compression technique to find the root
-        while (parent[node] != node) {
-            parent[node] = parent[parent[node]]; // Path compression
-            node = parent[node];
-        }
-        return node;
+    public Node(int data){
+        this.data = data;
+    }
+}
+*/
+class Solution{
+    public int sumOfLongRootToLeafPath(Node root) {
+        maxHeight = longestPathSum = 0;
+        // Call the recursive method to calculate the longest path sum 
+        calculateLongestRootToLeafPathSum(root, 0, 0);
+        return longestPathSum;
     }
 
-    // Method to perform union of two nodes in the disjoint set
-    static int union(int a, int b, int[] parent, int[] size) {
-        // Finding the roots of the nodes
-        int rootA = findRoot(a, parent);
-        int rootB = findRoot(b, parent);
+    int maxHeight, longestPathSum;
+    
+    // Define a method named calculateLongestRootToLeafPathSum
+    void calculateLongestRootToLeafPathSum(Node currentNode, int currentHeight, int currentSum) {
+        // Base case: If the current node is null, return 
+        if (currentNode == null)
+            return;
         
-        // If both nodes are already in the same set, returning the square of their size
-        if (rootA == rootB)
-            return size[rootA] * size[rootA];
-        
-        // Union by rank to merge smaller set into larger set
-        if (size[rootA] < size[rootB]) {
-            int temp = rootA;
-            rootA = rootB;
-            rootB = temp;
-
-            temp = a;
-            a = b;
-            b = temp;
-        }
-
-        // Updating result by adding the product of sizes of both sets
-        result += size[rootA] * size[rootB];
-        
-        // Merging smaller set into larger set
-        parent[rootB] = rootA;
-        size[rootA] += size[rootB];
-
-        return result;
-    }
-
-    // Method to find the maximum weighted edge for each query
-    public static ArrayList<Integer> maximumWeight(int n, int[][] edges, int q, int[] queries) {
-        
-        // Initializing result to 0
-        result = 0;
-
-        // Arrays to store parent and size of each node in the disjoint set
-        int[] parent = new int[n + 1];
-        int[] size = new int[n + 1];
-
-        // Initializing parent array with each node as its own parent and size array with 1
-        for (int i = 0; i <= n; i++) {
-            parent[i] = i;
-            size[i] = 1;
-        }
-
-        // List to store weighted edges
-        ArrayList<int[]> weightedEdges = new ArrayList<>();
-        for (int i = 0; i < n - 1; i++)
-            weightedEdges.add(new int[]{edges[i][2], edges[i][0], edges[i][1]});
-        weightedEdges.sort(Comparator.comparingInt(a -> a[0]));
-
-        // TreeMap to store result for each weight threshold
-        TreeMap<Integer, Integer> map = new TreeMap<>();
-        for (int i = 0; i < n - 1; i++) {
-            int weight = weightedEdges.get(i)[0];
-            int nodeA = weightedEdges.get(i)[1];
-            int nodeB = weightedEdges.get(i)[2];
-            map.put(weight, union(nodeA, nodeB, parent, size));
-        }
-
-        // ArrayList to store results for each query
-        ArrayList<Integer> resultArray = new ArrayList<>();
-        for (int i = 0; i < q; i++) {
+        // If the current node is a leaf node, calculate the sum of the path from the root to this leaf node
+        if (currentNode.left == null && currentNode.right == null) {
+            currentSum += currentNode.data;
             
-            // Finding the closest weight threshold less than or equal to the query weight
-            Map.Entry<Integer, Integer> entry = map.floorEntry(queries[i]);
-            
-            // If no such weight threshold exists, adding 0 to the result list
-            if (entry == null)
-                resultArray.add(0);
-            // Otherwise, adding the result corresponding to the weight threshold to the result list
-            else
-                resultArray.add(entry.getValue());
+            // Update maxHeight and longestPathSum if the current path is longer than the previously found longest path
+            if (currentHeight > maxHeight) {
+                maxHeight = currentHeight;
+                longestPathSum = currentSum;
+            } else if (currentHeight == maxHeight) {
+                longestPathSum = Math.max(longestPathSum, currentSum);
+            }
+                
+            return;
         }
-
-        return resultArray;
+        
+        // Recursively call the method for the left and right children of the current node 
+        currentSum += currentNode.data;
+        calculateLongestRootToLeafPathSum(currentNode.left, currentHeight + 1, currentSum);
+        calculateLongestRootToLeafPathSum(currentNode.right, currentHeight + 1, currentSum);
     }
+    
 }
 ```
