@@ -5,34 +5,28 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 20-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/possible-paths--141628/1)
-## Possible Paths in a Tree
+## Today's 20-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/sum-of-the-longest-bloodline-of-a-tree/1)
+## Sum of nodes on the longest path from root to leaf node
 
 ## Intuition
-The given code implements a solution to find the maximum weighted edge for each query in a disjoint set data structure (also known as union-find or merge-find data structure). The problem involves processing a series of weighted edges and answering queries based on a weight threshold.
-
+The task is to find the sum of the longest path from the root to a leaf node in a binary tree. We can achieve this by recursively traversing the tree and keeping track of the maximum height and sum of the longest path found so far.
 
 ## Approach
 
-**Disjoint Set Initialization** :
-- I initialized the parent and size arrays for the disjoint set.
-- Each node is initially its own parent, and the size of each set is set to 1.
-
-**Processing Weighted Edges** :
-- Sorted the given edges based on their weights in ascending order.
-- For each edge in the sorted list :
-  - Finded the roots of the two nodes connected by the edge using the `findRoot` method.
-  - If the roots are different, performed union of the two nodes using the `union` method.
-  - Updated the `result` variable with the sum of squares of sizes of the merged sets.
-
-**Stored Results** :
-- Used a TreeMap to store the result for each weight threshold encountered during the processing of edges.
-- For each query weight :
-  - Finded the closest weight threshold less than or equal to the query weight using the `floorEntry` method of TreeMap.
-  - If no such weight threshold exists, added 0 to the result list; otherwise, add the corresponding result to the list.
-
-**Results** :
-- Returned the list containing the results for each query.
+1. Define a class named PathSumCalculator.
+2. Inside the class, define two instance variables: maxHeight and longestPathSum, to keep track of the maximum height and sum of the longest path found so far.
+3. Define a recursive method named calculateLongestRootToLeafPathSum, which takes three parameters: currentNode (the current node being processed), currentHeight (the height of the current node), and currentSum (the sum of the path from the root to the current node).
+4. In the calculateLongestRootToLeafPathSum method:
+   - Check if the currentNode is null. If so, return.
+   - If the currentNode is a leaf node (both left and right children are null):
+     - Calculate the sum of the path from the root to this leaf node by adding the currentNode's data to the currentSum.
+     - Update maxHeight and longestPathSum if the current path is longer than the previously found longest path.
+   - Recursively call the method for the left and right children of the currentNode, updating the height and sum accordingly.
+5. Define a method named findLongestRootToLeafPathSum, which takes the rootNode as a parameter.
+6. Inside findLongestRootToLeafPathSum:
+   - Initialize maxHeight and longestPathSum to zero.
+   - Call the calculateLongestRootToLeafPathSum method with the rootNode, starting height (0), and starting sum (0).
+   - Return the longestPathSum, which holds the sum of the longest path from the root to a leaf node in the binary tree.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -40,11 +34,9 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $ O(n log n + q log n)$
+- Time complexity : $ O( n )$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$n$ :  number of edges 
-
-$q$ : number of queries
+$n$ :  number of nodes 
 - Space complexity : $O( n )$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
