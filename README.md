@@ -13,7 +13,7 @@ To calculate the diagonal sum of a binary tree, I traverse the tree in a diagona
 
 ## Approach
 
-- Initialize an ArrayList to store the diagonal sums.
+- I initialize an ArrayList to store the diagonal sums.
 - Define a recursive function to calculate the diagonal sums.
 - In each recursive call, update the diagonal sum at the corresponding index in the ArrayList.
 - Traverse the tree recursively, moving to the right child and incrementing the diagonal level, and moving to the left child while keeping the diagonal level unchanged.
