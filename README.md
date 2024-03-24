@@ -1,5 +1,6 @@
-🚀 Enjoy exploring my solution and keep the coding spirit alive! Happy coding ! ✨
+# Wishing you all a vibrant Holika Dahan! Let the sacred fire illuminate our hearts with joy and the triumph of good over evil. 🪔✨ #HolikaDahan\
 
+🚀 Enjoy exploring my solution and keep the coding spirit alive! Happy coding ! ✨
 
 ## Problem Of The Day Solutions
 
