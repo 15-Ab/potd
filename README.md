@@ -1,4 +1,8 @@
-# Wishing you all a vibrant Holika Dahan! Let the sacred fire illuminate our hearts with joy and the triumph of good over evil. 🪔✨ #HolikaDahan
+# 🎉 Happy Holi, GitHub Friends ! 🌈🎨
+
+## Wishing you a colorful and joyful Holi celebration ! 🥳 May your coding adventures be as vibrant and delightful as the festival itself. Thanks for stopping by my repo ! 💻🌟
+
+## Happy Holi from me to you ! 🎊🎉
 
 🚀 Enjoy exploring my solution and keep the coding spirit alive! Happy coding ! ✨
 
@@ -6,21 +10,23 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 24-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/insert-an-element-at-the-bottom-of-a-stack/1)
-## Insert an Element at the Bottom of a Stack
+## Today's 25-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/print-n-bit-binary-numbers-having-more-1s-than-0s0252/1)
+## Print N-bit binary numbers having more 1s than 0s
 
 ## Intuition
-The intuition behind this method is to use an additional stack to reverse the order of elements in the original stack temporarily. This allows to insert the new element at the bottom of the stack efficiently.
+- My algorithm generates all possible binary strings of length N with a specific constraint.
+- It starts with an empty binary string and recursively appends '1' or '0' based on the number of extra ones allowed.
+- When all places are filled, it adds the binary string to the result list.
 
 ## Approach
 
-- Created a temporary stack (`tempStack`) to hold elements temporarily.
-- Popped all elements from the original stack (`st`) and push them onto the temporary stack. This effectively reverses the order of elements in the original stack.
-- Pushed the new element (`x`) onto the original stack (`st`). This effectively inserts the new element at the bottom of the original stack.
-- Popped all elements from the temporary stack (`tempStack`) and push them back onto the original stack (`st`). This restores the original order of elements.
-- Returned the modified original stack (`st`) with the new element inserted at the bottom.
-
-By following this approach, I can efficiently insert an element at the bottom of the stack while maintaining the order of other elements.
+- I initialized an empty list to store the generated binary strings.
+- Defined a recursive function to generate binary strings:
+   - Base case: If all places are filled, add the binary string to the result list.
+   - Recursive step: Append '1' to the binary string and recursively call the function with one extra '1' allowed.
+     If there are extra ones allowed, append '0' as well and recursively call the function with one fewer extra ones allowed.
+- Started the recursion with an empty binary string and the allowed number of extra ones.
+- Returned the list of generated binary strings.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -28,10 +34,10 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O( n )$
+- Time complexity : $O( 2^N )$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$n$ : number of elements in the stack
-- Space complexity : $O( n )$
+$N$ : length of the binary strings
+- Space complexity : $O( 2^N )$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code
@@ -41,27 +47,30 @@ $n$ : number of elements in the stack
 
 class Solution {
     
-    // Method to insert an element at the bottom of a stack
-    public Stack<Integer> insertAtBottom(Stack<Integer> st, int x) {
+    static ArrayList<String> jawab;
+    
+    ArrayList<String> NBitBinary(int N) {
+        // code here
         
-        // Creating a temporary stack to hold elements temporarily
-        Stack<Integer> tempStack = new Stack<>();
-        
-        // Pushing all elements from the original stack to the temporary stack
-        while (!st.isEmpty()) {
-            tempStack.push(st.pop());
-        }
-        
-        // Pushing the new element to the original stack, effectively inserting it at the bottom
-        st.push(x);
-        
-        // Popping all elements from the temporary stack and push them back to the original stack
-        while (!tempStack.isEmpty()) {
-            st.push(tempStack.pop());
-        }
-        
-        // Returning the modified original stack with the new element inserted at the bottom
-        return st;
+        // Initialize jawab list
+        jawab = new ArrayList<>();
+        String binaryString = "";
+        generate(binaryString, 0, N);
+        return jawab;
     }
-} 	
+    
+    static void generate(String binary, int extraOnes, int remainingPlaces) {
+        // Base case : when all places are filled
+        if (remainingPlaces == 0) {
+            jawab.add(binary);
+            return;
+        }
+        // Appending '1' and recursing
+        generate(binary + "1", extraOnes + 1, remainingPlaces - 1);
+        // If extraOnes is non-zero, appending '0' and recursing
+        if (extraOnes > 0) {
+            generate(binary + "0", extraOnes - 1, remainingPlaces - 1);
+        }
+    }
+}	
 ```
