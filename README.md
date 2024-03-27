@@ -1,9 +1,3 @@
-# 🎉 Happy Holi, GitHub Friends ! 🌈🎨
-
-## Wishing you a colorful and joyful Holi celebration ! 🥳 May your coding adventures be as vibrant and delightful as the festival itself. Thanks for stopping by my repo ! 💻🌟
-
-## Happy Holi from me to you ! 🎊🎉
-
 🚀 Enjoy exploring my solution and keep the coding spirit alive! Happy coding ! ✨
 
 ## Problem Of The Day Solutions
