@@ -14,7 +14,7 @@ The problem involves finding the shortest path from any cell with value 1 in the
 
 **Marked Landmines :**
 - I iterated through the grid.
-- For each cell with value 0 (landmine), mark adjacent cells as impassable by setting their value to -1.
+- For each cell with value 0 (landmine), marked adjacent cells as impassable by setting their value to -1.
 
 **Converted Marked Cells :**
 - Converted all marked cells (value -1) back to passable cells (value 0).
