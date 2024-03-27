@@ -8,19 +8,29 @@ This is my attempt to make the coding experience easier for you guys so that you
 ## Find shortest safe route in a matrix
 
 ## Intuition
-An additive sequence is a series of numbers in which each number in the sequence is the sum of the two preceding numbers. The idea behind the algorithm is to explore all possible combinations of the first two numbers in the sequence and then recursively check if the remaining string forms a valid additive sequence.
+The problem involves finding the shortest path from any cell with value 1 in the first column to any cell with value 1 in the last column, considering only cells with value 1 as passable and 0 as impassable. Landmines, represented by cells with value 0, block adjacent cells.
 
 ## Approach
 
-**Input Validation :** I checked if the length of the input string is less than or equal to 2. If so, return false as an additive sequence must contain at least three numbers.
-- **Initialization :** Initialized two static variables `jawab` (result) and `sequence` (to store the current sequence being checked).
-- **Recursion :** Defined a recursive function `checkAdditive` that takes the input string and the starting index as parameters.
-- **Base Case :** If the starting index equals the length of the input string and the size of the sequence is greater than 2, set the result to true.
-- **Updated Variables :** Updated variables `first`, `second`, and `current` based on the current state of the sequence.
-- **Iterated :** Iterated through the remaining characters in the input string starting from the current index.
-- **Backtracking :** Added the current number to the sequence if the sequence size is less than 2 and the result is not true. Recursively call the `checkAdditive` function with the updated parameters. Removed the current number from the sequence to backtrack and explore other possibilities.
-- **Checked Conditions :** Checked if the current number violates the additive property or if it satisfies the additive property. Return or continue accordingly.
-- **Result :** After exploring all possibilities, returned the final result.
+**Marked Landmines :**
+- I iterated through the grid.
+- For each cell with value 0 (landmine), mark adjacent cells as impassable by setting their value to -1.
+
+**Converted Marked Cells :**
+- Converted all marked cells (value -1) back to passable cells (value 0).
+
+**Breadth-First Search (BFS) :**
+   - Initialized a 2D array to store distances from the starting point.
+   - Initialized a queue for BFS traversal.
+   - Enqueued cells from the first column with value 1 and set their distance to 0.
+   - Performed BFS :
+     - Dequeued a cell and explore its neighboring cells.
+     - If a neighboring cell is valid, unvisited, and reachable, updated its distance and enqueue it.
+   - Continued BFS until all reachable cells are visited or the queue is empty.
+
+**Finded Shortest Path :**
+   - Finded the minimum distance from any cell in the last column with value 1 to the destination.
+   - If a destination cell cannot be reached, returned -1; otherwise, returned the minimum distance plus 1 as the shortest path length.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -28,10 +38,12 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O( N^2 )$
+- Time complexity : $O( r*c )$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$N$ : length of the input string
-- Space complexity : $O( N )$
+$r$ : number of rows
+
+$c$ : number of columns
+- Space complexity : $O( r*c )$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code
