@@ -34,12 +34,9 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O( r*c )$
+- Time complexity : $O(numOfCities^3)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$r$ : number of rows
-
-$c$ : number of columns
-- Space complexity : $O( r*c )$
+- Space complexity : $O(numOfCities^2)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code
