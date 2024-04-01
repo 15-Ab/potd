@@ -4,18 +4,17 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 31-03-24 [Problem Link](https://www.geeksforgeeks.org/problems/closest-neighbor-in-bst/1)
-## Closest Neighbour in BST
+## Today's 01-04-24 [Problem Link](https://www.geeksforgeeks.org/problems/pairs-violating-bst-property--212515/1)
+## Pairs violating the BST property
 
 ## Intuition
-I utilized the properties of a binary search tree (BST) to efficiently find the greatest number less than or equal to the target value.
+Count the number of pairs of nodes violating the BST property.
 
 ## Approach
-- Started with the root node of the BST.
-- Traversed down the BST, comparing node values with the target value.
-- Updated the maximum value found so far if a node's value is less than or equal to the target.
-- Continued traversal until reaching a leaf node or a node with no valid children.
-- Returned the maximum value found, representing the greatest number in the BST less than or equal to the target.
+- Traversed the BST in inorder to obtain a sorted array of its elements.
+- While traversing, count inversions, i.e., the number of times a smaller value appears after a larger value.
+- Used a modified merge sort to count inversions during merging of sorted subarrays.
+- Returned the inversion count as the result.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -23,12 +22,11 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(h)$
+- Time complexity : $O(n*logn)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$h$ : height of the tree
+$h$ : number of nodes in the BST
 
-However, in the average case, when the tree is balanced, the time complexity is $O(log n)$, where $n$ is the number of nodes in the BST.
-- Space complexity : $O(1)$
+- Space complexity : $O(n)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code
@@ -36,45 +34,93 @@ However, in the average case, when the tree is balanced, the time complexity is 
 ```
 //  User function Template for Java
 
-/*class Node
+/*
+
+Definition for Binary Tree Node
+class Node
 {
-    int key;
-    Node left, right;
+    int data;
+    Node left;
+    Node right;
 
-    Node(int x)
+    Node(int data)
     {
-        key = x;
-        left = right = null;
+        this.data = data;
+        left = null;
+        right = null;
     }
-
-}*/
+}
+*/
 
 class Solution {
-
-    // Function to find the greatest number in the binary search tree (BST) 
-    // that is less than or equal to n.
-
-    public static int findMaxForN(Node root, int n) {
-        
-        // Initializing the maximum value found so far
-        int maxVal = Integer.MIN_VALUE;
-        
-        // Traversing down the BST until reaching a leaf node or a node with no valid children
-        while (root != null) {
-            // If the current node's value is less than or equal to n
-            if (root.key <= n) {
-                // Updating maxVal if the current node's value is greater than the current maxVal
-                maxVal = Math.max(maxVal, root.key);
-                // Moving to the right subtree to potentially find a greater value
-                root = root.right;
-            } else {
-                // If the current node's value is greater than n, moving to the left subtree
-                root = root.left;
-            }
+    static int inversionCount;
+    
+    public static int pairsViolatingBST(int n, Node root) {
+        inversionCount = 0;
+        int[] arr = new int[n];
+        inorderTraversal(root, arr);
+        return mergeSortAndCount(arr, 0, n - 1);
+    }
+    
+    static void inorderTraversal(Node root, int[] arr) {
+        if (root == null) {
+            return;
         }
-        
-        // If maxVal remains the default value, returning -1 indicating no valid value found
-        return maxVal == Integer.MIN_VALUE ? -1 : maxVal;
+
+        inorderTraversal(root.left, arr);
+        arr[inversionCount++] = root.data;
+        inorderTraversal(root.right, arr);
+    }
+    
+    static int mergeSortAndCount(int[] arr, int l, int r) {
+        int count = 0;
+        if (l < r) {
+            int m = (l + r) / 2;
+            count += mergeSortAndCount(arr, l, m);
+            count += mergeSortAndCount(arr, m + 1, r);
+            count += mergeAndCount(arr, l, m, r);
+        }
+        return count;
+    }
+
+    static int mergeAndCount(int[] arr, int l, int m, int r) {
+        int n1 = m - l + 1;
+        int n2 = r - m;
+        int[] left = new int[n1];
+        int[] right = new int[n2];
+
+        for (int i = 0; i < n1; i++) {
+            left[i] = arr[l + i];
+        }
+        for (int i = 0; i < n2; i++) {
+            right[i] = arr[m + 1 + i];
+        }
+
+        int count = 0, i = 0, j = 0, inversionCount = l;
+
+        while (i < n1 && j < n2) {
+            if (left[i] <= right[j]) {
+                arr[inversionCount] = left[i];
+                i++;
+            } else {
+                arr[inversionCount] = right[j];
+                j++;
+                count += (n1 - i);
+            }
+            inversionCount++;
+        }
+
+        while (i < n1) {
+            arr[inversionCount] = left[i];
+            i++;
+            inversionCount++;
+        }
+        while (j < n2) {
+            arr[inversionCount] = right[j];
+            j++;
+            inversionCount++;
+        }
+        return count;
     }
 }
 ```
