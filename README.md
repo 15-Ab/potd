@@ -24,7 +24,7 @@ Keep Solving.:)
 ## Complexity
 - Time complexity : $O(n*logn)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$h$ : number of nodes in the BST
+$n$ : number of nodes in the BST
 
 - Space complexity : $O(n)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
