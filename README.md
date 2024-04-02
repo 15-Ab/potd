@@ -4,8 +4,8 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 02-04-24 [Problem Link](https://www.geeksforgeeks.org/problems/pairs-violating-bst-property--212515/1)
-## Pairs violating the BST property
+## Today's 02-04-24 [Problem Link](https://www.geeksforgeeks.org/problems/minimum-absolute-difference-in-bst-1665139652/1)
+## Minimum Absolute Difference In BST
 
 ## Intuition
 Count the number of pairs of nodes violating the BST property.
