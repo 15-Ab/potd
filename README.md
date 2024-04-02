@@ -8,13 +8,14 @@ This is my attempt to make the coding experience easier for you guys so that you
 ## Minimum Absolute Difference In BST
 
 ## Intuition
-Count the number of pairs of nodes violating the BST property.
+- I aim to find the minimum absolute difference between adjacent node values in the inorder traversal of a binary tree.
 
 ## Approach
-- Traversed the BST in inorder to obtain a sorted array of its elements.
-- While traversing, count inversions, i.e., the number of times a smaller value appears after a larger value.
-- Used a modified merge sort to count inversions during merging of sorted subarrays.
-- Returned the inversion count as the result.
+- Initialized variables p and a with Integer.MAX_VALUE.
+- Traversed the tree inorder.
+- During traversal, compared current node value with the previous node value p.
+- Updated the minimum absolute difference a if a smaller difference is found.
+- Returned the minimum absolute difference a.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -22,12 +23,13 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(n*logn)$
+- Time complexity : $O(n)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$n$ : number of nodes in the BST
+$n$ : number of nodes in the tree
 
-- Space complexity : $O(n)$
+- Space complexity : $O(h)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
+$h$ : height of the binary tree
 
 ## Code
 
