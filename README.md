@@ -34,93 +34,36 @@ $n$ : number of nodes in the BST
 ```
 //  User function Template for Java
 
-/*
-
-Definition for Binary Tree Node
-class Node
-{
+/*The Node structure is defined as
+struct Node {
     int data;
-    Node left;
-    Node right;
+    Node *left;
+    Node *right;
 
-    Node(int data)
-    {
-        this.data = data;
-        left = null;
-        right = null;
-    }
-}
+};
 */
-
 class Solution {
-    static int inversionCount;
     
-    public static int pairsViolatingBST(int n, Node root) {
-        inversionCount = 0;
-        int[] arr = new int[n];
-        inorderTraversal(root, arr);
-        return mergeSortAndCount(arr, 0, n - 1);
+    int p = Integer.MAX_VALUE; // Initializing previous node value with max value
+    int a = Integer.MAX_VALUE; // Initializing minimum absolute difference with max value
+    
+    // Method to find the minimum absolute difference between adjacent node values
+    int absolute_diff(Node root) {
+        inorder(root);  // Performing inorder traversal
+        return a;       // Returning the minimum absolute difference
     }
     
-    static void inorderTraversal(Node root, int[] arr) {
-        if (root == null) {
+    // Inorder traversal to visit nodes in non-decreasing order
+    void inorder(Node root) {
+        if(root==null){
             return;
         }
-
-        inorderTraversal(root.left, arr);
-        arr[inversionCount++] = root.data;
-        inorderTraversal(root.right, arr);
-    }
-    
-    static int mergeSortAndCount(int[] arr, int l, int r) {
-        int count = 0;
-        if (l < r) {
-            int m = (l + r) / 2;
-            count += mergeSortAndCount(arr, l, m);
-            count += mergeSortAndCount(arr, m + 1, r);
-            count += mergeAndCount(arr, l, m, r);
+        inorder(root.left);          // Traversing left subtree
+        if(p != Integer.MAX_VALUE){  // Checking if p is not initialized (first node)
+            a = Math.min(a,root.data-p); // Calculating absolute difference and update a
         }
-        return count;
-    }
-
-    static int mergeAndCount(int[] arr, int l, int m, int r) {
-        int n1 = m - l + 1;
-        int n2 = r - m;
-        int[] left = new int[n1];
-        int[] right = new int[n2];
-
-        for (int i = 0; i < n1; i++) {
-            left[i] = arr[l + i];
-        }
-        for (int i = 0; i < n2; i++) {
-            right[i] = arr[m + 1 + i];
-        }
-
-        int count = 0, i = 0, j = 0, inversionCount = l;
-
-        while (i < n1 && j < n2) {
-            if (left[i] <= right[j]) {
-                arr[inversionCount] = left[i];
-                i++;
-            } else {
-                arr[inversionCount] = right[j];
-                j++;
-                count += (n1 - i);
-            }
-            inversionCount++;
-        }
-
-        while (i < n1) {
-            arr[inversionCount] = left[i];
-            i++;
-            inversionCount++;
-        }
-        while (j < n2) {
-            arr[inversionCount] = right[j];
-            j++;
-            inversionCount++;
-        }
-        return count;
+        p = root.data;       // Updating previous node value
+        inorder(root.right); // Traversing right subtree
     }
 }
 ```
