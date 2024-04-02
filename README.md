@@ -4,7 +4,7 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 01-04-24 [Problem Link](https://www.geeksforgeeks.org/problems/pairs-violating-bst-property--212515/1)
+## Today's 02-04-24 [Problem Link](https://www.geeksforgeeks.org/problems/pairs-violating-bst-property--212515/1)
 ## Pairs violating the BST property
 
 ## Intuition
