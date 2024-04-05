@@ -28,7 +28,7 @@ Keep Solving.:)
 ## Complexity
 - Time complexity : $O(n^2)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$n$ : length of the input array 'nums'
+$n$ : length of the input array `nums`
 
 - Space complexity : $O(n)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
