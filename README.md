@@ -4,8 +4,8 @@
 
 This is my attempt to make the coding experience easier for you guys so that you can easily learn what to do in today's problem of the day.
 
-## Today's 04-04-24 [Problem Link](https://www.geeksforgeeks.org/problems/sum-of-all-substrings-of-a-number-1587115621/1)
-## Sum of all substrings of a number
+## Today's 05-04-24 [Problem Link](https://www.geeksforgeeks.org/problems/convert-to-strictly-increasing-array3351/1)
+## Strictly Increasing Array
 
 ## Intuition
 The problem aims to find the minimum number of operations required to make an array strictly increasing. To solve the problem, I can use dynamic programming.
