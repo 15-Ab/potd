@@ -14,13 +14,17 @@ This is my attempt to make the coding experience easier for you guys so that you
 ## Sum of all substrings of a number
 
 ## Intuition
--  I want to efficiently find the sum of all substrings of a given string.
+The problem aims to find the minimum number of operations required to make an array strictly increasing. To solve the problem, I can use dynamic programming.
 
 ## Approach
-- I initialized variables for modulus, partial sum array, and final answer.
-- Iterated through each character of the string.
-- Calculated the partial sum for each index using dynamic programming.
-- Updated the final answer accordingly.
+- I iterated through the array and for each element, we determine the length of the longest increasing subsequence ending at that element.
+- I initialized a dynamic programming array 'dp' with all elements set to 1, indicating that initially each element forms a subsequence of length 1.
+- I iterated over each element of the array:
+  - For each element 'nums[i]', I iterate over the elements before it ('nums[j]' where 'j' ranges from 0 to 'i - 1').
+  - If 'nums[i] > nums[j]' and the difference between 'nums[i]' and 'nums[j]' is greater than or equal to the difference in indices ('i - j'), it means I can include 'nums[i]' in the increasing subsequence ending at 'nums[i]'.
+  - I updated the length of the longest increasing subsequence ending at 'nums[i]' by taking the maximum of the current value and '1 + dp[j]'.
+  - I also updated a variable 'maxIncreasingLength' to keep track of the maximum increasing subsequence length encountered so far.
+- Finally, I returned the difference between the length of the array and 'maxIncreasingLength', which represents the minimum number of operations required to make the array strictly increasing.
 
 ---
 Have a look at the code , still have any confusion then please let me know in the comments
@@ -28,11 +32,11 @@ Have a look at the code , still have any confusion then please let me know in th
 Keep Solving.:)
 
 ## Complexity
-- Time complexity : $O(l)$
+- Time complexity : $O(n^2)$
 <!-- Add your time complexity here, e.g. $$O())$$ -->
-$l$ : length of the string
+$n$ : length of the input array 'nums'
 
-- Space complexity : $O(l)$
+- Space complexity : $O(n)$
 <!-- Add your space complexity here, e.g. $$O(n)$$ -->
 
 ## Code
@@ -40,38 +44,30 @@ $l$ : length of the string
 ```
 //  User function Template for Java
 
-class Solution
-{
-    // Declaring a static variable to store the modulus value.
-    static long mod = 1_000_000_007;
-    // Declaring an array to store the partial sum of substrings.
-    static long[] gp;
-    // Declaring a variable to store the final answer.
-    static long jawab;
+class Solution {
     
-    // Function to find sum of all possible substrings of the given string.
-    public static long sumSubstrings(String s) {
+    public int min_operations(int[] nums) {
+        // Code here
+        int length = nums.length;
+        int maxIncreasingLength = 1;
+        int[] dp = new int[length];
         
-        // Initializing the partial sum array with the same length as the string.
-        gp = new long[s.length()];
-        // Initializing the first element of the partial sum array with the value of the first character in the string.
-        gp[0] = s.charAt(0) - '0';
-        // Initializing the final answer with the value of the first element in the partial sum array.
-        jawab = gp[0];
+        // Initializing the dynamic programming array with 1s.
+        for (int i = 0; i < length; i++)
+            dp[i] = 1;
         
-        // Iterating through the characters of the string starting from the second character.
-        for(int i = 1; i < s.length(); i++){
-            
-            // Getting the current character.
-            char c = s.charAt(i);
-            // Calculating the partial sum for the current index using the formula.
-            gp[i] = ( ( gp[i-1] * 10 ) % mod + ( ( c - '0' ) * ( i + 1 ) ) % mod ) % mod;
-            // Updating the final answer by adding the partial sum for the current index.
-            jawab = ( jawab + gp[i] ) % mod;
+        // Performing dynamic programming to find the length of the longest increasing subsequence.
+        for (int i = 1; i < length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j] && (nums[i] - nums[j] >= (i - j))) {
+                    dp[i] = Math.max(1 + dp[j], dp[i]);
+                    maxIncreasingLength = Math.max(maxIncreasingLength, dp[i]);
+                }
+            }
         }
         
-        // Returning the final answer.
-        return jawab;
+        // Returning the minimum number of operations required to make the array strictly increasing.
+        return length - maxIncreasingLength;
     }
 }
 ```
