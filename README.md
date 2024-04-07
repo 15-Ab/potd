@@ -44,23 +44,23 @@ class Solution{
 		// Your code goes here
 	
 		 // Initializing a 2D array to store the maximum dot product
-        int[][] gp = new int[m + 1][n + 1];
+                 int[][] gp = new int[m + 1][n + 1];
         
-        // Initializing the array with zeros
-        for (int[] row : gp) {
-            Arrays.fill(row, 0);
-        }
+                 // Initializing the array with zeros
+                 for (int[] row : gp) {
+                     Arrays.fill(row, 0);
+                 }
         
-        // Dynamic programming approach to calculate the maximum dot product
-        for (int i = 1; i <= m; i++) {
-            for (int j = i; j <= n; j++) {
-                // Calculating the current dot product and update the cell
-                gp[i][j] = Math.max(gp[i - 1][j - 1] + a[j - 1] * b[i - 1], gp[i][j - 1]);
-            }
-        }
+                 // Dynamic programming approach to calculate the maximum dot product
+                 for (int i = 1; i <= m; i++) {
+                     for (int j = i; j <= n; j++) {
+                     // Calculating the current dot product and update the cell
+                     gp[i][j] = Math.max(gp[i - 1][j - 1] + a[j - 1] * b[i - 1], gp[i][j - 1]);
+                     }
+                 }
         
-        // Returning the maximum dot product
-        return gp[m][n];
+                // Returning the maximum dot product
+                return gp[m][n];
 	} 
 }
 ```
